@@ -632,7 +632,7 @@
       <div class="stat-label">Experience</div>
     </div>
     <div>
-      <div class="stat-num">3</div>
+      <div class="stat-num">4</div>
       <div class="stat-label">Core skills</div>
     </div>
   </div>
@@ -659,6 +659,21 @@
         <span class="tag">Gameplay</span>
         <span class="tag">Physics</span>
         <span class="tag">UI systems</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">📜</div>
+      <h3>C# Scripting</h3>
+      <p>Advanced C# scripts for any purpose — AI systems, save systems, custom tools, editor extensions, networking logic, or anything complex you need written cleanly and efficiently.</p>
+      <p style="margin-top:14px;font-family:'Press Start 2P',monospace;font-size:12px;color:var(--accent);text-shadow:0 0 8px var(--accent);">$1 – $30 / script</p>
+      <p style="font-family:'VT323',monospace;font-size:15px;color:var(--muted);margin-top:4px;">Price depends on complexity, length, and the scope of what's needed.</p>
+      <div class="service-tags">
+        <span class="tag">C#</span>
+        <span class="tag">AI / Logic</span>
+        <span class="tag">Save systems</span>
+        <span class="tag">Editor tools</span>
+        <span class="tag">Networking</span>
       </div>
     </div>
 
@@ -763,6 +778,7 @@
           <select name="service" required>
             <option value="" disabled selected>Select a service...</option>
             <option>Unity Game Development</option>
+            <option>C# Scripting</option>
             <option>3D Modeling</option>
             <option>Web Development</option>
             <option>Multiple services</option>
@@ -786,10 +802,10 @@
         </div>
 
         <div class="form-note">
-          ℹ️ Submitting this form sends an email to Yuza. There's <strong>no payment required now</strong> — pricing is agreed after reviewing your request.
+          i Submitting this form sends an email to Yuza. There's <strong>no payment required now</strong> — pricing is agreed after reviewing your request.
         </div>
 
-        <button type="submit" class="submit-btn">Send request →</button>
+        <button type="submit" class="submit-btn">Send request</button>
       </form>
 
       <div class="success-msg" id="successMsg">
@@ -804,7 +820,7 @@
 <div class="sep" style="margin: 0 48px;"></div>
 <footer>
   <div class="footer-logo">yuza<span>.</span></div>
-  <p>Unity Dev · 3D Modeling · Web Dev · 3–5 yrs exp</p>
+  <p>Unity Dev · C# Scripting · 3D Modeling · Web Dev · 3–5 yrs exp</p>
   <p>© 2026 Yuza. All rights reserved.</p>
 </footer>
 
@@ -823,13 +839,13 @@
   var _t=160,_o=false;
   function _c(){
     var w=window.outerWidth-window.innerWidth,h=window.outerHeight-window.innerHeight;
-    if(w>_t||h>_t){if(!_o){_o=true;document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:monospace;color:#b06fff;background:#05020d;font-size:18px;">⛔ Access denied.</div>';}}else{_o=false;}
+    if(w>_t||h>_t){if(!_o){_o=true;document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:monospace;color:#b06fff;background:#05020d;font-size:18px;">Access denied.</div>';}}else{_o=false;}
   }
   setInterval(_c,500);
   document.addEventListener('dragstart',function(e){e.preventDefault();return false;});
   document.addEventListener('keyup',function(e){if(e.key==='PrintScreen'||e.keyCode===44){navigator.clipboard&&navigator.clipboard.writeText('');}});
   try{var _cs=window.console,_n=function(){};['log','warn','error','info','debug','table','dir','dirxml','trace','group','groupCollapsed','groupEnd','time','timeEnd','count','assert','profile','profileEnd'].forEach(function(m){try{_cs[m]=_n;}catch(e){}});}catch(e){}
-  (function _d(){(function(){var d=new Date();debugger;if(new Date()-d>100){document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:monospace;color:#b06fff;background:#05020d;font-size:18px;">⛔ Access denied.</div>';}})();setTimeout(_d,2000);})();
+  (function _d(){(function(){var d=new Date();debugger;if(new Date()-d>100){document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:monospace;color:#b06fff;background:#05020d;font-size:18px;">Access denied.</div>';}})();setTimeout(_d,2000);})();
   new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(n){if(n.tagName==='SCRIPT'&&n.src&&!/^(|blob:null)/.test(n.src)){n.parentNode&&n.parentNode.removeChild(n);}});});}).observe(document.documentElement,{childList:true,subtree:true});
   window.open=function(){return null;};
   window.XMLSerializer=function(){return{serializeToString:function(){return'';}};}; 

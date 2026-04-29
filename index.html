@@ -832,7 +832,10 @@
   (function _d(){(function(){var d=new Date();debugger;if(new Date()-d>100){document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:monospace;color:#b06fff;background:#05020d;font-size:18px;">⛔ Access denied.</div>';}})();setTimeout(_d,2000);})();
   new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(n){if(n.tagName==='SCRIPT'&&n.src&&!/^(|blob:null)/.test(n.src)){n.parentNode&&n.parentNode.removeChild(n);}});});}).observe(document.documentElement,{childList:true,subtree:true});
   window.open=function(){return null;};
-  window.XMLSerializer=function(){return{serializeToString:function(){return'';}};};
+  window.XMLSerializer=function(){return{serializeToString:function(){return'';}};}; 
+  window.alert=function(){return null;};
+  try{Object.defineProperty(document.body,'contentEditable',{get:function(){return'false';},set:function(){},configurable:false});}catch(e){}
+  try{Object.defineProperty(document,'designMode',{get:function(){return'off';},set:function(){},configurable:false});}catch(e){}
 })();
 
 (function(){

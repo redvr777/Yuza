@@ -812,13 +812,14 @@
 (function(){
   document.addEventListener('contextmenu',function(e){e.preventDefault();return false;});
   document.addEventListener('keydown',function(e){
-    var k=e.key||e.keyCode;
-    if(k==='F12'||e.keyCode===123){e.preventDefault();return false;}
+    var k=e.key||'';var kc=e.keyCode||0;
+    if(k==='F12'||kc===123){e.preventDefault();e.stopPropagation();return false;}
     if(e.ctrlKey||e.metaKey){
-      if(e.shiftKey&&['i','I','j','J','c','C'].includes(k)){e.preventDefault();return false;}
-      if(!e.shiftKey&&['u','U','s','S'].includes(k)){e.preventDefault();return false;}
+      if(e.shiftKey&&['i','I','j','J','c','C','k','K','m','M','p','P'].indexOf(k)>-1){e.preventDefault();e.stopPropagation();return false;}
+      if(e.altKey&&['i','I','j','J','c','C','u','U'].indexOf(k)>-1){e.preventDefault();e.stopPropagation();return false;}
+      if(!e.shiftKey&&!e.altKey&&['u','U','s','S','p','P','a','A'].indexOf(k)>-1){e.preventDefault();e.stopPropagation();return false;}
     }
-  });
+  },true);
   var _t=160,_o=false;
   function _c(){
     var w=window.outerWidth-window.innerWidth,h=window.outerHeight-window.innerHeight;

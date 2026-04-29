@@ -38,6 +38,10 @@
     font-size: 18px;
     line-height: 1.65;
     image-rendering: pixelated;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 
   body::before {
@@ -470,6 +474,9 @@
     outline: none;
     transition: border-color 0.15s;
     -webkit-appearance: none;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    user-select: text;
   }
 
   .field input:focus,
@@ -800,63 +807,117 @@
 </footer>
 
 <script>
-  const form = document.getElementById('requestForm');
-  const successMsg = document.getElementById('successMsg');
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  ANTI-INSPECT PROTECTION
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+(function(){
+  // 1. Disable right-click context menu
+  document.addEventListener('contextmenu', function(e){ e.preventDefault(); return false; });
 
-  form.addEventListener('submit', function(e) {
+  // 2. Block keyboard shortcuts for DevTools & View Source
+  document.addEventListener('keydown', function(e){
+    var k = e.key || e.keyCode;
+    // F12
+    if(k === 'F12' || e.keyCode === 123){ e.preventDefault(); return false; }
+    // Ctrl+U (View Source), Ctrl+Shift+I/J/C (DevTools), Ctrl+S (Save)
+    if(e.ctrlKey || e.metaKey){
+      var blocked = ['u','U','s','S','i','I','j','J','c','C'];
+      if(e.shiftKey && ['i','I','j','J','c','C'].includes(k)){ e.preventDefault(); return false; }
+      if(!e.shiftKey && ['u','U','s','S'].includes(k)){ e.preventDefault(); return false; }
+    }
+  });
+
+  // 3. DevTools size-based detection — blank the page if open
+  var _threshold = 160;
+  var _devOpen = false;
+  function _checkDevTools(){
+    var widthDiff  = window.outerWidth  - window.innerWidth;
+    var heightDiff = window.outerHeight - window.innerHeight;
+    if(widthDiff > _threshold || heightDiff > _threshold){
+      if(!_devOpen){
+        _devOpen = true;
+        document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:monospace;color:#b06fff;background:#05020d;font-size:18px;">⛔ Access denied.</div>';
+      }
+    } else {
+      _devOpen = false;
+    }
+  }
+  setInterval(_checkDevTools, 500);
+
+  // 4. Disable drag-to-copy
+  document.addEventListener('dragstart', function(e){ e.preventDefault(); return false; });
+
+  // 5. Disable print screen shortcut (best-effort)
+  document.addEventListener('keyup', function(e){
+    if(e.key === 'PrintScreen' || e.keyCode === 44){
+      navigator.clipboard && navigator.clipboard.writeText('');
+    }
+  });
+
+  // 6. Override console methods to make debugging harder
+  try {
+    var _c = window.console;
+    var _noop = function(){};
+    ['log','warn','error','info','debug','table','dir','dirxml','trace','group','groupCollapsed','groupEnd','time','timeEnd','count','assert','profile','profileEnd'].forEach(function(m){
+      try{ _c[m] = _noop; } catch(e){}
+    });
+  } catch(e){}
+
+  // 7. Debugger trap — triggers when DevTools evaluates code
+  (function _dbgTrap(){
+    (function(){ var d = new Date(); debugger; if(new Date() - d > 100){ document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:monospace;color:#b06fff;background:#05020d;font-size:18px;">⛔ Access denied.</div>'; } })();
+    setTimeout(_dbgTrap, 2000);
+  })();
+})();
+
+(function(){
+  var _f = document.getElementById('requestForm');
+  var _s = document.getElementById('successMsg');
+
+  _f.addEventListener('submit', function(e){
     e.preventDefault();
+    var _n  = _f.querySelector('[name="name"]').value;
+    var _e  = _f.querySelector('[name="email"]').value;
+    var _sv = _f.querySelector('[name="service"]').value;
+    var _en = _f.querySelector('[name="engine"]').value;
+    var _d  = _f.querySelector('[name="description"]').value;
+    var _dl = _f.querySelector('[name="deadline"]').value;
 
-    const name = form.querySelector('[name="name"]').value;
-    const email = form.querySelector('[name="email"]').value;
-    const service = form.querySelector('[name="service"]').value;
-    const engine = form.querySelector('[name="engine"]').value;
-    const description = form.querySelector('[name="description"]').value;
-    const deadline = form.querySelector('[name="deadline"]').value;
-
-    const subject = encodeURIComponent(`Project Request from ${name} — ${service}`);
-    const body = encodeURIComponent(
-`Hi Yuza,
-
-I'd like to request some work on my game. Here are the details:
-
-Name: ${name}
-Email: ${email}
-Service needed: ${service}
-Engine / Platform: ${engine || 'Not specified'}
-Deadline: ${deadline || 'Flexible'}
-
-Project description:
-${description}
-
-Looking forward to hearing from you!
-
-— ${name}`
+    var _sub  = encodeURIComponent('Project Request from ' + _n + ' \u2014 ' + _sv);
+    var _body = encodeURIComponent(
+      'Hi Yuza,\n\nI\'d like to request some work on my game. Here are the details:\n\n' +
+      'Name: ' + _n + '\nEmail: ' + _e + '\nService needed: ' + _sv +
+      '\nEngine / Platform: ' + (_en || 'Not specified') +
+      '\nDeadline: ' + (_dl || 'Flexible') +
+      '\n\nProject description:\n' + _d +
+      '\n\nLooking forward to hearing from you!\n\n\u2014 ' + _n
     );
 
- const link = document.createElement('a');
-link.href = `https://mail.google.com/mail/?view=cm&to=yuzadeveloper@gmail.com&su=${subject}&body=${body}`;
-link.target = '_blank';
-link.rel = 'noopener noreferrer';
-document.body.appendChild(link);
-link.click();
-document.body.removeChild(link);
-    setTimeout(() => {
-      form.style.display = 'none';
-      successMsg.style.display = 'block';
+    var _lnk = document.createElement('a');
+    _lnk.href = 'https://mail.google.com/mail/?view=cm&to=yuzadeveloper@gmail.com&su=' + _sub + '&body=' + _body;
+    _lnk.target = '_blank';
+    _lnk.rel = 'noopener noreferrer';
+    document.body.appendChild(_lnk);
+    _lnk.click();
+    document.body.removeChild(_lnk);
+
+    setTimeout(function(){
+      _f.style.display = 'none';
+      _s.style.display = 'block';
     }, 500);
   });
 
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor){
+    anchor.addEventListener('click', function(e){
+      var target = document.querySelector(this.getAttribute('href'));
+      if(target){
         e.preventDefault();
-        const offset = 80;
-        const top = target.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top, behavior: 'smooth' });
+        var top = target.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top: top, behavior: 'smooth' });
       }
     });
   });
+})();
 </script>
 </body>
 </html>

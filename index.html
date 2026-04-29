@@ -807,67 +807,26 @@
 </footer>
 
 <script>
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-//  ANTI-INSPECT PROTECTION
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 (function(){
-  // 1. Disable right-click context menu
-  document.addEventListener('contextmenu', function(e){ e.preventDefault(); return false; });
-
-  // 2. Block keyboard shortcuts for DevTools & View Source
-  document.addEventListener('keydown', function(e){
-    var k = e.key || e.keyCode;
-    // F12
-    if(k === 'F12' || e.keyCode === 123){ e.preventDefault(); return false; }
-    // Ctrl+U (View Source), Ctrl+Shift+I/J/C (DevTools), Ctrl+S (Save)
-    if(e.ctrlKey || e.metaKey){
-      var blocked = ['u','U','s','S','i','I','j','J','c','C'];
-      if(e.shiftKey && ['i','I','j','J','c','C'].includes(k)){ e.preventDefault(); return false; }
-      if(!e.shiftKey && ['u','U','s','S'].includes(k)){ e.preventDefault(); return false; }
+  document.addEventListener('contextmenu',function(e){e.preventDefault();return false;});
+  document.addEventListener('keydown',function(e){
+    var k=e.key||e.keyCode;
+    if(k==='F12'||e.keyCode===123){e.preventDefault();return false;}
+    if(e.ctrlKey||e.metaKey){
+      if(e.shiftKey&&['i','I','j','J','c','C'].includes(k)){e.preventDefault();return false;}
+      if(!e.shiftKey&&['u','U','s','S'].includes(k)){e.preventDefault();return false;}
     }
   });
-
-  // 3. DevTools size-based detection — blank the page if open
-  var _threshold = 160;
-  var _devOpen = false;
-  function _checkDevTools(){
-    var widthDiff  = window.outerWidth  - window.innerWidth;
-    var heightDiff = window.outerHeight - window.innerHeight;
-    if(widthDiff > _threshold || heightDiff > _threshold){
-      if(!_devOpen){
-        _devOpen = true;
-        document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:monospace;color:#b06fff;background:#05020d;font-size:18px;">⛔ Access denied.</div>';
-      }
-    } else {
-      _devOpen = false;
-    }
+  var _t=160,_o=false;
+  function _c(){
+    var w=window.outerWidth-window.innerWidth,h=window.outerHeight-window.innerHeight;
+    if(w>_t||h>_t){if(!_o){_o=true;document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:monospace;color:#b06fff;background:#05020d;font-size:18px;">⛔ Access denied.</div>';}}else{_o=false;}
   }
-  setInterval(_checkDevTools, 500);
-
-  // 4. Disable drag-to-copy
-  document.addEventListener('dragstart', function(e){ e.preventDefault(); return false; });
-
-  // 5. Disable print screen shortcut (best-effort)
-  document.addEventListener('keyup', function(e){
-    if(e.key === 'PrintScreen' || e.keyCode === 44){
-      navigator.clipboard && navigator.clipboard.writeText('');
-    }
-  });
-
-  // 6. Override console methods to make debugging harder
-  try {
-    var _c = window.console;
-    var _noop = function(){};
-    ['log','warn','error','info','debug','table','dir','dirxml','trace','group','groupCollapsed','groupEnd','time','timeEnd','count','assert','profile','profileEnd'].forEach(function(m){
-      try{ _c[m] = _noop; } catch(e){}
-    });
-  } catch(e){}
-
-  // 7. Debugger trap — triggers when DevTools evaluates code
-  (function _dbgTrap(){
-    (function(){ var d = new Date(); debugger; if(new Date() - d > 100){ document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:monospace;color:#b06fff;background:#05020d;font-size:18px;">⛔ Access denied.</div>'; } })();
-    setTimeout(_dbgTrap, 2000);
-  })();
+  setInterval(_c,500);
+  document.addEventListener('dragstart',function(e){e.preventDefault();return false;});
+  document.addEventListener('keyup',function(e){if(e.key==='PrintScreen'||e.keyCode===44){navigator.clipboard&&navigator.clipboard.writeText('');}});
+  try{var _cs=window.console,_n=function(){};['log','warn','error','info','debug','table','dir','dirxml','trace','group','groupCollapsed','groupEnd','time','timeEnd','count','assert','profile','profileEnd'].forEach(function(m){try{_cs[m]=_n;}catch(e){}});}catch(e){}
+  (function _d(){(function(){var d=new Date();debugger;if(new Date()-d>100){document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:monospace;color:#b06fff;background:#05020d;font-size:18px;">⛔ Access denied.</div>';}})();setTimeout(_d,2000);})();
 })();
 
 (function(){

@@ -833,8 +833,13 @@ Looking forward to hearing from you!
 — ${name}`
     );
 
-    window.open(`https://mail.google.com/mail/?view=cm&to=yuzadeveloper@gmail.com&su=${subject}&body=${body}`, '_blank');
-
+ const link = document.createElement('a');
+link.href = `https://mail.google.com/mail/?view=cm&to=yuzadeveloper@gmail.com&su=${subject}&body=${body}`;
+link.target = '_blank';
+link.rel = 'noopener noreferrer';
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
     setTimeout(() => {
       form.style.display = 'none';
       successMsg.style.display = 'block';

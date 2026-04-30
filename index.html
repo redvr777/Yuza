@@ -149,6 +149,30 @@
   .nav-bmac:active { transform: translate(1px,1px) !important; box-shadow: 1px 1px 0 #a08800 !important; }
   .nav-bmac .bmac-icon { font-size: 14px; line-height: 1; }
 
+  .nav-cashapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--cashapp) !important;
+    color: #001a0d !important;
+    padding: 7px 14px !important;
+    border-radius: 2px !important;
+    font-family: 'Press Start 2P', monospace !important;
+    font-size: 9px !important;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    transition: background 0.15s, transform 0.1s !important;
+    box-shadow: 3px 3px 0 #007a2b;
+    white-space: nowrap;
+  }
+  .nav-cashapp:hover {
+    background: var(--cashapp-dark) !important;
+    color: #001a0d !important;
+    transform: translate(-1px,-1px) !important;
+    box-shadow: 4px 4px 0 #007a2b !important;
+  }
+  .nav-cashapp:active { transform: translate(1px,1px) !important; box-shadow: 1px 1px 0 #007a2b !important; }
+  .nav-cashapp .cashapp-icon { font-size: 14px; line-height: 1; }
 
   .bmac-float {
     position: fixed;
@@ -477,7 +501,7 @@
     line-height: 1.55;
   }
 
- 
+  /* Payment methods section */
   #payment { background: var(--bg); }
 
   .payment-grid {
@@ -772,6 +796,7 @@
     <li><a href="#payment">Payment</a></li>
     <li><a href="#request">Request work</a></li>
     <li><a href="https://buymeacoffee.com/cbsgames" target="_blank" rel="noopener noreferrer" class="nav-bmac"><span class="bmac-icon">☕</span>Buy me a coffee</a></li>
+    <li><a href="https://cash.app/$Thatonedev476" target="_blank" rel="noopener noreferrer" class="nav-cashapp"><span class="cashapp-icon">💸</span>CashApp</a></li>
     <li><a href="#request" class="nav-cta">Get a quote</a></li>
   </ul>
 </nav>
@@ -915,16 +940,18 @@
   <p class="section-sub">I only accept payment through the two platforms below — no exceptions. Payment is handled after we agree on a quote.</p>
 
   <div class="payment-grid">
-    <div class="payment-card cashapp">
+    <a href="https://cash.app/$Thatonedev476" target="_blank" rel="noopener noreferrer" class="payment-card cashapp" style="text-decoration:none;">
       <div class="payment-icon">💸</div>
       <h3>CashApp</h3>
       <p>Send payment directly via CashApp once we've agreed on a price. Fast, simple, and no fees on your end.</p>
-    </div>
-    <div class="payment-card bmac">
+      <p style="margin-top:12px;font-family:'Press Start 2P',monospace;font-size:10px;color:var(--cashapp);">$Thatonedev476 →</p>
+    </a>
+    <a href="https://buymeacoffee.com/cbsgames" target="_blank" rel="noopener noreferrer" class="payment-card bmac" style="text-decoration:none;">
       <div class="payment-icon">☕</div>
       <h3>BuyMeACoffee</h3>
       <p>Pay through BuyMeACoffee — great if you want to support the work or prefer that platform for transactions.</p>
-    </div>
+      <p style="margin-top:12px;font-family:'Press Start 2P',monospace;font-size:10px;color:var(--coffee);">buymeacoffee.com/cbsgames →</p>
+    </a>
   </div>
 
   <div class="payment-only-note">
@@ -999,6 +1026,11 @@
           <input type="text" name="deadline" placeholder="e.g. 3 weeks, by end of August, flexible...">
         </div>
 
+        <div class="field">
+          <label>Your budget</label>
+          <input type="text" name="budget" placeholder="e.g. $20, $50–$100, not sure yet...">
+        </div>
+
         <div class="form-note">
           i Submitting this form sends an email to Yuza. There's <strong>no payment required now</strong> — pricing is agreed after reviewing your request. Payment is accepted via <span class="cashapp-pill">💸 CashApp</span> or <span class="bmac-pill">☕ BuyMeACoffee</span> only.
         </div>
@@ -1064,6 +1096,7 @@
     var _en = _f.querySelector('[name="engine"]').value;
     var _d  = _f.querySelector('[name="description"]').value;
     var _dl = _f.querySelector('[name="deadline"]').value;
+    var _bg = _f.querySelector('[name="budget"]').value;
 
     var _sub  = encodeURIComponent('Project Request from ' + _n + ' \u2014 ' + _sv);
     var _body = encodeURIComponent(
@@ -1071,6 +1104,7 @@
       'Name: ' + _n + '\nEmail: ' + _e + '\nService needed: ' + _sv +
       '\nEngine / Platform: ' + (_en || 'Not specified') +
       '\nDeadline: ' + (_dl || 'Flexible') +
+      '\nBudget: ' + (_bg || 'Not specified') +
       '\n\nProject description:\n' + _d +
       '\n\nLooking forward to hearing from you!\n\n\u2014 ' + _n
     );

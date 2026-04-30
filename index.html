@@ -1438,7 +1438,7 @@
   try{Object.defineProperty(document,'designMode',{get:function(){return'off';},set:function(){},configurable:false});}catch(e){}
 })();
 
-// Work section filter
+
 function filterWork(cat, btn) {
   document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
@@ -1451,10 +1451,10 @@ function filterWork(cat, btn) {
   });
 }
 
-// Lightbox
+
 function openLightbox(card) {
   var img = card.querySelector('.work-img img');
-  if(!img) return; // no image yet — placeholder, do nothing
+  if(!img) return; 
   var title = card.querySelector('h3').textContent;
   document.getElementById('lightbox-img').src = img.src;
   document.getElementById('lightbox-caption').textContent = title;

@@ -217,6 +217,91 @@
     50% { transform: translateY(-5px); }
   }
 
+  /* ── Floating music player ── */
+  #musicPlayer {
+    position: fixed;
+    bottom: 28px;
+    left: 28px;
+    z-index: 200;
+    background: var(--bg2);
+    border: 2px solid var(--border2);
+    border-radius: var(--card-r);
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 4px 4px 0 #6a00cc;
+    font-family: 'Press Start 2P', monospace;
+    transition: box-shadow 0.1s, transform 0.1s;
+  }
+  #musicPlayer:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 5px 0 #6a00cc;
+  }
+  #playPauseBtn {
+    background: rgba(176,111,255,0.12);
+    border: 2px solid var(--border2);
+    border-radius: 2px;
+    color: var(--accent);
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    flex-shrink: 0;
+    transition: background 0.15s, transform 0.1s;
+    text-shadow: 0 0 6px var(--accent);
+  }
+  #playPauseBtn:hover { background: rgba(176,111,255,0.22); transform: translate(-1px,-1px); }
+  #playPauseBtn:active { transform: translate(1px,1px); }
+  .music-label {
+    font-size: 8px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px var(--accent);
+    margin-bottom: 6px;
+    font-family: 'Press Start 2P', monospace;
+  }
+  #volumeSlider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 90px;
+    height: 4px;
+    background: var(--border2);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    display: block;
+  }
+  #volumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    border-radius: 0;
+    cursor: pointer;
+    box-shadow: 0 0 6px var(--accent);
+  }
+  #volumeSlider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    box-shadow: 0 0 6px var(--accent);
+  }
+  @media (max-width: 768px) {
+    #musicPlayer { bottom: 90px; left: 16px; padding: 8px 12px; gap: 10px; }
+    #playPauseBtn { width: 30px; height: 30px; font-size: 11px; }
+    .music-label { font-size: 7px; }
+    #volumeSlider { width: 70px; }
+  }
+
   .hero {
     min-height: 100vh;
     display: flex;
@@ -1031,9 +1116,29 @@
   </ul>
 </nav>
 
+<!-- Floating BuyMeACoffee button (bottom-right) -->
 <a href="https://buymeacoffee.com/cbsgames" target="_blank" rel="noopener noreferrer" class="bmac-float">
   <span class="bmac-icon">☕</span>Buy me a coffee
 </a>
+
+<!-- Floating music player (bottom-left) -->
+<div id="musicPlayer">
+  <button id="playPauseBtn" onclick="toggleMusic()" title="Play / Pause">▶</button>
+  <div>
+    <div class="music-label">♪ NOW PLAYING</div>
+    <input
+      type="range"
+      id="volumeSlider"
+      min="0" max="1" step="0.01" value="0.2"
+      oninput="setMusicVolume(this.value)"
+      title="Volume"
+    >
+  </div>
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="https://raw.githubusercontent.com/redvr777/Yuza/384d459800e8aa0055fd26abc863152050e61650/SpotiDownloader.com%20-%20Dinner%20Is%20Not%20Over%20-%20Jack%20Stauber's%20Micropop.mp3" type="audio/mpeg">
+</audio>
 
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
   <div class="lightbox-inner">
@@ -1158,119 +1263,95 @@
 
   <div class="work-grid" id="workGrid">
 
-<div class="work-card" data-category="unity" onclick="openLightbox(this)">
-  <div class="work-img">
-    <img src="https://github.com/redvr777/Yuza/blob/main/Screenshot%202026-04-30%20011311.png?raw=true" alt="Project Image">
-    <div class="work-overlay">
-      <span class="work-overlay-text">[ VIEW ]</span>
+    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+      <div class="work-img">
+        <img src="https://github.com/redvr777/Yuza/blob/main/Screenshot%202026-04-30%20011311.png?raw=true" alt="Project Image">
+        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+      </div>
+      <div class="work-meta">
+        <div class="work-category">Unity Development</div>
+        <h3>Affinity</h3>
+        <p>Affinity is my game. I have spent countless hours working on Affinity to make it better!</p>
+        <div class="work-tags">
+          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Gameplay</span>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="work-meta">
-    <div class="work-category">Unity Development</div>
-    <h3>Affinity</h3>
-    <p>Affinity is my game. I have spent countless hours working on Affinity to make it better!</p>
-    <div class="work-tags">
-      <span class="tag">Unity</span>
-      <span class="tag">C#</span>
-      <span class="tag">Gameplay</span>
-    </div>
-  </div>
-</div>
 
-<div class="work-card" data-category="unity" onclick="openLightbox(this)">
-  <div class="work-img">
-    <img src="https://raw.githubusercontent.com/redvr777/Yuza/8a7d093e218730dd57b2c70512b4777128b1cde8/Screenshot%202026-04-26%20200551.png" alt="Project Image">
-    <div class="work-overlay">
-      <span class="work-overlay-text">[ VIEW ]</span>
+    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+      <div class="work-img">
+        <img src="https://raw.githubusercontent.com/redvr777/Yuza/8a7d093e218730dd57b2c70512b4777128b1cde8/Screenshot%202026-04-26%20200551.png" alt="Project Image">
+        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+      </div>
+      <div class="work-meta">
+        <div class="work-category">Unity Development</div>
+        <h3>Super Scary Gorilla Tag (SSGT)</h3>
+        <p>SSGT is a full remake of gorilla tag made into horror! Everything is remade and created by Olive/Yuza. SSGT was planned to come out last year but was never released.</p>
+        <div class="work-tags">
+          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Gameplay</span>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="work-meta">
-    <div class="work-category">Unity Development</div>
-    <h3>Super Scary Gorilla Tag (SSGT)</h3>
-    <p>SSGT is a full remake of gorilla tag made into horror! Everything is remade and created by Olive/Yuza. SSGT was planned to come out last year but was never released.</p>
-    <div class="work-tags">
-      <span class="tag">Unity</span>
-      <span class="tag">C#</span>
-      <span class="tag">Gameplay</span>
-    </div>
-  </div>
-</div>
 
-<div class="work-card" data-category="unity" onclick="openLightbox(this)">
-  <div class="work-img">
-    <img src="https://raw.githubusercontent.com/redvr777/Yuza/10c79729437d992f65fd2ec80c5d3ca329f7d437/Screenshot%202026-04-30%20014136.png" alt="Project Image">
-    <div class="work-overlay">
-      <span class="work-overlay-text">[ VIEW ]</span>
+    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+      <div class="work-img">
+        <img src="https://raw.githubusercontent.com/redvr777/Yuza/10c79729437d992f65fd2ec80c5d3ca329f7d437/Screenshot%202026-04-30%20014136.png" alt="Project Image">
+        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+      </div>
+      <div class="work-meta">
+        <div class="work-category">Unity Development</div>
+        <h3>Martial Monkey</h3>
+        <p>Martial Monkey is a game where you are a monkey learning Martial Arts! This game is in very early development and is owned by MARIGOLD</p>
+        <div class="work-tags">
+          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Gameplay</span>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="work-meta">
-    <div class="work-category">Unity Development</div>
-    <h3>Martial Monkey</h3>
-    <p>Martial Monkey is a game where you are a monkey learning Martial Arts! This game is in very early development and is owned by MARIGOLD</p>
-    <div class="work-tags">
-      <span class="tag">Unity</span>
-      <span class="tag">C#</span>
-      <span class="tag">Gameplay</span>
-    </div>
-  </div>
-</div>
 
-<div class="work-card" data-category="unity" onclick="openLightbox(this)">
-  <div class="work-img">
-    <img src="https://raw.githubusercontent.com/redvr777/Yuza/120e02a0ecf455ff589198040d731483a8c93bfb/Screenshot%202026-04-30%20014743.png" alt="Project Image">
-    <div class="work-overlay">
-      <span class="work-overlay-text">[ VIEW ]</span>
+    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+      <div class="work-img">
+        <img src="https://raw.githubusercontent.com/redvr777/Yuza/120e02a0ecf455ff589198040d731483a8c93bfb/Screenshot%202026-04-30%20014743.png" alt="Project Image">
+        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+      </div>
+      <div class="work-meta">
+        <div class="work-category">Unity Development</div>
+        <h3>Chimp Dead Zone</h3>
+        <p>Chimp Dead Zone is my game. Chimp Dead Zone is in very early development, the base of the game is to go around and kill other monkeys to get better guns.</p>
+        <div class="work-tags">
+          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Gameplay</span>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="work-meta">
-    <div class="work-category">Unity Development</div>
-    <h3>Chimp Dead Zone</h3>
-    <p>Chimp Dead Zone is my game. Chimp Dead Zone is in very early development, the base of the game is to go around and kill other monkeys to get better guns.</p>
-    <div class="work-tags">
-      <span class="tag">Unity</span>
-      <span class="tag">C#</span>
-      <span class="tag">Gameplay</span>
-    </div>
-  </div>
-</div>
 
-<div class="work-card" data-category="unity" onclick="openLightbox(this)">
-  <div class="work-img">
-    <img src="https://raw.githubusercontent.com/redvr777/Yuza/85b4dc1e0c3a3e09dc8ae55dac10bc6fc947272f/Screenshot%202026-04-30%20015613.png" alt="Project Image">
-    <div class="work-overlay">
-      <span class="work-overlay-text">[ VIEW ]</span>
+    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+      <div class="work-img">
+        <img src="https://raw.githubusercontent.com/redvr777/Yuza/85b4dc1e0c3a3e09dc8ae55dac10bc6fc947272f/Screenshot%202026-04-30%20015613.png" alt="Project Image">
+        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+      </div>
+      <div class="work-meta">
+        <div class="work-category">Unity Development</div>
+        <h3>MonkeTekV3?</h3>
+        <p>MonkeTek is a voxel sandbox game with saving progress and many items to build and explore. MonkeTek was Owned by TEVR then was gaven to me because he started working on other games.</p>
+        <div class="work-tags">
+          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Gameplay</span>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="work-meta">
-    <div class="work-category">Unity Development</div>
-    <h3>MonkeTekV3?</h3>
-    <p>MonkeTek is a voxel sandbox game with saving progress and many items to build and explore. MonkeTek was Owned by TEVR then was gaven to me because he started working on other games.</p>
-    <div class="work-tags">
-      <span class="tag">Unity</span>
-      <span class="tag">C#</span>
-      <span class="tag">Gameplay</span>
-    </div>
-  </div>
-</div>
 
-<div class="work-card" data-category="scripting" onclick="openLightbox(this)">
-  <div class="work-img">
-    <img src="https://raw.githubusercontent.com/redvr777/Yuza/e0923695c2477898271d7452ac59672f90c05a7b/qr-code%20(1).png" alt="QR Code">
-    <div class="work-overlay">
-      <span class="work-overlay-text">[ VIEW ]</span>
+    <div class="work-card" data-category="scripting" onclick="openLightbox(this)">
+      <div class="work-img">
+        <img src="https://raw.githubusercontent.com/redvr777/Yuza/e0923695c2477898271d7452ac59672f90c05a7b/qr-code%20(1).png" alt="QR Code">
+        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+      </div>
+      <div class="work-meta">
+        <div class="work-category">Scripting</div>
+        <h3>Quest Optimizer</h3>
+        <p>The Quest Optimizer is one of the biggest scripting projects I have done yet. I spent countless hours researching Unity's Universal Render Pipeline to create a highly optimized performance system.</p>
+        <div class="work-tags">
+          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Gameplay</span>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="work-meta">
-    <div class="work-category">Scripting</div>
-    <h3>Quest Optimizer</h3>
-    <p>The Quest Optimizer is one of the biggest scripting projects I have done yet. I spent countless hours researching Unity's Universal Render Pipeline to create a highly optimized performance system.</p>
-    <div class="work-tags">
-      <span class="tag">Unity</span>
-      <span class="tag">C#</span>
-      <span class="tag">Gameplay</span>
-    </div>
-  </div>
-</div>
 
   </div>
 </div>
@@ -1428,8 +1509,13 @@
   <p>© 2026 Yuza. All rights reserved.</p>
 </footer>
 
-</div>
+</div><!-- end .page-content -->
 
+<!-- ════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════ -->
+
+<!-- Animated background canvas -->
 <script>
 (function(){
   var canvas = document.getElementById('bg-canvas');
@@ -1504,24 +1590,22 @@
 
     for (var oi = 0; oi < orbs.length; oi++) {
       var o = orbs[oi];
-      o.x += o.vx;
-      o.y += o.vy;
+      o.x += o.vx; o.y += o.vy;
       if (o.x < -0.3) o.x = 1.3;
       if (o.x > 1.3)  o.x = -0.3;
       if (o.y < -0.3) o.y = 1.3;
       if (o.y > 1.3)  o.y = -0.3;
-      var grd = ctx.createRadialGradient(o.x * W, o.y * H, 0, o.x * W, o.y * H, o.r * Math.max(W, H));
-      grd.addColorStop(0,   'rgba(' + o.color + ',0.11)');
-      grd.addColorStop(0.5, 'rgba(' + o.color + ',0.05)');
-      grd.addColorStop(1,   'rgba(' + o.color + ',0)');
+      var grd = ctx.createRadialGradient(o.x*W, o.y*H, 0, o.x*W, o.y*H, o.r*Math.max(W,H));
+      grd.addColorStop(0,   'rgba('+o.color+',0.11)');
+      grd.addColorStop(0.5, 'rgba('+o.color+',0.05)');
+      grd.addColorStop(1,   'rgba('+o.color+',0)');
       ctx.fillStyle = grd;
       ctx.fillRect(0, 0, W, H);
     }
 
     for (var pi = 0; pi < particles.length; pi++) {
       var p = particles[pi];
-      p.x += p.vx;
-      p.y += p.vy;
+      p.x += p.vx; p.y += p.vy;
       p.twinkle += p.twinkleSpeed;
       if (p.y < -4) { p.y = H + 4; p.x = Math.random() * W; }
       if (p.x < -4) p.x = W + 4;
@@ -1535,9 +1619,7 @@
 
     for (var si = shootingStars.length - 1; si >= 0; si--) {
       var s = shootingStars[si];
-      s.x += s.vx;
-      s.y += s.vy;
-      s.life -= s.decay;
+      s.x += s.vx; s.y += s.vy; s.life -= s.decay;
       if (s.life <= 0) { shootingStars.splice(si, 1); continue; }
       var sg = ctx.createLinearGradient(s.x, s.y, s.x - s.len, s.y - s.len * 0.5);
       sg.addColorStop(0, 'rgba(230,200,255,' + s.life * 0.9 + ')');
@@ -1556,42 +1638,35 @@
   draw();
 })();
 </script>
-<audio id="bgMusic" loop>
-  <source src="https://raw.githubusercontent.com/redvr777/Yuza/384d459800e8aa0055fd26abc863152050e61650/SpotiDownloader.com%20-%20Dinner%20Is%20Not%20Over%20-%20Jack%20Stauber's%20Micropop.mp3" type="audio/mpeg">
-</audio>
 
-<button onclick="playMusic()">Play</button>
-
-<label>Volume</label>
-<input type="range" min="0" max="1" step="0.01" value="0.5" oninput="setVolume(this.value)">
-
+<!-- Music player -->
 <script>
-const music = document.getElementById("bgMusic");
+(function(){
+  var music = document.getElementById('bgMusic');
+  var btn   = document.getElementById('playPauseBtn');
+  music.volume = 0.2;
 
+  window.toggleMusic = function() {
+    if (music.paused) {
+      music.play().then(function(){ btn.textContent = '⏸'; }).catch(function(){});
+    } else {
+      music.pause();
+      btn.textContent = '▶';
+    }
+  };
 
-music.volume = 0.2;
+  window.setMusicVolume = function(v) {
+    music.volume = parseFloat(v);
+  };
 
-function playMusic() {
-  music.play();
-}
-
-function setVolume(value) {
-  music.volume = value;
-}
-</script>
-<button onclick="playMusic()">Play Music</button>
-
-<script>
-function playMusic() {
-  document.getElementById("bgMusic").play();
-}
+  // Auto-start on first user interaction (browser autoplay policy)
+  document.addEventListener('click', function() {
+    music.play().then(function(){ btn.textContent = '⏸'; }).catch(function(){});
+  }, { once: true });
+})();
 </script>
 
-<script>
-document.addEventListener("click", () => {
-  document.getElementById("bgMusic").play();
-}, { once: true });
-</script>
+<!-- Anti-devtools / security -->
 <script>
 (function(){
   document.addEventListener('contextmenu',function(e){e.preventDefault();return false;});
@@ -1620,22 +1695,21 @@ document.addEventListener("click", () => {
   try{Object.defineProperty(document.body,'contentEditable',{get:function(){return'false';},set:function(){},configurable:false});}catch(e){}
   try{Object.defineProperty(document,'designMode',{get:function(){return'off';},set:function(){},configurable:false});}catch(e){}
 })();
+</script>
 
+<!-- Work filters, lightbox, form, smooth scroll -->
+<script>
 function filterWork(cat, btn) {
   document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
   document.querySelectorAll('.work-card').forEach(function(card){
-    if(cat === 'all' || card.dataset.category === cat){
-      card.style.display = '';
-    } else {
-      card.style.display = 'none';
-    }
+    card.style.display = (cat === 'all' || card.dataset.category === cat) ? '' : 'none';
   });
 }
 
 function openLightbox(card) {
   var img = card.querySelector('.work-img img');
-  if(!img) return;
+  if (!img) return;
   var title = card.querySelector('h3').textContent;
   document.getElementById('lightbox-img').src = img.src;
   document.getElementById('lightbox-caption').textContent = title;
@@ -1643,13 +1717,13 @@ function openLightbox(card) {
 }
 
 function closeLightbox(e) {
-  if(e.target === document.getElementById('lightbox')){
+  if (e.target === document.getElementById('lightbox')) {
     document.getElementById('lightbox').classList.remove('open');
   }
 }
 
 document.addEventListener('keydown', function(e){
-  if(e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
+  if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
 });
 
 (function(){
@@ -1694,7 +1768,7 @@ document.addEventListener('keydown', function(e){
   document.querySelectorAll('a[href^="#"]').forEach(function(anchor){
     anchor.addEventListener('click', function(e){
       var target = document.querySelector(this.getAttribute('href'));
-      if(target){
+      if (target) {
         e.preventDefault();
         var top = target.getBoundingClientRect().top + window.scrollY - 80;
         window.scrollTo({ top: top, behavior: 'smooth' });

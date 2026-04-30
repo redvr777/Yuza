@@ -1557,8 +1557,16 @@
 })();
 </script>
 <audio id="bgMusic" loop>
-  <source src="music.mp3" type="audio/mpeg">
+  <source src="https://raw.githubusercontent.com/redvr777/Yuza/384d459800e8aa0055fd26abc863152050e61650/SpotiDownloader.com%20-%20Dinner%20Is%20Not%20Over%20-%20Jack%20Stauber's%20Micropop.mp3" type="audio/mpeg">
 </audio>
+
+<button onclick="playMusic()">Play Music</button>
+
+<script>
+function playMusic() {
+  document.getElementById("bgMusic").play();
+}
+</script>
 
 <script>
 document.addEventListener("click", () => {

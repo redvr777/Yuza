@@ -29,6 +29,8 @@
     --accent-glow: rgba(176,111,255,0.18);
     --white: #ffffff;
     --card-r: 4px;
+    --coffee: #FFDD00;
+    --coffee-dark: #e6c800;
   }
 
   html { scroll-behavior: smooth; }
@@ -91,6 +93,7 @@
     display: flex;
     gap: 32px;
     list-style: none;
+    align-items: center;
   }
 
   .nav-links a {
@@ -118,6 +121,68 @@
   }
 
   .nav-cta:hover { background: var(--accent2) !important; color: #05020d !important; }
+
+  /* ── Buy Me a Coffee – nav button ── */
+  .nav-bmac {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--coffee) !important;
+    color: #1a1000 !important;
+    padding: 7px 14px !important;
+    border-radius: 2px !important;
+    font-family: 'Press Start 2P', monospace !important;
+    font-size: 9px !important;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    transition: background 0.15s, transform 0.1s !important;
+    box-shadow: 3px 3px 0 #a08800;
+    white-space: nowrap;
+  }
+  .nav-bmac:hover {
+    background: var(--coffee-dark) !important;
+    color: #1a1000 !important;
+    transform: translate(-1px,-1px) !important;
+    box-shadow: 4px 4px 0 #a08800 !important;
+  }
+  .nav-bmac:active { transform: translate(1px,1px) !important; box-shadow: 1px 1px 0 #a08800 !important; }
+  .nav-bmac .bmac-icon { font-size: 14px; line-height: 1; }
+
+  /* ── Buy Me a Coffee – floating button ── */
+  .bmac-float {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 200;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    background: var(--coffee);
+    color: #1a1000;
+    padding: 12px 18px;
+    border-radius: 2px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    box-shadow: 4px 4px 0 #a08800, 0 0 24px rgba(255,221,0,0.2);
+    transition: background 0.15s, transform 0.1s, box-shadow 0.1s;
+    animation: bmac-bob 3s ease-in-out infinite;
+    cursor: pointer;
+  }
+  .bmac-float:hover {
+    background: var(--coffee-dark);
+    transform: translate(-2px,-2px);
+    box-shadow: 6px 6px 0 #a08800, 0 0 32px rgba(255,221,0,0.3);
+    animation: none;
+  }
+  .bmac-float:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 #a08800; }
+  .bmac-float .bmac-icon { font-size: 18px; line-height: 1; }
+
+  @keyframes bmac-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
 
   .hero {
     min-height: 100vh;
@@ -598,6 +663,8 @@
     footer { flex-direction: column; gap: 12px; text-align: center; }
     .step:not(:last-child)::after { display: none; }
     #how { padding: 72px 24px; }
+    .bmac-float { bottom: 16px; right: 16px; padding: 10px 14px; font-size: 9px; }
+    .bmac-float .bmac-icon { font-size: 15px; }
   }
 </style>
 </head>
@@ -609,9 +676,15 @@
     <li><a href="#services">Services</a></li>
     <li><a href="#how">How it works</a></li>
     <li><a href="#request">Request work</a></li>
+    <li><a href="https://www.buymeacoffee.com/yuza" target="_blank" rel="noopener noreferrer" class="nav-bmac"><span class="bmac-icon">☕</span>Buy me a coffee</a></li>
     <li><a href="#request" class="nav-cta">Get a quote</a></li>
   </ul>
 </nav>
+
+<!-- Floating BMAC button -->
+<a href="https://www.buymeacoffee.com/yuza" target="_blank" rel="noopener noreferrer" class="bmac-float">
+  <span class="bmac-icon">☕</span>Buy me a coffee
+</a>
 
 <div style="max-width:1100px;margin:0 auto;">
 <section class="hero" id="home">

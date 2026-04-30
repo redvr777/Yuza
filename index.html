@@ -31,6 +31,8 @@
     --card-r: 4px;
     --coffee: #FFDD00;
     --coffee-dark: #e6c800;
+    --cashapp: #00D54B;
+    --cashapp-dark: #00b83f;
   }
 
   html { scroll-behavior: smooth; }
@@ -475,6 +477,79 @@
     line-height: 1.55;
   }
 
+  /* Payment methods section */
+  #payment { background: var(--bg); }
+
+  .payment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .payment-card {
+    border: 2px solid var(--border2);
+    border-radius: var(--card-r);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .payment-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .payment-card.cashapp { background: rgba(0,213,75,0.05); }
+  .payment-card.cashapp::before { background: var(--cashapp); }
+  .payment-card.cashapp:hover { transform: translate(-2px,-2px); box-shadow: 4px 4px 0 var(--cashapp); }
+
+  .payment-card.bmac { background: rgba(255,221,0,0.05); }
+  .payment-card.bmac::before { background: var(--coffee); }
+  .payment-card.bmac:hover { transform: translate(-2px,-2px); box-shadow: 4px 4px 0 #a08800; }
+
+  .payment-icon {
+    font-size: 32px;
+    line-height: 1;
+  }
+
+  .payment-card h3 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .payment-card.cashapp h3 { color: var(--cashapp); text-shadow: 0 0 10px rgba(0,213,75,0.4); }
+  .payment-card.bmac h3 { color: var(--coffee); text-shadow: 0 0 10px rgba(255,221,0,0.4); }
+
+  .payment-card p {
+    font-size: 17px;
+    color: var(--muted);
+    font-family: 'VT323', monospace;
+    line-height: 1.55;
+  }
+
+  .payment-only-note {
+    margin-top: 24px;
+    padding: 16px 20px;
+    background: rgba(176,111,255,0.06);
+    border: 1px solid var(--border2);
+    border-radius: 2px;
+    font-family: 'VT323', monospace;
+    font-size: 17px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .payment-only-note strong { color: var(--accent); font-weight: 400; }
+
   .form-wrap {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -568,6 +643,26 @@
     border-radius: 2px;
     border: 1px solid var(--border2);
     line-height: 1.55;
+  }
+
+  .form-note .cashapp-pill {
+    display: inline-block;
+    background: rgba(0,213,75,0.12);
+    color: var(--cashapp);
+    border: 1px solid rgba(0,213,75,0.3);
+    padding: 1px 8px;
+    border-radius: 2px;
+    font-size: 14px;
+  }
+
+  .form-note .bmac-pill {
+    display: inline-block;
+    background: rgba(255,221,0,0.10);
+    color: var(--coffee);
+    border: 1px solid rgba(255,221,0,0.3);
+    padding: 1px 8px;
+    border-radius: 2px;
+    font-size: 14px;
   }
 
   .submit-btn {
@@ -674,6 +769,7 @@
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#how">How it works</a></li>
+    <li><a href="#payment">Payment</a></li>
     <li><a href="#request">Request work</a></li>
     <li><a href="https://buymeacoffee.com/cbsgames" target="_blank" rel="noopener noreferrer" class="nav-bmac"><span class="bmac-icon">☕</span>Buy me a coffee</a></li>
     <li><a href="#request" class="nav-cta">Get a quote</a></li>
@@ -800,13 +896,39 @@
     <div class="step" style="padding-left:32px;">
       <div class="step-num">03</div>
       <h3>We agree on terms</h3>
-      <p>Once you're happy with the quote, we sort out payment and I get started on your project.</p>
+      <p>Once you're happy with the quote, we sort out payment via CashApp or BuyMeACoffee and I get started on your project.</p>
     </div>
     <div class="step" style="padding-left:32px; padding-right:0;">
       <div class="step-num">04</div>
       <h3>Delivery</h3>
       <p>I deliver the work, you review it, and we handle revisions until you're satisfied.</p>
     </div>
+  </div>
+</div>
+</div>
+
+<!-- Payment Methods Section -->
+<div style="background: var(--bg2); border-top: 2px solid var(--border2); border-bottom: 2px solid var(--border2); max-width: 100%; padding: 96px 48px;">
+<div id="payment" style="max-width:1100px;margin:0 auto;">
+  <p class="section-label">How you pay</p>
+  <h2>Payment Methods</h2>
+  <p class="section-sub">I only accept payment through the two platforms below — no exceptions. Payment is handled after we agree on a quote.</p>
+
+  <div class="payment-grid">
+    <div class="payment-card cashapp">
+      <div class="payment-icon">💸</div>
+      <h3>CashApp</h3>
+      <p>Send payment directly via CashApp once we've agreed on a price. Fast, simple, and no fees on your end.</p>
+    </div>
+    <div class="payment-card bmac">
+      <div class="payment-icon">☕</div>
+      <h3>BuyMeACoffee</h3>
+      <p>Pay through BuyMeACoffee — great if you want to support the work or prefer that platform for transactions.</p>
+    </div>
+  </div>
+
+  <div class="payment-only-note">
+    ⚠ <strong>Note:</strong> These are the <strong>only</strong> two payment methods accepted. No PayPal, Venmo, crypto, bank transfer, or other platforms. Payment is only due after you've reviewed and approved the quote — never upfront.
   </div>
 </div>
 </div>
@@ -825,6 +947,10 @@
       <div class="contact-detail">
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
         <div><strong>Pricing</strong><br>Custom quote per project</div>
+      </div>
+      <div class="contact-detail">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M9 12l2 2 4-4"/></svg>
+        <div><strong>Payment</strong><br>CashApp or BuyMeACoffee only</div>
       </div>
       <div class="contact-detail">
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M9 12l2 2 4-4"/></svg>
@@ -874,7 +1000,7 @@
         </div>
 
         <div class="form-note">
-          i Submitting this form sends an email to Yuza. There's <strong>no payment required now</strong> — pricing is agreed after reviewing your request.
+          i Submitting this form sends an email to Yuza. There's <strong>no payment required now</strong> — pricing is agreed after reviewing your request. Payment is accepted via <span class="cashapp-pill">💸 CashApp</span> or <span class="bmac-pill">☕ BuyMeACoffee</span> only.
         </div>
 
         <button type="submit" class="submit-btn">Send request</button>

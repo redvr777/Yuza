@@ -1508,13 +1508,8 @@
   <p>© 2026 Yuza. All rights reserved.</p>
 </footer>
 
-</div><!-- end .page-content -->
+</div>
 
-<!-- ════════════════════════════════════
-     SCRIPTS
-════════════════════════════════════ -->
-
-<!-- Animated background canvas -->
 <script>
 (function(){
   var canvas = document.getElementById('bg-canvas');
@@ -1638,7 +1633,7 @@
 })();
 </script>
 
-<!-- Music player -->
+
 <script>
 (function(){
   var music = document.getElementById('bgMusic');
@@ -1658,14 +1653,13 @@
     music.volume = parseFloat(v);
   };
 
-  // Auto-start on first user interaction (browser autoplay policy)
   document.addEventListener('click', function() {
     music.play().then(function(){ btn.textContent = '⏸'; }).catch(function(){});
   }, { once: true });
 })();
 </script>
 
-<!-- Anti-devtools / security -->
+
 <script>
 (function(){
   document.addEventListener('contextmenu',function(e){e.preventDefault();return false;});
@@ -1696,7 +1690,7 @@
 })();
 </script>
 
-<!-- Work filters, lightbox, form, smooth scroll -->
+
 <script>
 function filterWork(cat, btn) {
   document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });

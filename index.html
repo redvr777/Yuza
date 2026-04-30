@@ -450,6 +450,176 @@
     letter-spacing: 0.05em;
   }
 
+  /* ===== MY WORK SECTION ===== */
+  #work {
+    background: var(--bg2);
+    border-top: 2px solid var(--border2);
+    border-bottom: 2px solid var(--border2);
+    max-width: 100%;
+    padding: 96px 48px;
+  }
+
+  #work-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .work-filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .filter-btn {
+    background: transparent;
+    border: 2px solid var(--border2);
+    color: var(--muted);
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    padding: 6px 16px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.05em;
+  }
+
+  .filter-btn:hover,
+  .filter-btn.active {
+    background: rgba(176,111,255,0.1);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+
+  .work-card {
+    background: var(--bg);
+    border: 2px solid var(--border2);
+    border-radius: var(--card-r);
+    overflow: hidden;
+    transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .work-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 5px 5px 0 var(--accent2);
+    border-color: var(--accent);
+  }
+
+  /* The image container — swap the placeholder div for a real <img> */
+  .work-img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--bg3);
+    border-bottom: 2px solid var(--border2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* This placeholder disappears once you put a real image inside */
+  .work-img-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--border2);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    letter-spacing: 0.05em;
+    text-align: center;
+    padding: 16px;
+  }
+
+  .work-img-placeholder .ph-icon {
+    font-size: 32px;
+    opacity: 0.4;
+  }
+
+  /* Real images inside .work-img */
+  .work-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    image-rendering: auto; /* override pixelated for photos */
+    transition: transform 0.3s;
+  }
+
+  .work-card:hover .work-img img {
+    transform: scale(1.04);
+  }
+
+  /* Overlay that appears on hover */
+  .work-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(5,2,13,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .work-card:hover .work-overlay {
+    opacity: 1;
+  }
+
+  .work-overlay-text {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    text-shadow: 0 0 12px var(--accent);
+    letter-spacing: 1px;
+  }
+
+  .work-meta {
+    padding: 20px 22px 22px;
+  }
+
+  .work-category {
+    font-family: 'VT323', monospace;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .work-card h3 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .work-card p {
+    font-family: 'VT323', monospace;
+    font-size: 17px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .work-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 14px;
+  }
+  /* ===== END MY WORK SECTION ===== */
+
   #how { background: var(--bg2); border-top: 2px solid var(--border2); border-bottom: 2px solid var(--border2); max-width: 100%; padding: 96px 48px; }
   #how-inner { max-width: 1100px; margin: 0 auto; }
 
@@ -770,6 +940,56 @@
     background: var(--border);
   }
 
+  /* Lightbox */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    background: rgba(5,2,13,0.92);
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+  }
+
+  .lightbox.open { display: flex; }
+
+  .lightbox-inner {
+    max-width: 880px;
+    width: 90%;
+    position: relative;
+  }
+
+  .lightbox-inner img {
+    width: 100%;
+    display: block;
+    border: 2px solid var(--border2);
+    border-radius: var(--card-r);
+    image-rendering: auto;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    cursor: pointer;
+    background: none;
+    border: none;
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px var(--accent);
+  }
+
+  .lightbox-caption {
+    margin-top: 16px;
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    color: var(--muted);
+    text-align: center;
+  }
+
   @media (max-width: 768px) {
     nav { padding: 0 24px; }
     .nav-links { display: none; }
@@ -783,6 +1003,8 @@
     #how { padding: 72px 24px; }
     .bmac-float { bottom: 16px; right: 16px; padding: 10px 14px; font-size: 9px; }
     .bmac-float .bmac-icon { font-size: 15px; }
+    #work { padding: 72px 24px; }
+    .work-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -792,6 +1014,7 @@
   <a href="#" class="nav-logo">yuza<span>.</span></a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
+    <li><a href="#work">My Work</a></li>
     <li><a href="#how">How it works</a></li>
     <li><a href="#payment">Payment</a></li>
     <li><a href="#request">Request work</a></li>
@@ -804,6 +1027,15 @@
 <a href="https://www.buymeacoffee.com/yuza" target="_blank" rel="noopener noreferrer" class="bmac-float">
   <span class="bmac-icon">☕</span>Buy me a coffee
 </a>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" onclick="document.getElementById('lightbox').classList.remove('open')">[ CLOSE ]</button>
+    <img id="lightbox-img" src="" alt="">
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+</div>
 
 <div style="max-width:1100px;margin:0 auto;">
 <section class="hero" id="home">
@@ -899,6 +1131,129 @@
     </div>
   </div>
 </section>
+
+<div class="sep"></div>
+
+<!-- ===== MY WORK SECTION ===== -->
+<!--
+  HOW TO ADD YOUR PHOTOS:
+  1. In your project folder, create a folder called: images/
+  2. Drop your screenshots/photos into that folder
+  3. In each .work-img div below, replace the placeholder div with:
+       <img src="./images/YOUR-FILE-NAME.jpg" alt="short description">
+  4. Update the title, category, description, and tags for each card
+  5. git add images/ index.html  →  git commit -m "Add portfolio images"  →  git push
+-->
+<div id="work">
+<div id="work-inner">
+  <p class="section-label">Past projects</p>
+  <h2>My Work</h2>
+  <p class="section-sub">A selection of things I've built — games, scripts, models, and sites.</p>
+
+  <div class="work-filters">
+    <button class="filter-btn active" onclick="filterWork('all', this)">All</button>
+    <button class="filter-btn" onclick="filterWork('unity', this)">Unity</button>
+    <button class="filter-btn" onclick="filterWork('scripting', this)">Scripting</button>
+    <button class="filter-btn" onclick="filterWork('modeling', this)">3D Models</button>
+    <button class="filter-btn" onclick="filterWork('web', this)">Web</button>
+  </div>
+
+  <div class="work-grid" id="workGrid">
+
+    <!-- CARD 1 — Replace placeholder with your image -->
+    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+      <div class="work-img">
+        <!-- REPLACE THIS with: <img src="./images/your-screenshot.jpg" alt="Project name"> -->
+        <div class="work-img-placeholder">
+          <span class="ph-icon">🖼️</span>
+          Add your image here<br>(see HTML comments)
+        </div>
+        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+      </div>
+      <div class="work-meta">
+        <div class="work-category">Unity Development</div>
+        <h3>Project Title Here</h3>
+        <p>Short description of what you built, what systems were involved, and what makes it cool.</p>
+        <div class="work-tags">
+          <span class="tag">Unity</span>
+          <span class="tag">C#</span>
+          <span class="tag">Gameplay</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="work-card" data-category="modeling" onclick="openLightbox(this)">
+      <div class="work-img">
+        <!-- REPLACE THIS with: <img src="./images/model-render.jpg" alt="Model name"> -->
+        <div class="work-img-placeholder">
+          <span class="ph-icon">🧊</span>
+          Add your image here<br>(see HTML comments)
+        </div>
+        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+      </div>
+      <div class="work-meta">
+        <div class="work-category">3D Modeling</div>
+        <h3>Model Title Here</h3>
+        <p>Brief description — polycount, style, what it's used for in the game.</p>
+        <div class="work-tags">
+          <span class="tag">3D</span>
+          <span class="tag">Character</span>
+          <span class="tag">Unity-ready</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="work-card" data-category="scripting" onclick="openLightbox(this)">
+      <div class="work-img">
+        <!-- REPLACE THIS with: <img src="./images/script-screenshot.jpg" alt="Script name"> -->
+        <div class="work-img-placeholder">
+          <span class="ph-icon">📜</span>
+          Add your image here<br>(see HTML comments)
+        </div>
+        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+      </div>
+      <div class="work-meta">
+        <div class="work-category">C# Scripting</div>
+        <h3>Script / System Title</h3>
+        <p>What does this script do? What problem does it solve? How complex is it?</p>
+        <div class="work-tags">
+          <span class="tag">C#</span>
+          <span class="tag">AI</span>
+          <span class="tag">Save system</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 4 -->
+    <div class="work-card" data-category="web" onclick="openLightbox(this)">
+      <div class="work-img">
+        <!-- REPLACE THIS with: <img src="./images/site-screenshot.jpg" alt="Site name"> -->
+        <div class="work-img-placeholder">
+          <span class="ph-icon">🌐</span>
+          Add your image here<br>(see HTML comments)
+        </div>
+        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+      </div>
+      <div class="work-meta">
+        <div class="work-category">Web Development</div>
+        <h3>Website Title Here</h3>
+        <p>What was this site for? What features did it have? Who was the client?</p>
+        <div class="work-tags">
+          <span class="tag">HTML/CSS</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">Landing page</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add more cards by copying one of the blocks above -->
+
+  </div>
+</div>
+</div>
+<!-- ===== END MY WORK SECTION ===== -->
 
 <div id="how">
 <div id="how-inner">
@@ -1082,6 +1437,39 @@
   try{Object.defineProperty(document.body,'contentEditable',{get:function(){return'false';},set:function(){},configurable:false});}catch(e){}
   try{Object.defineProperty(document,'designMode',{get:function(){return'off';},set:function(){},configurable:false});}catch(e){}
 })();
+
+// Work section filter
+function filterWork(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  document.querySelectorAll('.work-card').forEach(function(card){
+    if(cat === 'all' || card.dataset.category === cat){
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// Lightbox
+function openLightbox(card) {
+  var img = card.querySelector('.work-img img');
+  if(!img) return; // no image yet — placeholder, do nothing
+  var title = card.querySelector('h3').textContent;
+  document.getElementById('lightbox-img').src = img.src;
+  document.getElementById('lightbox-caption').textContent = title;
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function closeLightbox(e) {
+  if(e.target === document.getElementById('lightbox')){
+    document.getElementById('lightbox').classList.remove('open');
+  }
+}
+
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
+});
 
 (function(){
   var _f = document.getElementById('requestForm');

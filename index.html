@@ -1556,7 +1556,15 @@
   draw();
 })();
 </script>
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
 
+<script>
+document.addEventListener("click", () => {
+  document.getElementById("bgMusic").play();
+}, { once: true });
+</script>
 <script>
 (function(){
   document.addEventListener('contextmenu',function(e){e.preventDefault();return false;});

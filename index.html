@@ -33,6 +33,9 @@
     --coffee-dark: #e6c800;
     --cashapp: #00D54B;
     --cashapp-dark: #00b83f;
+    --live: #00ff88;
+    --live-dark: #00cc6e;
+    --live-glow: rgba(0,255,136,0.18);
   }
 
   html { scroll-behavior: smooth; }
@@ -343,6 +346,11 @@
     50% { opacity: 0.3; }
   }
 
+  @keyframes live-pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--live); }
+    50% { opacity: 0.5; box-shadow: 0 0 14px var(--live); }
+  }
+
   h1 {
     font-family: 'Press Start 2P', monospace;
     font-size: clamp(22px, 3.5vw, 46px);
@@ -540,6 +548,179 @@
     border: 1px solid var(--border2);
     font-family: 'VT323', monospace;
     letter-spacing: 0.05em;
+  }
+
+  #released {
+    background: rgba(0,10,5,0.92);
+    border-top: 2px solid rgba(0,255,136,0.25);
+    border-bottom: 2px solid rgba(0,255,136,0.25);
+    max-width: 100%;
+    padding: 96px 48px;
+  }
+
+  #released-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  #released .section-label {
+    color: var(--live);
+  }
+
+  #released h2 {
+    text-shadow: 0 0 20px rgba(0,255,136,0.3);
+  }
+
+  .released-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+  }
+
+  .released-card {
+    background: var(--bg);
+    border: 2px solid rgba(0,255,136,0.2);
+    border-radius: var(--card-r);
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+    position: relative;
+    transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+    cursor: pointer;
+  }
+
+  .released-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 5px 5px 0 var(--live-dark);
+    border-color: var(--live);
+  }
+
+  .released-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--live);
+    box-shadow: 0 0 12px var(--live);
+    z-index: 2;
+  }
+
+  .released-img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--bg3);
+    border-bottom: 2px solid rgba(0,255,136,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .released-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    image-rendering: auto;
+    transition: transform 0.3s;
+  }
+
+  .released-card:hover .released-img img {
+    transform: scale(1.04);
+  }
+
+  .released-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,10,5,0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+    gap: 10px;
+    flex-direction: column;
+  }
+
+  .released-card:hover .released-overlay {
+    opacity: 1;
+  }
+
+  .released-overlay-text {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: var(--live);
+    text-shadow: 0 0 12px var(--live);
+    letter-spacing: 1px;
+  }
+
+  .released-overlay-sub {
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    color: rgba(0,255,136,0.7);
+    letter-spacing: 0.08em;
+  }
+
+  .released-meta {
+    padding: 20px 22px 24px;
+  }
+
+  .released-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0,255,136,0.08);
+    border: 1px solid rgba(0,255,136,0.3);
+    color: var(--live);
+    font-family: 'VT323', monospace;
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin-bottom: 12px;
+  }
+
+  .released-badge::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: var(--live);
+    border-radius: 0;
+    animation: live-pulse 1.8s ease-in-out infinite;
+  }
+
+  .released-card h3 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .released-card p {
+    font-family: 'VT323', monospace;
+    font-size: 17px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+
+  .released-platform {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    padding: 5px 10px;
+    border: 1px solid var(--border2);
+    border-radius: 2px;
+    background: rgba(160,100,255,0.05);
   }
 
   #work {
@@ -1094,6 +1275,8 @@
     .bmac-float .bmac-icon { font-size: 15px; }
     #work { padding: 72px 24px; }
     .work-grid { grid-template-columns: 1fr; }
+    #released { padding: 72px 24px; }
+    .released-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -1105,6 +1288,7 @@
   <a href="#" class="nav-logo">yuza<span>.</span></a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
+    <li><a href="#released">Released</a></li>
     <li><a href="#work">My Work</a></li>
     <li><a href="#how">How it works</a></li>
     <li><a href="#payment">Payment</a></li>
@@ -1115,11 +1299,9 @@
   </ul>
 </nav>
 
-
 <a href="https://buymeacoffee.com/cbsgames" target="_blank" rel="noopener noreferrer" class="bmac-float">
   <span class="bmac-icon">☕</span>Buy me a coffee
 </a>
-
 
 <div id="musicPlayer">
   <button id="playPauseBtn" onclick="toggleMusic()" title="Play / Pause">▶</button>
@@ -1246,6 +1428,50 @@
 
 <div class="sep"></div>
 
+<div id="released">
+<div id="released-inner">
+  <p class="section-label">Live on Meta Quest</p>
+  <h2>Released Games</h2>
+  <p class="section-sub" style="color:var(--muted);">Games I've built that are out in the wild and playable right now. Click any to view on Meta.</p>
+
+  <div class="released-grid">
+
+    <a href="https://www.meta.com/en-gb/experiences/affinity/33514428664838971/" target="_blank" rel="noopener noreferrer" class="released-card">
+      <div class="released-img">
+        <img src="https://github.com/redvr777/Yuza/blob/main/Screenshot%202026-04-30%20011311.png?raw=true" alt="Affinity">
+        <div class="released-overlay">
+          <span class="released-overlay-text">[ VIEW ON META ]</span>
+          <span class="released-overlay-sub">meta.com/experiences</span>
+        </div>
+      </div>
+      <div class="released-meta">
+        <div class="released-badge">LIVE NOW</div>
+        <h3>Affinity</h3>
+        <p>My game — countless hours poured into making it better. Available now on Meta Quest.</p>
+        <div class="released-platform">🥽 Meta Quest</div>
+      </div>
+    </a>
+
+    <a href="https://www.meta.com/en-gb/experiences/monkaroon/26094581960137109/" target="_blank" rel="noopener noreferrer" class="released-card">
+      <div class="released-img">
+        <img src="https://raw.githubusercontent.com/redvr777/Yuza/18f8fe59008d910c6c65d414be6319a553c4c23a/4748d2b99296a548716e03ced2af1e68.jpg" alt="Monkaroon">
+        <div class="released-overlay">
+          <span class="released-overlay-text">[ VIEW ON META ]</span>
+          <span class="released-overlay-sub">meta.com/experiences</span>
+        </div>
+      </div>
+      <div class="released-meta">
+        <div class="released-badge">LIVE NOW</div>
+        <h3>Monkaroon</h3>
+        <p>A gorilla tag fan game with Tag, Crown Tag, Bazooka PVP, and Casual. I'm a developer and wrote many of the core scripts.</p>
+        <div class="released-platform">🥽 Meta Quest</div>
+      </div>
+    </a>
+
+  </div>
+</div>
+</div>
+
 <div id="work">
 <div id="work-inner">
   <p class="section-label">Things I have made or worked on</p>
@@ -1352,7 +1578,7 @@
       </div>
     </div>
 
-       <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
       <div class="work-img">
         <img src="https://raw.githubusercontent.com/redvr777/Yuza/b314dbd2fafd9cefad1ead5dda54ad77d2015e2e/b76b219885e018c9a66a031100d481d1.jpg" alt="Project Image">
         <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
@@ -1367,7 +1593,7 @@
       </div>
     </div>
 
-       <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
       <div class="work-img">
         <img src="https://raw.githubusercontent.com/redvr777/Yuza/18f8fe59008d910c6c65d414be6319a553c4c23a/4748d2b99296a548716e03ced2af1e68.jpg" alt="Project Image">
         <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
@@ -1382,7 +1608,7 @@
       </div>
     </div>
 
-        <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
       <div class="work-img">
         <img src="https://raw.githubusercontent.com/redvr777/Yuza/e1365d11b19360f0ff36b689878c30a1a04b6802/image.png" alt="Project Image">
         <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
@@ -1397,7 +1623,7 @@
       </div>
     </div>
 
-           <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
       <div class="work-img">
         <img src="https://raw.githubusercontent.com/redvr777/Yuza/7911264aa37190e346ae567a1249ed0834294f09/Screenshot%202026-05-01%20022004.png" alt="Project Image">
         <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
@@ -1411,7 +1637,7 @@
         </div>
       </div>
     </div>
-   
+
     <div class="work-card" data-category="scripting" onclick="openLightbox(this)">
       <div class="work-img">
         <img src="https://raw.githubusercontent.com/redvr777/Yuza/e0923695c2477898271d7452ac59672f90c05a7b/qr-code%20(1).png" alt="QR Code">
@@ -1708,7 +1934,6 @@
 })();
 </script>
 
-
 <script>
 (function(){
   var music = document.getElementById('bgMusic');
@@ -1733,7 +1958,6 @@
   }, { once: true });
 })();
 </script>
-
 
 <script>
 (function(){
@@ -1764,7 +1988,6 @@
   try{Object.defineProperty(document,'designMode',{get:function(){return'off';},set:function(){},configurable:false});}catch(e){}
 })();
 </script>
-
 
 <script>
 function filterWork(cat, btn) {

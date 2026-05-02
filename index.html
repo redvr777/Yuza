@@ -847,6 +847,8 @@
     justify-content: center;
     opacity: 0;
     transition: opacity 0.2s;
+    flex-direction: column;
+    gap: 8px;
   }
 
   .work-card:hover .work-overlay {
@@ -859,6 +861,13 @@
     color: var(--accent);
     text-shadow: 0 0 12px var(--accent);
     letter-spacing: 1px;
+  }
+
+  .work-overlay-count {
+    font-family: 'VT323', monospace;
+    font-size: 15px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
   }
 
   .work-meta {
@@ -1216,58 +1225,164 @@
     background: var(--border);
   }
 
+  /* ── GALLERY LIGHTBOX ── */
   .lightbox {
     display: none;
     position: fixed;
     inset: 0;
     z-index: 500;
-    background: rgba(5,2,13,0.92);
+    background: rgba(5,2,13,0.96);
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(12px);
   }
 
   .lightbox.open { display: flex; }
 
   .lightbox-inner {
-    max-width: 880px;
-    width: 90%;
+    max-width: 940px;
+    width: 94%;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
   }
 
-  .lightbox-inner img {
+  .lightbox-topbar {
     width: 100%;
-    display: block;
-    border: 2px solid var(--border2);
-    border-radius: var(--card-r);
-    image-rendering: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .lightbox-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    text-shadow: 0 0 8px var(--accent);
+    letter-spacing: 1px;
   }
 
   .lightbox-close {
-    position: absolute;
-    top: -40px;
-    right: 0;
     font-family: 'Press Start 2P', monospace;
-    font-size: 12px;
-    color: var(--accent);
+    font-size: 10px;
+    color: var(--muted);
     cursor: pointer;
-    background: none;
-    border: none;
+    background: rgba(176,111,255,0.08);
+    border: 2px solid var(--border2);
+    border-radius: 2px;
+    padding: 6px 12px;
     letter-spacing: 1px;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+  .lightbox-close:hover { color: var(--accent); border-color: var(--accent); background: rgba(176,111,255,0.15); }
+
+  .lightbox-stage {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox-img-wrap {
+    width: 100%;
+    border: 2px solid var(--border2);
+    border-radius: var(--card-r);
+    overflow: hidden;
+    background: var(--bg3);
+    position: relative;
+  }
+
+  .lightbox-img-wrap img {
+    width: 100%;
+    max-height: 68vh;
+    object-fit: contain;
+    display: block;
+    image-rendering: auto;
+    transition: opacity 0.18s;
+  }
+
+  .lightbox-img-wrap img.fading { opacity: 0; }
+
+  .lb-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(5,2,13,0.82);
+    border: 2px solid var(--border2);
+    border-radius: 2px;
+    color: var(--accent);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    width: 42px;
+    height: 52px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, border-color 0.15s, transform 0.1s;
+    z-index: 2;
     text-shadow: 0 0 8px var(--accent);
+    flex-shrink: 0;
+  }
+  .lb-arrow:hover { background: rgba(176,111,255,0.18); border-color: var(--accent); }
+  .lb-arrow:active { transform: translateY(-50%) scale(0.93); }
+  .lb-arrow.lb-prev { left: -54px; }
+  .lb-arrow.lb-next { right: -54px; }
+  .lb-arrow.lb-hidden { opacity: 0; pointer-events: none; }
+
+  .lightbox-footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 14px;
+    gap: 16px;
   }
 
   .lightbox-caption {
-    margin-top: 16px;
     font-family: 'VT323', monospace;
     font-size: 18px;
     color: var(--muted);
-    text-align: center;
+    flex: 1;
   }
 
-  .page-content {
-    position: relative;
-    z-index: 1;
+  .lightbox-counter {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    white-space: nowrap;
+    text-shadow: 0 0 6px var(--accent);
+  }
+
+  .lightbox-dots {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+  }
+
+  .lb-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 0;
+    background: var(--border2);
+    border: 1px solid var(--border2);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    flex-shrink: 0;
+  }
+  .lb-dot.active { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 6px var(--accent); }
+  .lb-dot:hover:not(.active) { background: rgba(176,111,255,0.4); }
+
+  @media (max-width: 768px) {
+    .lb-arrow.lb-prev { left: -2px; }
+    .lb-arrow.lb-next { right: -2px; }
+    .lb-arrow { width: 34px; height: 42px; font-size: 11px; }
+    .lightbox-inner { width: 98%; }
   }
 
   #devapply {
@@ -1552,11 +1667,25 @@
   <source src="https://raw.githubusercontent.com/redvr777/Yuza/67930de687f2729d2ed1f2cc7168189f8660b57a/liminal%20spaces%20__%20dark%20ambient%20music%20mix%204%20(1).mp3" type="audio/mpeg">
 </audio>
 
-<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+<!-- ── GALLERY LIGHTBOX ── -->
+<div class="lightbox" id="lightbox">
   <div class="lightbox-inner">
-    <button class="lightbox-close" onclick="document.getElementById('lightbox').classList.remove('open')">[ CLOSE ]</button>
-    <img id="lightbox-img" src="" alt="">
-    <div class="lightbox-caption" id="lightbox-caption"></div>
+    <div class="lightbox-topbar">
+      <span class="lightbox-title" id="lbTitle"></span>
+      <button class="lightbox-close" id="lbClose">[ CLOSE ]</button>
+    </div>
+    <div class="lightbox-stage">
+      <button class="lb-arrow lb-prev lb-hidden" id="lbPrev">&#9664;</button>
+      <div class="lightbox-img-wrap">
+        <img id="lightbox-img" src="" alt="">
+      </div>
+      <button class="lb-arrow lb-next lb-hidden" id="lbNext">&#9654;</button>
+    </div>
+    <div class="lightbox-footer">
+      <span class="lightbox-caption" id="lightbox-caption"></span>
+      <div class="lightbox-dots" id="lbDots"></div>
+      <span class="lightbox-counter" id="lbCounter"></span>
+    </div>
   </div>
 </div>
 
@@ -1717,12 +1846,17 @@
     <button class="filter-btn" onclick="filterWork('web', this)">Web</button>
   </div>
 
+
   <div class="work-grid" id="workGrid">
 
-    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+    <div class="work-card" data-category="unity"
+      data-images='["https://github.com/redvr777/Yuza/blob/main/Screenshot%202026-04-30%20011311.png?raw=true","https://github.com/redvr777/Yuza/blob/55b819f14145e00305a19895e9193e93ef7219ef/Screenshot%202026-05-02%20162544.png?raw=true","https://github.com/redvr777/Yuza/blob/55b819f14145e00305a19895e9193e93ef7219ef/Screenshot%202026-05-02%20163944.png?raw=true,"https://github.com/redvr777/Yuza/blob/55b819f14145e00305a19895e9193e93ef7219ef/Screenshot%202026-05-02%20163951.png?raw=true","https://github.com/redvr777/Yuza/blob/55b819f14145e00305a19895e9193e93ef7219ef/Screenshot%202026-05-02%20163959.png?raw=true","https://github.com/redvr777/Yuza/blob/55b819f14145e00305a19895e9193e93ef7219ef/Screenshot%202026-05-02%20164008.png?raw=true","https://github.com/redvr777/Yuza/blob/55b819f14145e00305a19895e9193e93ef7219ef/Screenshot%202026-05-02%20164015.png?raw=true"]'>
       <div class="work-img">
-        <img src="https://github.com/redvr777/Yuza/blob/main/Screenshot%202026-04-30%20011311.png?raw=true" alt="Project Image">
-        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+        <img src="https://github.com/redvr777/Yuza/blob/main/Screenshot%202026-04-30%20011311.png?raw=true" alt="Affinity">
+        <div class="work-overlay">
+          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
+          <span class="work-overlay-count" id="cnt-affinity"></span>
+        </div>
       </div>
       <div class="work-meta">
         <div class="work-category">Unity Development</div>
@@ -1734,10 +1868,13 @@
       </div>
     </div>
 
-    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+    <div class="work-card" data-category="unity"
+      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/8a7d093e218730dd57b2c70512b4777128b1cde8/Screenshot%202026-04-26%20200551.png"]'>
       <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/8a7d093e218730dd57b2c70512b4777128b1cde8/Screenshot%202026-04-26%20200551.png" alt="Project Image">
-        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+        <img src="https://raw.githubusercontent.com/redvr777/Yuza/8a7d093e218730dd57b2c70512b4777128b1cde8/Screenshot%202026-04-26%20200551.png" alt="SSGT">
+        <div class="work-overlay">
+          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
+        </div>
       </div>
       <div class="work-meta">
         <div class="work-category">Unity Development</div>
@@ -1749,10 +1886,13 @@
       </div>
     </div>
 
-    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+    <div class="work-card" data-category="unity"
+      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/10c79729437d992f65fd2ec80c5d3ca329f7d437/Screenshot%202026-04-30%20014136.png"]'>
       <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/10c79729437d992f65fd2ec80c5d3ca329f7d437/Screenshot%202026-04-30%20014136.png" alt="Project Image">
-        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+        <img src="https://raw.githubusercontent.com/redvr777/Yuza/10c79729437d992f65fd2ec80c5d3ca329f7d437/Screenshot%202026-04-30%20014136.png" alt="Martial Monkey">
+        <div class="work-overlay">
+          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
+        </div>
       </div>
       <div class="work-meta">
         <div class="work-category">Unity Development</div>
@@ -1764,10 +1904,13 @@
       </div>
     </div>
 
-    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+    <div class="work-card" data-category="unity"
+      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/120e02a0ecf455ff589198040d731483a8c93bfb/Screenshot%202026-04-30%20014743.png"]'>
       <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/120e02a0ecf455ff589198040d731483a8c93bfb/Screenshot%202026-04-30%20014743.png" alt="Project Image">
-        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+        <img src="https://raw.githubusercontent.com/redvr777/Yuza/120e02a0ecf455ff589198040d731483a8c93bfb/Screenshot%202026-04-30%20014743.png" alt="Chimp Dead Zone">
+        <div class="work-overlay">
+          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
+        </div>
       </div>
       <div class="work-meta">
         <div class="work-category">Unity Development</div>
@@ -1779,10 +1922,13 @@
       </div>
     </div>
 
-    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+    <div class="work-card" data-category="unity"
+      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/85b4dc1e0c3a3e09dc8ae55dac10bc6fc947272f/Screenshot%202026-04-30%20015613.png"]'>
       <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/85b4dc1e0c3a3e09dc8ae55dac10bc6fc947272f/Screenshot%202026-04-30%20015613.png" alt="Project Image">
-        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+        <img src="https://raw.githubusercontent.com/redvr777/Yuza/85b4dc1e0c3a3e09dc8ae55dac10bc6fc947272f/Screenshot%202026-04-30%20015613.png" alt="MonkeTekV3">
+        <div class="work-overlay">
+          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
+        </div>
       </div>
       <div class="work-meta">
         <div class="work-category">Unity Development</div>
@@ -1794,10 +1940,13 @@
       </div>
     </div>
 
-    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+    <div class="work-card" data-category="unity"
+      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/4a759b919151cb73b9673d377433ac2c178404ea/Untitled139_20260412125653-1.jpg"]'>
       <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/4a759b919151cb73b9673d377433ac2c178404ea/Untitled139_20260412125653-1.jpg" alt="Project Image">
-        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+        <img src="https://raw.githubusercontent.com/redvr777/Yuza/4a759b919151cb73b9673d377433ac2c178404ea/Untitled139_20260412125653-1.jpg" alt="Junk-Yard-Mechs">
+        <div class="work-overlay">
+          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
+        </div>
       </div>
       <div class="work-meta">
         <div class="work-category">Unity Development</div>
@@ -1809,10 +1958,13 @@
       </div>
     </div>
 
-    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+    <div class="work-card" data-category="unity"
+      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/b314dbd2fafd9cefad1ead5dda54ad77d2015e2e/b76b219885e018c9a66a031100d481d1.jpg"]'>
       <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/b314dbd2fafd9cefad1ead5dda54ad77d2015e2e/b76b219885e018c9a66a031100d481d1.jpg" alt="Project Image">
-        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+        <img src="https://raw.githubusercontent.com/redvr777/Yuza/b314dbd2fafd9cefad1ead5dda54ad77d2015e2e/b76b219885e018c9a66a031100d481d1.jpg" alt="The Mighty Mine">
+        <div class="work-overlay">
+          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
+        </div>
       </div>
       <div class="work-meta">
         <div class="work-category">Unity Development</div>
@@ -1824,10 +1976,13 @@
       </div>
     </div>
 
-    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+    <div class="work-card" data-category="unity"
+      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/18f8fe59008d910c6c65d414be6319a553c4c23a/4748d2b99296a548716e03ced2af1e68.jpg"]'>
       <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/18f8fe59008d910c6c65d414be6319a553c4c23a/4748d2b99296a548716e03ced2af1e68.jpg" alt="Project Image">
-        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+        <img src="https://raw.githubusercontent.com/redvr777/Yuza/18f8fe59008d910c6c65d414be6319a553c4c23a/4748d2b99296a548716e03ced2af1e68.jpg" alt="Monkaroon">
+        <div class="work-overlay">
+          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
+        </div>
       </div>
       <div class="work-meta">
         <div class="work-category">Unity Development</div>
@@ -1839,10 +1994,13 @@
       </div>
     </div>
 
-    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+    <div class="work-card" data-category="unity"
+      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/e1365d11b19360f0ff36b689878c30a1a04b6802/image.png"]'>
       <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/e1365d11b19360f0ff36b689878c30a1a04b6802/image.png" alt="Project Image">
-        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+        <img src="https://raw.githubusercontent.com/redvr777/Yuza/e1365d11b19360f0ff36b689878c30a1a04b6802/image.png" alt="Project Skate">
+        <div class="work-overlay">
+          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
+        </div>
       </div>
       <div class="work-meta">
         <div class="work-category">Unity Development</div>
@@ -1854,10 +2012,13 @@
       </div>
     </div>
 
-    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+    <div class="work-card" data-category="unity"
+      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/7911264aa37190e346ae567a1249ed0834294f09/Screenshot%202026-05-01%20022004.png"]'>
       <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/7911264aa37190e346ae567a1249ed0834294f09/Screenshot%202026-05-01%20022004.png" alt="Project Image">
-        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+        <img src="https://raw.githubusercontent.com/redvr777/Yuza/7911264aa37190e346ae567a1249ed0834294f09/Screenshot%202026-05-01%20022004.png" alt="Deep Descent">
+        <div class="work-overlay">
+          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
+        </div>
       </div>
       <div class="work-meta">
         <div class="work-category">Unity Development</div>
@@ -1869,10 +2030,13 @@
       </div>
     </div>
 
-    <div class="work-card" data-category="unity" onclick="openLightbox(this)">
+    <div class="work-card" data-category="unity"
+      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/70b3ea24cebcdcc538e672f62648e160c41d3c80/Screenshot%202026-05-01%20043138.png"]'>
       <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/70b3ea24cebcdcc538e672f62648e160c41d3c80/Screenshot%202026-05-01%20043138.png" alt="Project Image">
-        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+        <img src="https://raw.githubusercontent.com/redvr777/Yuza/70b3ea24cebcdcc538e672f62648e160c41d3c80/Screenshot%202026-05-01%20043138.png" alt="Experimental Chimps">
+        <div class="work-overlay">
+          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
+        </div>
       </div>
       <div class="work-meta">
         <div class="work-category">Unity Development</div>
@@ -1884,10 +2048,13 @@
       </div>
     </div>
 
-    <div class="work-card" data-category="scripting" onclick="openLightbox(this)">
+    <div class="work-card" data-category="scripting"
+      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/e0923695c2477898271d7452ac59672f90c05a7b/qr-code%20(1).png"]'>
       <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/e0923695c2477898271d7452ac59672f90c05a7b/qr-code%20(1).png" alt="QR Code">
-        <div class="work-overlay"><span class="work-overlay-text">[ VIEW ]</span></div>
+        <img src="https://raw.githubusercontent.com/redvr777/Yuza/e0923695c2477898271d7452ac59672f90c05a7b/qr-code%20(1).png" alt="Quest Optimizer">
+        <div class="work-overlay">
+          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
+        </div>
       </div>
       <div class="work-meta">
         <div class="work-category">Scripting</div>
@@ -2297,24 +2464,112 @@ function filterWork(cat, btn) {
   });
 }
 
-function openLightbox(card) {
-  var img = card.querySelector('.work-img img');
-  if (!img) return;
-  var title = card.querySelector('h3').textContent;
-  document.getElementById('lightbox-img').src = img.src;
-  document.getElementById('lightbox-caption').textContent = title;
-  document.getElementById('lightbox').classList.add('open');
-}
+(function(){
+  var lb        = document.getElementById('lightbox');
+  var lbImg     = document.getElementById('lightbox-img');
+  var lbTitle   = document.getElementById('lbTitle');
+  var lbCaption = document.getElementById('lightbox-caption');
+  var lbCounter = document.getElementById('lbCounter');
+  var lbDots    = document.getElementById('lbDots');
+  var lbPrev    = document.getElementById('lbPrev');
+  var lbNext    = document.getElementById('lbNext');
+  var lbClose   = document.getElementById('lbClose');
 
-function closeLightbox(e) {
-  if (e.target === document.getElementById('lightbox')) {
-    document.getElementById('lightbox').classList.remove('open');
+  var gallery = [];
+  var current = 0;
+
+  function buildDots(total) {
+    lbDots.innerHTML = '';
+    for (var i = 0; i < total; i++) {
+      var d = document.createElement('span');
+      d.className = 'lb-dot' + (i === current ? ' active' : '');
+      d.dataset.index = i;
+      d.addEventListener('click', (function(idx){ return function(){ goTo(idx); }; })(i));
+      lbDots.appendChild(d);
+    }
   }
-}
 
-document.addEventListener('keydown', function(e){
-  if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
-});
+  function updateDots() {
+    var dots = lbDots.querySelectorAll('.lb-dot');
+    dots.forEach(function(d, i){ d.classList.toggle('active', i === current); });
+  }
+
+  function updateArrows() {
+    lbPrev.classList.toggle('lb-hidden', gallery.length <= 1 || current === 0);
+    lbNext.classList.toggle('lb-hidden', gallery.length <= 1 || current === gallery.length - 1);
+  }
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= gallery.length) return;
+    lbImg.classList.add('fading');
+    setTimeout(function(){
+      current = idx;
+      lbImg.src = gallery[current];
+      lbImg.classList.remove('fading');
+      lbCounter.textContent = (current + 1) + ' / ' + gallery.length;
+      updateDots();
+      updateArrows();
+    }, 160);
+  }
+
+  function openLightbox(card) {
+    var raw = card.dataset.images;
+    try { gallery = JSON.parse(raw); } catch(e) { gallery = []; }
+    if (!gallery.length) {
+      var img = card.querySelector('.work-img img');
+      if (img) gallery = [img.src];
+    }
+    current = 0;
+    lbTitle.textContent   = card.querySelector('h3') ? card.querySelector('h3').textContent : '';
+    lbCaption.textContent = card.querySelector('p')  ? card.querySelector('p').textContent  : '';
+    lbImg.src             = gallery[0];
+    lbCounter.textContent = '1 / ' + gallery.length;
+    buildDots(gallery.length);
+    updateArrows();
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.work-card').forEach(function(card){
+    card.addEventListener('click', function(){ openLightbox(card); });
+    var raw = card.dataset.images;
+    var imgs = [];
+    try { imgs = JSON.parse(raw); } catch(e){}
+    if (imgs.length > 1) {
+      var oc = card.querySelector('.work-overlay');
+      if (oc) {
+        var sub = document.createElement('span');
+        sub.className = 'work-overlay-count';
+        sub.textContent = imgs.length + ' photos';
+        oc.appendChild(sub);
+      }
+    }
+  });
+
+  lbPrev.addEventListener('click', function(e){ e.stopPropagation(); goTo(current - 1); });
+  lbNext.addEventListener('click', function(e){ e.stopPropagation(); goTo(current + 1); });
+  lbClose.addEventListener('click', closeLightbox);
+  lb.addEventListener('click', function(e){ if (e.target === lb) closeLightbox(); });
+
+  document.addEventListener('keydown', function(e){
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape')      closeLightbox();
+    if (e.key === 'ArrowLeft')   goTo(current - 1);
+    if (e.key === 'ArrowRight')  goTo(current + 1);
+  });
+
+  var touchStartX = 0;
+  lb.addEventListener('touchstart', function(e){ touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', function(e){
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 50) dx < 0 ? goTo(current + 1) : goTo(current - 1);
+  });
+})();
 
 (function(){
   var _f = document.getElementById('requestForm');

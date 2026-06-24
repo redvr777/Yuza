@@ -1760,17 +1760,17 @@
 <canvas id="bg-canvas"></canvas>
 
 <nav>
-  <!-- ── NAV LOGO: swap YOUR_PHOTO_URL with your actual image URL ── -->
   <a href="#" class="nav-logo">
     <img
       class="nav-avatar"
-      src="https://raw.githubusercontent.com/redvr777/Yuza/blob/08275274517a36966586f66a1d622ca84a339a5a/7caf2a7b-aa83-4534-a7e2-c635a39a9d8c.png"
+      src="https://raw.githubusercontent.com/redvr777/Yuza/08275274517a36966586f66a1d622ca84a339a5a/7caf2a7b-aa83-4534-a7e2-c635a39a9d8c.png"
       alt="Yuza"
-      onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+      onerror="this.style.display='none'; document.getElementById('nav-fallback').style.display='flex';"
     >
-    <span class="nav-avatar-placeholder" style="display:none;">Y</span>
+    <span id="nav-fallback" class="nav-avatar-placeholder" style="display:none;">Y</span>
     yuza<span>.</span>
   </a>
+
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#released">Released</a></li>
@@ -1779,87 +1779,51 @@
     <li><a href="#how">How it works</a></li>
     <li><a href="#payment">Payment</a></li>
     <li><a href="#request">Request work</a></li>
-    <li><a href="https://buymeacoffee.com/cbsgames" target="_blank" rel="noopener noreferrer" class="nav-bmac"><span class="bmac-icon">☕</span>Buy me a coffee</a></li>
-    <li><a href="https://cash.app/$Thatonedev476" target="_blank" rel="noopener noreferrer" class="nav-cashapp"><span class="cashapp-icon">💸</span>CashApp</a></li>
+    <li><a href="https://buymeacoffee.com/cbsgames" target="_blank" rel="noopener noreferrer">☕ Buy me a coffee</a></li>
+    <li><a href="https://cash.app/$Thatonedev476" target="_blank" rel="noopener noreferrer">💸 CashApp</a></li>
     <li><a href="#request" class="nav-cta">Get a quote</a></li>
   </ul>
 </nav>
 
-<a href="https://buymeacoffee.com/cbsgames" target="_blank" rel="noopener noreferrer" class="bmac-float">
-  <span class="bmac-icon">☕</span>Buy me a coffee
-</a>
-
-<div id="musicPlayer">
-  <button id="playPauseBtn" onclick="toggleMusic()" title="Play / Pause">▶</button>
-  <div>
-    <div class="music-label">♪ NOW PLAYING</div>
-    <input
-      type="range"
-      id="volumeSlider"
-      min="0" max="1" step="0.01" value="0.2"
-      oninput="setMusicVolume(this.value)"
-      title="Volume"
-    >
-  </div>
-</div>
-
-<audio id="bgMusic" loop>
-  <source src="https://raw.githubusercontent.com/redvr777/Yuza/67930de687f2729d2ed1f2cc7168189f8660b57a/liminal%20spaces%20__%20dark%20ambient%20music%20mix%204%20(1).mp3" type="audio/mpeg">
-</audio>
-
-<!-- ── GALLERY LIGHTBOX ── -->
-<div class="lightbox" id="lightbox">
-  <div class="lightbox-inner">
-    <div class="lightbox-topbar">
-      <span class="lightbox-title" id="lbTitle"></span>
-      <button class="lightbox-close" id="lbClose">[ CLOSE ]</button>
-    </div>
-    <div class="lightbox-stage">
-      <button class="lb-arrow lb-prev lb-hidden" id="lbPrev">&#9664;</button>
-      <div class="lightbox-img-wrap">
-        <img id="lightbox-img" src="" alt="">
-      </div>
-      <button class="lb-arrow lb-next lb-hidden" id="lbNext">&#9654;</button>
-    </div>
-    <div class="lightbox-footer">
-      <span class="lightbox-caption" id="lightbox-caption"></span>
-      <div class="lightbox-dots" id="lbDots"></div>
-      <span class="lightbox-counter" id="lbCounter"></span>
-    </div>
-  </div>
-</div>
-
 <div class="page-content">
 
-<div style="max-width:1100px;margin:0 auto;">
-<section class="hero" id="home">
-  <div class="hero-tag">Available for freelance work</div>
+  <section class="hero" id="home">
+    <div class="hero-tag">Available for freelance work</div>
 
-  <!-- ── HERO BODY: text left, image right ── -->
-  <div class="hero-body">
-    <div class="hero-text">
-      <h1>I code, model &amp;<br>build for <em>Unity.</em></h1>
-      <p class="hero-sub">3–5 years of experience in Unity game dev, 3D modeling, and web development. Tell me what you need — I'll tell you if I can do it and what it'll cost.</p>
-      <div class="hero-btns">
-        <a href="#request" class="btn-primary">Request a project</a>
-        <a href="#services" class="btn-outline">See what I do</a>
+    <div class="hero-body">
+      <div class="hero-text">
+        <h1>I code, model &amp;<br>build for <em>Unity.</em></h1>
+
+        <p class="hero-sub">
+          3–5 years of experience in Unity game dev, 3D modeling, and web development.
+          Tell me what you need — I'll tell you if I can do it and what it'll cost.
+        </p>
+
+        <div class="hero-btns">
+          <a href="#request" class="btn-primary">Request a project</a>
+          <a href="#services" class="btn-outline">See what I do</a>
+        </div>
+      </div>
+
+      <div class="hero-image-wrap">
+        <img
+          class="hero-img"
+          src="https://raw.githubusercontent.com/redvr777/Yuza/08275274517a36966586f66a1d622ca84a339a5a/7caf2a7b-aa83-4534-a7e2-c635a39a9d8c.png"
+          alt="Yuza's work"
+          onerror="this.style.display='none'; document.getElementById('hero-fallback').style.display='flex';"
+        >
+
+        <div id="hero-fallback" class="hero-img-placeholder" style="display:none;">
+          <span class="ph-big">🎮</span>
+          <span>
+            
+          </span>
+        </div>
       </div>
     </div>
+  </section>
 
-    <!-- ── HERO IMAGE: swap YOUR_HERO_IMAGE_URL with a screenshot, artwork, or photo ── -->
-    <div class="hero-image-wrap">
-      <img
-        class="hero-img"
-        src="YOUR_HERO_IMAGE_URL"
-        alt="Yuza's work"
-        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-      >
-      <div class="hero-img-placeholder" style="display:none;">
-        <span class="ph-big">🎮</span>
-        <span>Add your image here —<br>swap YOUR_HERO_IMAGE_URL<br>in the HTML</span>
-      </div>
-    </div>
-  </div>
+</div>
 
   <div class="hero-stats">
     <div>

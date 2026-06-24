@@ -95,7 +95,11 @@
     border-bottom: 2px solid var(--border2);
   }
 
+  /* ── NAV LOGO WITH AVATAR ── */
   .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     font-family: 'Press Start 2P', monospace;
     font-weight: 400;
     font-size: 16px;
@@ -106,6 +110,44 @@
   }
 
   .nav-logo span { color: var(--accent); }
+
+  /* Avatar in nav */
+  .nav-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 2px;
+    border: 2px solid var(--border2);
+    object-fit: cover;
+    display: block;
+    flex-shrink: 0;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 0 0 var(--accent);
+    image-rendering: auto;
+    background: var(--bg3);
+  }
+
+  .nav-logo:hover .nav-avatar {
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(176,111,255,0.4);
+  }
+
+  /* Avatar placeholder (shown when no src) */
+  .nav-avatar-placeholder {
+    width: 38px;
+    height: 38px;
+    border-radius: 2px;
+    border: 2px solid var(--border2);
+    background: var(--bg3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+    color: var(--accent);
+    font-family: 'Press Start 2P', monospace;
+    transition: border-color 0.2s;
+  }
+  .nav-logo:hover .nav-avatar-placeholder { border-color: var(--accent); }
 
   .nav-links {
     display: flex;
@@ -309,6 +351,7 @@
     #volumeSlider { width: 70px; }
   }
 
+  /* ── HERO LAYOUT WITH SIDE IMAGE ── */
   .hero {
     min-height: 100vh;
     display: flex;
@@ -318,6 +361,86 @@
     max-width: 1100px;
     margin: 0 auto;
     position: relative;
+  }
+
+  /* Hero inner: text left, image right */
+  .hero-body {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 56px;
+    align-items: center;
+  }
+
+  /* ── HERO SIDE IMAGE ── */
+  .hero-image-wrap {
+    position: relative;
+    border: 2px solid var(--border2);
+    border-radius: var(--card-r);
+    overflow: hidden;
+    background: var(--bg3);
+    aspect-ratio: 4 / 3;
+    box-shadow: 6px 6px 0 #6a00cc, 0 0 40px rgba(176,111,255,0.15);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+
+  .hero-image-wrap:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0 #6a00cc, 0 0 56px rgba(176,111,255,0.22);
+  }
+
+  .hero-image-wrap::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent);
+    z-index: 2;
+  }
+
+  /* The actual image — swap src to your screenshot/artwork */
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    image-rendering: auto;
+    transition: transform 0.4s;
+  }
+
+  .hero-image-wrap:hover .hero-img {
+    transform: scale(1.04);
+  }
+
+  /* Placeholder shown when no image src is set */
+  .hero-img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: var(--border2);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-align: center;
+    padding: 24px;
+    min-height: 240px;
+  }
+
+  .hero-img-placeholder .ph-big { font-size: 48px; opacity: 0.35; }
+
+  /* Corner pixel accents on hero image */
+  .hero-image-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 16px; height: 16px;
+    background: var(--accent);
+    opacity: 0.25;
+    pointer-events: none;
   }
 
   .hero-tag {
@@ -1602,6 +1725,11 @@
     text-align: center;
   }
 
+  @media (max-width: 1024px) {
+    .hero-body { grid-template-columns: 1fr; gap: 40px; }
+    .hero-image-wrap { max-width: 480px; }
+  }
+
   @media (max-width: 768px) {
     nav { padding: 0 24px; }
     .nav-links { display: none; }
@@ -1622,6 +1750,8 @@
     #devapply { padding: 72px 24px; }
     .devapply-layout { grid-template-columns: 1fr; gap: 36px; }
     .devapply-cta-box { padding: 32px 24px; }
+    .hero-body { grid-template-columns: 1fr; }
+    .hero-image-wrap { max-width: 100%; }
   }
 </style>
 </head>
@@ -1630,7 +1760,17 @@
 <canvas id="bg-canvas"></canvas>
 
 <nav>
-  <a href="#" class="nav-logo">yuza<span>.</span></a>
+  <!-- ── NAV LOGO: swap YOUR_PHOTO_URL with your actual image URL ── -->
+  <a href="#" class="nav-logo">
+    <img
+      class="nav-avatar"
+      src="YOUR_PHOTO_URL"
+      alt="Yuza"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+    >
+    <span class="nav-avatar-placeholder" style="display:none;">Y</span>
+    yuza<span>.</span>
+  </a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#released">Released</a></li>
@@ -1694,12 +1834,33 @@
 <div style="max-width:1100px;margin:0 auto;">
 <section class="hero" id="home">
   <div class="hero-tag">Available for freelance work</div>
-  <h1>I code, model &amp;<br>build for <em>Unity.</em></h1>
-  <p class="hero-sub">3–5 years of experience in Unity game dev, 3D modeling, and web development. Tell me what you need — I'll tell you if I can do it and what it'll cost.</p>
-  <div class="hero-btns">
-    <a href="#request" class="btn-primary">Request a project</a>
-    <a href="#services" class="btn-outline">See what I do</a>
+
+  <!-- ── HERO BODY: text left, image right ── -->
+  <div class="hero-body">
+    <div class="hero-text">
+      <h1>I code, model &amp;<br>build for <em>Unity.</em></h1>
+      <p class="hero-sub">3–5 years of experience in Unity game dev, 3D modeling, and web development. Tell me what you need — I'll tell you if I can do it and what it'll cost.</p>
+      <div class="hero-btns">
+        <a href="#request" class="btn-primary">Request a project</a>
+        <a href="#services" class="btn-outline">See what I do</a>
+      </div>
+    </div>
+
+    <!-- ── HERO IMAGE: swap YOUR_HERO_IMAGE_URL with a screenshot, artwork, or photo ── -->
+    <div class="hero-image-wrap">
+      <img
+        class="hero-img"
+        src="YOUR_HERO_IMAGE_URL"
+        alt="Yuza's work"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+      >
+      <div class="hero-img-placeholder" style="display:none;">
+        <span class="ph-big">🎮</span>
+        <span>Add your image here —<br>swap YOUR_HERO_IMAGE_URL<br>in the HTML</span>
+      </div>
+    </div>
   </div>
+
   <div class="hero-stats">
     <div>
       <div class="stat-num">Unity</div>
@@ -1845,7 +2006,6 @@
     <button class="filter-btn" onclick="filterWork('modeling', this)">3D Models</button>
     <button class="filter-btn" onclick="filterWork('web', this)">Web</button>
   </div>
-
 
   <div class="work-grid" id="workGrid">
 

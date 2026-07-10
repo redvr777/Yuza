@@ -41,6 +41,10 @@
     --gold-dim: #a08800;
     --gold-glow: rgba(255,221,0,0.18);
     --gold-border: rgba(255,221,0,0.28);
+    --discord: #5865F2;
+    --discord-dark: #4752c4;
+    --phone: #00C2FF;
+    --phone-dark: #00a3d9;
   }
 
   html { scroll-behavior: smooth; }
@@ -1235,6 +1239,45 @@
 
   .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 
+  .contact-method-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .contact-method-btn {
+    background: var(--bg3);
+    border: 2px solid var(--border);
+    border-radius: 2px;
+    color: var(--muted);
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    padding: 12px 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .contact-method-btn .cm-icon { font-size: 20px; }
+
+  .contact-method-btn.selected {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(176,111,255,0.08);
+  }
+
+  .contact-method-btn.selected.discord { border-color: var(--discord); color: var(--discord); background: rgba(88,101,242,0.1); }
+  .contact-method-btn.selected.phone { border-color: var(--phone); color: var(--phone); background: rgba(0,194,255,0.1); }
+  .contact-method-btn.selected.email { border-color: var(--cashapp); color: var(--cashapp); background: rgba(0,213,75,0.08); }
+
+  .contact-method-input { display: none; margin-bottom: 20px; }
+  .contact-method-input.active { display: block; }
+
   .form-note {
     font-size: 15px;
     color: var(--muted);
@@ -1313,7 +1356,84 @@
     color: var(--accent);
   }
 
-  .success-msg p { font-size: 17px; color: var(--muted); font-family: 'VT323', monospace; }
+  .success-msg p { font-size: 17px; color: var(--muted); font-family: 'VT323', monospace; margin-bottom: 8px; }
+
+  .copy-box {
+    background: var(--bg3);
+    border: 2px solid var(--border2);
+    border-radius: 2px;
+    padding: 16px;
+    text-align: left;
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    color: var(--text);
+    white-space: pre-wrap;
+    margin: 16px 0;
+    max-height: 260px;
+    overflow-y: auto;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    user-select: text;
+  }
+
+  .copy-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #05020d;
+    border: none;
+    border-radius: 2px;
+    padding: 10px 20px;
+    font-size: 11px;
+    font-family: 'Press Start 2P', monospace;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    box-shadow: 3px 3px 0 #6a00cc;
+    margin-right: 10px;
+    margin-bottom: 8px;
+  }
+  .copy-btn:hover { background: var(--accent2); transform: translate(-1px,-1px); }
+  .copy-btn:active { transform: translate(1px,1px); }
+
+  .action-btn {
+    display: inline-block;
+    color: #05020d;
+    border: none;
+    border-radius: 2px;
+    padding: 10px 20px;
+    font-size: 11px;
+    font-family: 'Press Start 2P', monospace;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s, transform 0.1s;
+    margin-bottom: 8px;
+  }
+
+  .action-btn.discord { background: var(--discord); box-shadow: 3px 3px 0 var(--discord-dark); color: #fff; }
+  .action-btn.discord:hover { background: var(--discord-dark); transform: translate(-1px,-1px); }
+
+  .action-btn.phone { background: var(--phone); box-shadow: 3px 3px 0 var(--phone-dark); }
+  .action-btn.phone:hover { background: var(--phone-dark); transform: translate(-1px,-1px); }
+
+  .action-btn.email { background: var(--cashapp); box-shadow: 3px 3px 0 var(--cashapp-dark); }
+  .action-btn.email:hover { background: var(--cashapp-dark); transform: translate(-1px,-1px); }
+
+  .reset-btn {
+    display: block;
+    margin: 24px auto 0;
+    background: transparent;
+    color: var(--muted);
+    border: 2px solid var(--border2);
+    border-radius: 2px;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-family: 'VT323', monospace;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .reset-btn:hover { color: var(--accent); border-color: var(--accent); }
 
   footer {
     border-top: 2px solid var(--border2);
@@ -1752,6 +1872,7 @@
     .devapply-cta-box { padding: 32px 24px; }
     .hero-body { grid-template-columns: 1fr; }
     .hero-image-wrap { max-width: 100%; }
+    .contact-method-row { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -2262,7 +2383,7 @@
     <div class="step" style="padding-left:32px;">
       <div class="step-num">02</div>
       <h3>I review &amp; respond</h3>
-      <p>I'll email you back with whether I can take it on, how much it'll cost, and how long it'll take.</p>
+      <p>I'll respond back with whether I can take it on, how much it'll cost, and how long it'll take.</p>
     </div>
     <div class="step" style="padding-left:32px;">
       <div class="step-num">03</div>
@@ -2310,7 +2431,7 @@
     <div class="form-info">
       <p class="section-label">Work with me</p>
       <h2>Request a project</h2>
-      <p>Tell me about your game and what you need. I'll get back to you with a quote — no obligation, no upfront cost.</p>
+      <p>Tell me about your game and what you need. Pick how you'd like to reach me — Discord, phone, or email — no obligation, no upfront cost.</p>
 
       <div class="contact-detail">
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
@@ -2326,7 +2447,7 @@
       </div>
       <div class="contact-detail">
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M9 12l2 2 4-4"/></svg>
-        <div><strong>No spam</strong><br>Your email is only used to reply</div>
+        <div><strong>Contact me via</strong><br>Discord (yuza4948), phone, or email</div>
       </div>
     </div>
 
@@ -2376,8 +2497,27 @@
           <input type="text" name="budget" placeholder="e.g. $20, $50–$100, not sure yet...">
         </div>
 
+        <div class="field">
+          <label>How should I reach you back?</label>
+          <div class="contact-method-row">
+            <div class="contact-method-btn discord" data-method="discord" onclick="selectContactMethod('discord')">
+              <span class="cm-icon">🎮</span>
+              <span>Discord</span>
+            </div>
+            <div class="contact-method-btn phone" data-method="phone" onclick="selectContactMethod('phone')">
+              <span class="cm-icon">📱</span>
+              <span>Phone</span>
+            </div>
+            <div class="contact-method-btn email" data-method="email" onclick="selectContactMethod('email')">
+              <span class="cm-icon">✉️</span>
+              <span>Email</span>
+            </div>
+          </div>
+          <input type="hidden" name="contactMethod" id="contactMethodField" required>
+        </div>
+
         <div class="form-note">
-          i Submitting this form sends an email to Yuza. There's <strong>no payment required now</strong> — pricing is agreed after reviewing your request. Payment is accepted via <span class="cashapp-pill">💸 CashApp</span> or <span class="bmac-pill">☕ BuyMeACoffee</span> only.
+          i Pick a contact method above, then hit send. There's <strong>no payment required now</strong> — pricing is agreed after reviewing your request. Payment is accepted via <span class="cashapp-pill">💸 CashApp</span> or <span class="bmac-pill">☕ BuyMeACoffee</span> only.
         </div>
 
         <button type="submit" class="submit-btn">Send request</button>
@@ -2385,8 +2525,11 @@
 
       <div class="success-msg" id="successMsg">
         <div class="check">✓</div>
-        <h3>Request sent!</h3>
-        <p>Thanks for reaching out. Yuza will review your project and reply to your email within 24–48 hours.</p>
+        <h3 id="successTitle">Request ready!</h3>
+        <p id="successSub">Here's your message, ready to send.</p>
+        <div class="copy-box" id="copyBox"></div>
+        <div id="actionArea"></div>
+        <button type="button" class="reset-btn" onclick="resetForm()">← Back to form</button>
       </div>
     </div>
   </div>
@@ -2526,31 +2669,6 @@
 
 <script>
 (function(){
-  var music = document.getElementById('bgMusic');
-  var btn   = document.getElementById('playPauseBtn');
-  music.volume = 0.2;
-
-  window.toggleMusic = function() {
-    if (music.paused) {
-      music.play().then(function(){ btn.textContent = '⏸'; }).catch(function(){});
-    } else {
-      music.pause();
-      btn.textContent = '▶';
-    }
-  };
-
-  window.setMusicVolume = function(v) {
-    music.volume = parseFloat(v);
-  };
-
-  document.addEventListener('click', function() {
-    music.play().then(function(){ btn.textContent = '⏸'; }).catch(function(){});
-  }, { once: true });
-})();
-</script>
-
-<script>
-(function(){
   document.addEventListener('contextmenu',function(e){e.preventDefault();return false;});
   document.addEventListener('keydown',function(e){
     var k=e.key||'';var kc=e.keyCode||0;
@@ -2561,21 +2679,7 @@
       if(!e.shiftKey&&!e.altKey&&['u','U','s','S','p','P','a','A'].indexOf(k)>-1){e.preventDefault();e.stopPropagation();return false;}
     }
   },true);
-  var _t=160,_o=false;
-  function _c(){
-    var w=window.outerWidth-window.innerWidth,h=window.outerHeight-window.innerHeight;
-    if(w>_t||h>_t){if(!_o){_o=true;document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:monospace;color:#b06fff;background:#05020d;font-size:18px;">Access denied.</div>';}}else{_o=false;}}
-  setInterval(_c,500);
   document.addEventListener('dragstart',function(e){e.preventDefault();return false;});
-  document.addEventListener('keyup',function(e){if(e.key==='PrintScreen'||e.keyCode===44){navigator.clipboard&&navigator.clipboard.writeText('');}});
-  try{var _cs=window.console,_n=function(){};['log','warn','error','info','debug','table','dir','dirxml','trace','group','groupCollapsed','groupEnd','time','timeEnd','count','assert','profile','profileEnd'].forEach(function(m){try{_cs[m]=_n;}catch(e){}});}catch(e){}
-  (function _d(){(function(){var d=new Date();debugger;if(new Date()-d>100){document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:monospace;color:#b06fff;background:#05020d;font-size:18px;">Access denied.</div>';}})();setTimeout(_d,2000);})();
-  new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(n){if(n.tagName==='SCRIPT'&&n.src&&!/^(|blob:null)/.test(n.src)){n.parentNode&&n.parentNode.removeChild(n);}});});}).observe(document.documentElement,{childList:true,subtree:true});
-  window.open=function(){return null;};
-  window.XMLSerializer=function(){return{serializeToString:function(){return'';}};}; 
-  window.alert=function(){return null;};
-  try{Object.defineProperty(document.body,'contentEditable',{get:function(){return'false';},set:function(){},configurable:false});}catch(e){}
-  try{Object.defineProperty(document,'designMode',{get:function(){return'off';},set:function(){},configurable:false});}catch(e){}
 })();
 </script>
 
@@ -2598,6 +2702,8 @@ function filterWork(cat, btn) {
   var lbPrev    = document.getElementById('lbPrev');
   var lbNext    = document.getElementById('lbNext');
   var lbClose   = document.getElementById('lbClose');
+
+  if (!lb) return;
 
   var gallery = [];
   var current = 0;
@@ -2695,12 +2801,63 @@ function filterWork(cat, btn) {
   });
 })();
 
+/* ── CONTACT METHOD PICKER + REQUEST FORM ── */
+var YUZA_DISCORD = 'yuza4948';
+var YUZA_PHONE   = '9042586813';
+var YUZA_PHONE_DISPLAY = '(904) 258-6813';
+var YUZA_EMAIL   = 'yuzadeveloper@gmail.com';
+
+function selectContactMethod(method) {
+  document.querySelectorAll('.contact-method-btn').forEach(function(b){
+    b.classList.toggle('selected', b.dataset.method === method);
+  });
+  document.getElementById('contactMethodField').value = method;
+}
+
+function resetForm() {
+  document.getElementById('requestForm').style.display = '';
+  document.getElementById('requestForm').reset();
+  document.querySelectorAll('.contact-method-btn').forEach(function(b){ b.classList.remove('selected'); });
+  document.getElementById('successMsg').style.display = 'none';
+}
+
+function copyText(text, btnEl) {
+  function done(ok) {
+    if (!btnEl) return;
+    var orig = btnEl.textContent;
+    btnEl.textContent = ok ? 'Copied!' : 'Copy failed';
+    setTimeout(function(){ btnEl.textContent = orig; }, 1600);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function(){ done(true); }).catch(function(){ done(false); });
+  } else {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      done(true);
+    } catch (e) { done(false); }
+  }
+}
+
 (function(){
   var _f = document.getElementById('requestForm');
   var _s = document.getElementById('successMsg');
 
   _f.addEventListener('submit', function(e){
     e.preventDefault();
+
+    var method = document.getElementById('contactMethodField').value;
+    if (!method) {
+      alert('Please pick how you\'d like Yuza to reach you back (Discord, Phone, or Email).');
+      return;
+    }
+
     var _n  = _f.querySelector('[name="name"]').value;
     var _e  = _f.querySelector('[name="email"]').value;
     var _sv = _f.querySelector('[name="service"]').value;
@@ -2709,29 +2866,101 @@ function filterWork(cat, btn) {
     var _dl = _f.querySelector('[name="deadline"]').value;
     var _bg = _f.querySelector('[name="budget"]').value;
 
-    var _sub  = encodeURIComponent('Project Request from ' + _n + ' \u2014 ' + _sv);
-    var _body = encodeURIComponent(
+    var messageBody =
       'Hi Yuza,\n\nI\'d like to request some work on my game. Here are the details:\n\n' +
-      'Name: ' + _n + '\nEmail: ' + _e + '\nService needed: ' + _sv +
+      'Name: ' + _n + '\n' +
+      'Email: ' + _e + '\n' +
+      'Service needed: ' + _sv +
       '\nEngine / Platform: ' + (_en || 'Not specified') +
       '\nDeadline: ' + (_dl || 'Flexible') +
       '\nBudget: ' + (_bg || 'Not specified') +
       '\n\nProject description:\n' + _d +
-      '\n\nLooking forward to hearing from you!\n\n\u2014 ' + _n
-    );
+      '\n\nLooking forward to hearing from you!\n\n— ' + _n;
 
-    var _lnk = document.createElement('a');
-    _lnk.href = 'https://mail.google.com/mail/?view=cm&to=yuzadeveloper@gmail.com&su=' + _sub + '&body=' + _body;
-    _lnk.target = '_blank';
-    _lnk.rel = 'noopener noreferrer';
-    document.body.appendChild(_lnk);
-    _lnk.click();
-    document.body.removeChild(_lnk);
+    var copyBox    = document.getElementById('copyBox');
+    var actionArea = document.getElementById('actionArea');
+    var title      = document.getElementById('successTitle');
+    var sub        = document.getElementById('successSub');
 
-    setTimeout(function(){
-      _f.style.display = 'none';
-      _s.style.display = 'block';
-    }, 500);
+    actionArea.innerHTML = '';
+
+    if (method === 'discord') {
+      title.textContent = 'Message ready for Discord!';
+      sub.textContent = 'Copy the message below, open Discord, and DM it to Yuza (@' + YUZA_DISCORD + ').';
+      copyBox.textContent = messageBody;
+
+      var copyBtn = document.createElement('button');
+      copyBtn.type = 'button';
+      copyBtn.className = 'copy-btn';
+      copyBtn.textContent = 'Copy message';
+      copyBtn.onclick = function(){ copyText(messageBody, copyBtn); };
+      actionArea.appendChild(copyBtn);
+
+      var discordLink = document.createElement('a');
+      discordLink.className = 'action-btn discord';
+      discordLink.href = 'https://discord.com/users/' + YUZA_DISCORD;
+      discordLink.target = '_blank';
+      discordLink.rel = 'noopener noreferrer';
+      discordLink.textContent = 'Open Discord';
+      actionArea.appendChild(discordLink);
+
+      var note = document.createElement('p');
+      note.style.marginTop = '8px';
+      note.textContent = 'Discord username: ' + YUZA_DISCORD;
+      actionArea.appendChild(note);
+
+    } else if (method === 'phone') {
+      title.textContent = 'Message ready to text!';
+      sub.textContent = 'Copy the message below, or tap "Open Messages" to text it straight to Yuza.';
+      copyBox.textContent = messageBody;
+
+      var copyBtn2 = document.createElement('button');
+      copyBtn2.type = 'button';
+      copyBtn2.className = 'copy-btn';
+      copyBtn2.textContent = 'Copy message';
+      copyBtn2.onclick = function(){ copyText(messageBody, copyBtn2); };
+      actionArea.appendChild(copyBtn2);
+
+      var smsLink = document.createElement('a');
+      smsLink.className = 'action-btn phone';
+      smsLink.href = 'sms:' + YUZA_PHONE + '?&body=' + encodeURIComponent(messageBody);
+      smsLink.textContent = 'Open Messages';
+      actionArea.appendChild(smsLink);
+
+      var note2 = document.createElement('p');
+      note2.style.marginTop = '8px';
+      note2.textContent = 'Phone number: ' + YUZA_PHONE_DISPLAY;
+      actionArea.appendChild(note2);
+
+    } else if (method === 'email') {
+      title.textContent = 'Message ready to email!';
+      sub.textContent = 'Copy the message below, or tap "Open Email" to send it straight to Yuza.';
+      copyBox.textContent = messageBody;
+
+      var copyBtn3 = document.createElement('button');
+      copyBtn3.type = 'button';
+      copyBtn3.className = 'copy-btn';
+      copyBtn3.textContent = 'Copy message';
+      copyBtn3.onclick = function(){ copyText(messageBody, copyBtn3); };
+      actionArea.appendChild(copyBtn3);
+
+      var mailLink = document.createElement('a');
+      mailLink.className = 'action-btn email';
+      var subj = encodeURIComponent('Project Request from ' + _n + ' — ' + _sv);
+      mailLink.href = 'mailto:' + YUZA_EMAIL + '?subject=' + subj + '&body=' + encodeURIComponent(messageBody);
+      mailLink.target = '_blank';
+      mailLink.rel = 'noopener noreferrer';
+      mailLink.textContent = 'Open Email';
+      actionArea.appendChild(mailLink);
+
+      var note3 = document.createElement('p');
+      note3.style.marginTop = '8px';
+      note3.textContent = 'Email: ' + YUZA_EMAIL;
+      actionArea.appendChild(note3);
+    }
+
+    _f.style.display = 'none';
+    _s.style.display = 'block';
   });
 
   document.querySelectorAll('a[href^="#"]').forEach(function(anchor){

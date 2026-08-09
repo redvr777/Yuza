@@ -99,7 +99,6 @@
     border-bottom: 2px solid var(--border2);
   }
 
-  /* ── NAV LOGO WITH AVATAR ── */
   .nav-logo {
     display: flex;
     align-items: center;
@@ -115,7 +114,6 @@
 
   .nav-logo span { color: var(--accent); }
 
-  /* Avatar in nav */
   .nav-avatar {
     width: 38px;
     height: 38px;
@@ -135,7 +133,6 @@
     box-shadow: 0 0 10px rgba(176,111,255,0.4);
   }
 
-  /* Avatar placeholder (shown when no src) */
   .nav-avatar-placeholder {
     width: 38px;
     height: 38px;
@@ -236,41 +233,6 @@
   .nav-cashapp:active { transform: translate(1px,1px) !important; box-shadow: 1px 1px 0 #007a2b !important; }
   .nav-cashapp .cashapp-icon { font-size: 14px; line-height: 1; }
 
-  .bmac-float {
-    position: fixed;
-    bottom: 28px;
-    right: 28px;
-    z-index: 200;
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    background: var(--coffee);
-    color: #1a1000;
-    padding: 12px 18px;
-    border-radius: 2px;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
-    letter-spacing: 0.5px;
-    text-decoration: none;
-    box-shadow: 4px 4px 0 #a08800, 0 0 24px rgba(255,221,0,0.2);
-    transition: background 0.15s, transform 0.1s, box-shadow 0.1s;
-    animation: bmac-bob 3s ease-in-out infinite;
-    cursor: pointer;
-  }
-  .bmac-float:hover {
-    background: var(--coffee-dark);
-    transform: translate(-2px,-2px);
-    box-shadow: 6px 6px 0 #a08800, 0 0 32px rgba(255,221,0,0.3);
-    animation: none;
-  }
-  .bmac-float:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 #a08800; }
-  .bmac-float .bmac-icon { font-size: 18px; line-height: 1; }
-
-  @keyframes bmac-bob {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-  }
-
   #musicPlayer {
     position: fixed;
     bottom: 28px;
@@ -355,7 +317,6 @@
     #volumeSlider { width: 70px; }
   }
 
-  /* ── HERO LAYOUT WITH SIDE IMAGE ── */
   .hero {
     min-height: 100vh;
     display: flex;
@@ -367,7 +328,6 @@
     position: relative;
   }
 
-  /* Hero inner: text left, image right */
   .hero-body {
     display: grid;
     grid-template-columns: 1fr 420px;
@@ -375,7 +335,6 @@
     align-items: center;
   }
 
-  /* ── HERO SIDE IMAGE ── */
   .hero-image-wrap {
     position: relative;
     border: 2px solid var(--border2);
@@ -402,7 +361,6 @@
     z-index: 2;
   }
 
-  /* The actual image — swap src to your screenshot/artwork */
   .hero-img {
     width: 100%;
     height: 100%;
@@ -416,7 +374,6 @@
     transform: scale(1.04);
   }
 
-  /* Placeholder shown when no image src is set */
   .hero-img-placeholder {
     width: 100%;
     height: 100%;
@@ -436,7 +393,6 @@
 
   .hero-img-placeholder .ph-big { font-size: 48px; opacity: 0.35; }
 
-  /* Corner pixel accents on hero image */
   .hero-image-wrap::after {
     content: '';
     position: absolute;
@@ -1468,7 +1424,6 @@
     background: var(--border);
   }
 
-  /* ── GALLERY LIGHTBOX ── */
   .lightbox {
     display: none;
     position: fixed;
@@ -1861,8 +1816,6 @@
     footer { flex-direction: column; gap: 12px; text-align: center; }
     .step:not(:last-child)::after { display: none; }
     #how { padding: 72px 24px; }
-    .bmac-float { bottom: 16px; right: 16px; padding: 10px 14px; font-size: 9px; }
-    .bmac-float .bmac-icon { font-size: 15px; }
     #work { padding: 72px 24px; }
     .work-grid { grid-template-columns: 1fr; }
     #released { padding: 72px 24px; }
@@ -2562,6 +2515,27 @@
 
 </div>
 
+<div id="lightbox" class="lightbox">
+  <div class="lightbox-inner">
+    <div class="lightbox-topbar">
+      <span class="lightbox-title" id="lbTitle"></span>
+      <span class="lightbox-close" id="lbClose">CLOSE ✕</span>
+    </div>
+    <div class="lightbox-stage">
+      <div class="lb-arrow lb-prev" id="lbPrev">‹</div>
+      <div class="lightbox-img-wrap">
+        <img id="lightbox-img" src="" alt="">
+      </div>
+      <div class="lb-arrow lb-next" id="lbNext">›</div>
+    </div>
+    <div class="lightbox-footer">
+      <span class="lightbox-caption" id="lightbox-caption"></span>
+      <div class="lightbox-dots" id="lbDots"></div>
+      <span class="lightbox-counter" id="lbCounter"></span>
+    </div>
+  </div>
+</div>
+
 <script>
 (function(){
   var canvas = document.getElementById('bg-canvas');
@@ -2993,6 +2967,9 @@ function copyText(text, btnEl) {
   });
 })();
 </script>
+
+<!-- Buy Me a Coffee floating widget -->
+<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="cbsgames" data-description="Support me on Buy me a coffee!" data-message="" data-color="#FF813F" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 
 </body>
 </html>

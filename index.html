@@ -989,6 +989,27 @@
     margin-top: 14px;
   }
 
+  .work-visit-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 14px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    padding: 6px 10px;
+    border: 1px solid var(--border2);
+    border-radius: 2px;
+    background: rgba(176,111,255,0.06);
+    text-decoration: none;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+  }
+  .work-visit-link:hover {
+    border-color: var(--accent);
+    background: rgba(176,111,255,0.14);
+  }
+
   #how { background: rgba(12,6,24,0.85); border-top: 2px solid var(--border2); border-bottom: 2px solid var(--border2); max-width: 100%; padding: 96px 48px; }
   #how-inner { max-width: 1100px; margin: 0 auto; }
 
@@ -2136,17 +2157,52 @@
     <span class="acc-toggle">+</span>
   </summary>
   <div class="acc-body" id="websites-inner">
-  <p class="section-sub">Landing pages and portfolio-style sites I've coded from scratch — click a card to view screenshots.</p>
+  <p class="section-sub">Landing pages and site builds I've coded from scratch — click a card to view screenshots, or use the link to visit the live site.</p>
 
   <div class="work-grid" id="websiteGrid">
 
     <div class="work-card" data-category="web"
-      data-images='["https://yuza-developer.vercel.app/"]'>
+      data-images='["https://raw.githubusercontent.com/redvr777/MonkeTekRemastered/main/firstimeagfe.png","https://raw.githubusercontent.com/redvr777/MonkeTekRemastered/main/seconds.png","https://raw.githubusercontent.com/redvr777/MonkeTekRemastered/main/thrisimgae.png","https://raw.githubusercontent.com/redvr777/MonkeTekRemastered/main/fourths.png","https://raw.githubusercontent.com/redvr777/MonkeTekRemastered/main/fgirths.png"]'>
       <div class="work-img">
-        <div class="work-img-placeholder">
-          <span class="ph-icon">🌐</span>
-          <span>This site<br>(yuza-developer)</span>
+        <img src="https://raw.githubusercontent.com/redvr777/MonkeTekRemastered/main/firstimeagfe.png" alt="MonkeTek Remastered">
+        <div class="work-overlay">
+          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
         </div>
+      </div>
+      <div class="work-meta">
+        <div class="work-category">Web Development</div>
+        <h3>MonkeTek Remastered</h3>
+        <p>Landing page for the MonkeTek Remastered dev build — raytraced city, character reveal, and a screenshot gallery with a Discord join link.</p>
+        <div class="work-tags">
+          <span class="tag">HTML / CSS</span><span class="tag">JavaScript</span><span class="tag">Game site</span>
+        </div>
+        <a href="https://monke-tek-remastered.vercel.app/#gallery" target="_blank" rel="noopener noreferrer" class="work-visit-link" onclick="event.stopPropagation();">Visit site →</a>
+      </div>
+    </div>
+
+    <div class="work-card" data-category="web"
+      data-images='["https://raw.githubusercontent.com/redvr777/monke-manor/main/Screenshot%202026-08-08%20143855.png","https://raw.githubusercontent.com/redvr777/monke-manor/main/Screenshot%202026-08-08%20143919.png","https://raw.githubusercontent.com/redvr777/monke-manor/main/Screenshot%202026-08-08%20143932.png","https://raw.githubusercontent.com/redvr777/monke-manor/main/Screenshot%202026-08-08%20143947.png","https://raw.githubusercontent.com/redvr777/monke-manor/main/Screenshot%202026-08-08%20144008.png"]'>
+      <div class="work-img">
+        <img src="https://raw.githubusercontent.com/redvr777/monke-manor/main/Screenshot%202026-08-08%20143855.png" alt="Monke Manor">
+        <div class="work-overlay">
+          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
+        </div>
+      </div>
+      <div class="work-meta">
+        <div class="work-category">Web Development</div>
+        <h3>Monke Manor</h3>
+        <p>Landing page for the Monke Manor VR hangout — brick grounds, a shop, a cosmetics wing, and a cave, laid out section by section with a gallery.</p>
+        <div class="work-tags">
+          <span class="tag">HTML / CSS</span><span class="tag">JavaScript</span><span class="tag">Game site</span>
+        </div>
+        <a href="https://monke-manor.vercel.app/" target="_blank" rel="noopener noreferrer" class="work-visit-link" onclick="event.stopPropagation();">Visit site →</a>
+      </div>
+    </div>
+
+    <div class="work-card" data-category="web"
+      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/08275274517a36966586f66a1d622ca84a339a5a/7caf2a7b-aa83-4534-a7e2-c635a39a9d8c.png"]'>
+      <div class="work-img">
+        <img src="https://raw.githubusercontent.com/redvr777/Yuza/08275274517a36966586f66a1d622ca84a339a5a/7caf2a7b-aa83-4534-a7e2-c635a39a9d8c.png" alt="Yuza Developer Site">
         <div class="work-overlay">
           <span class="work-overlay-text">[ VIEW GALLERY ]</span>
         </div>
@@ -2158,6 +2214,7 @@
         <div class="work-tags">
           <span class="tag">HTML / CSS</span><span class="tag">JavaScript</span><span class="tag">Landing page</span>
         </div>
+        <a href="https://yuza-developer.vercel.app/" target="_blank" rel="noopener noreferrer" class="work-visit-link" onclick="event.stopPropagation();">Visit site →</a>
       </div>
     </div>
 

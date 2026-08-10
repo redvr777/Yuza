@@ -1424,6 +1424,91 @@
     background: var(--border);
   }
 
+  /* ── Collapsible accordion sections ── */
+  details.acc { display: block; }
+  details.acc > summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 96px 48px 0;
+    max-width: 1100px;
+    margin: 0 auto;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  details.acc[open] > summary { padding-bottom: 0; }
+  details.acc:not([open]) > summary { padding-bottom: 96px; }
+  details.acc > summary::-webkit-details-marker { display: none; }
+  details.acc > summary::marker { content: ""; }
+
+  .acc-heading { flex: 1; min-width: 0; }
+  .acc-heading .section-label { margin-bottom: 16px; }
+  .acc-heading h2 { margin-bottom: 0; }
+
+  .acc-toggle {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border: 2px solid var(--border2);
+    border-radius: 2px;
+    background: rgba(176,111,255,0.06);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    transition: transform 0.2s, background 0.15s, border-color 0.15s;
+    text-shadow: 0 0 8px var(--accent);
+  }
+  details.acc[open] .acc-toggle { transform: rotate(45deg); }
+  details.acc > summary:hover .acc-toggle { border-color: var(--accent); background: rgba(176,111,255,0.14); }
+
+  .acc-body {
+    padding: 40px 48px 96px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* full-bleed tinted sections keep their own background/border, accordion just controls the inner padding */
+  #released.acc-wrap, #work.acc-wrap, #devapply.acc-wrap, #how.acc-wrap, #payment-wrap.acc-wrap {
+    padding: 0;
+  }
+  #released.acc-wrap > summary,
+  #work.acc-wrap > summary,
+  #devapply.acc-wrap > summary,
+  #how.acc-wrap > summary,
+  #payment-wrap.acc-wrap > summary { padding-top: 96px; }
+  #released.acc-wrap:not([open]) > summary,
+  #work.acc-wrap:not([open]) > summary,
+  #devapply.acc-wrap:not([open]) > summary,
+  #how.acc-wrap:not([open]) > summary,
+  #payment-wrap.acc-wrap:not([open]) > summary { padding-bottom: 96px; }
+  #released.acc-wrap[open] > summary,
+  #work.acc-wrap[open] > summary,
+  #devapply.acc-wrap[open] > summary,
+  #how.acc-wrap[open] > summary,
+  #payment-wrap.acc-wrap[open] > summary { padding-bottom: 0; }
+  #released .acc-body, #work .acc-body, #devapply .acc-body, #how .acc-body, #payment-wrap .acc-body {
+    padding: 40px 48px 96px;
+  }
+
+  @media (max-width: 768px) {
+    details.acc > summary,
+    #released.acc-wrap > summary,
+    #work.acc-wrap > summary,
+    #devapply.acc-wrap > summary,
+    #how.acc-wrap > summary,
+    #payment-wrap.acc-wrap > summary { padding-left: 24px; padding-right: 24px; }
+    .acc-body,
+    #released .acc-body, #work .acc-body, #devapply .acc-body, #how .acc-body, #payment-wrap .acc-body {
+      padding-left: 24px; padding-right: 24px;
+    }
+  }
+
   .lightbox {
     display: none;
     position: fixed;
@@ -1848,6 +1933,7 @@
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#released">Released</a></li>
+    <li><a href="#websites">Websites</a></li>
     <li><a href="#work">My Work</a></li>
     <li><a href="#devapply">Dev Apply</a></li>
     <li><a href="#how">How it works</a></li>
@@ -1895,32 +1981,36 @@
         </div>
       </div>
     </div>
+
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">Unity</div>
+        <div class="stat-label">Only engine I use</div>
+      </div>
+      <div>
+        <div class="stat-num">3–5 yrs</div>
+        <div class="stat-label">Experience</div>
+      </div>
+      <div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">Core skills</div>
+      </div>
+    </div>
   </section>
 
 </div>
 
-  <div class="hero-stats">
-    <div>
-      <div class="stat-num">Unity</div>
-      <div class="stat-label">Only engine I use</div>
-    </div>
-    <div>
-      <div class="stat-num">3–5 yrs</div>
-      <div class="stat-label">Experience</div>
-    </div>
-    <div>
-      <div class="stat-num">4</div>
-      <div class="stat-label">Core skills</div>
-    </div>
-  </div>
-</section>
-</div>
-
 <div class="sep"></div>
 
-<section id="services">
-  <p class="section-label">What I do</p>
-  <h2>Services</h2>
+<details class="acc" id="services" open>
+  <summary>
+    <div class="acc-heading">
+      <p class="section-label">What I do</p>
+      <h2>Services</h2>
+    </div>
+    <span class="acc-toggle">+</span>
+  </summary>
+  <div class="acc-body">
   <p class="section-sub">Every project is quoted individually. Send me the details and we'll figure out a fair price together.</p>
 
   <div class="services-grid">
@@ -1983,14 +2073,20 @@
       </div>
     </div>
   </div>
-</section>
+  </div>
+</details>
 
 <div class="sep"></div>
 
-<div id="released">
-<div id="released-inner">
-  <p class="section-label">Live on Meta Quest</p>
-  <h2>Released Games</h2>
+<details class="acc acc-wrap" id="released">
+<summary>
+    <div class="acc-heading">
+      <p class="section-label">Live on Meta Quest</p>
+      <h2>Released Games</h2>
+    </div>
+    <span class="acc-toggle">+</span>
+  </summary>
+  <div class="acc-body" id="released-inner">
   <p class="section-sub" style="color:var(--muted);">Games I've made, worked on, or developed on that are released to meta right now!</p>
 
   <div class="released-grid">
@@ -2028,13 +2124,56 @@
     </a>
 
   </div>
-</div>
-</div>
+  </div>
+</details>
 
-<div id="work">
-<div id="work-inner">
-  <p class="section-label">Things I have made or worked on</p>
-  <h2>My Work</h2>
+<details class="acc acc-wrap" id="websites">
+<summary>
+    <div class="acc-heading">
+      <p class="section-label">Sites I've built</p>
+      <h2>Websites</h2>
+    </div>
+    <span class="acc-toggle">+</span>
+  </summary>
+  <div class="acc-body" id="websites-inner">
+  <p class="section-sub">Landing pages and portfolio-style sites I've coded from scratch — click a card to view screenshots.</p>
+
+  <div class="work-grid" id="websiteGrid">
+
+    <div class="work-card" data-category="web"
+      data-images='["https://yuza-developer.vercel.app/"]'>
+      <div class="work-img">
+        <div class="work-img-placeholder">
+          <span class="ph-icon">🌐</span>
+          <span>This site<br>(yuza-developer)</span>
+        </div>
+        <div class="work-overlay">
+          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
+        </div>
+      </div>
+      <div class="work-meta">
+        <div class="work-category">Web Development</div>
+        <h3>Yuza Developer Site</h3>
+        <p>This very site — a from-scratch landing page for freelance Unity, scripting, modeling, and web work. No templates.</p>
+        <div class="work-tags">
+          <span class="tag">HTML / CSS</span><span class="tag">JavaScript</span><span class="tag">Landing page</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+</details>
+
+<details class="acc acc-wrap" id="work">
+<summary>
+    <div class="acc-heading">
+      <p class="section-label">Things I have made or worked on</p>
+      <h2>My Work</h2>
+    </div>
+    <span class="acc-toggle">+</span>
+  </summary>
+  <div class="acc-body" id="work-inner">
   <p class="section-sub">A selection of things I've built — games, scripts, models, and sites.</p>
 
   <div class="work-filters">
@@ -2283,13 +2422,18 @@
     </div>
 
   </div>
-</div>
-</div>
+  </div>
+</details>
 
-<div id="devapply">
-<div id="devapply-inner">
-  <p class="section-label">Join the team</p>
-  <h2>Developer Applications</h2>
+<details class="acc acc-wrap" id="devapply">
+<summary>
+    <div class="acc-heading">
+      <p class="section-label">Join the team</p>
+      <h2>Developer Applications</h2>
+    </div>
+    <span class="acc-toggle">+</span>
+  </summary>
+  <div class="acc-body" id="devapply-inner">
   <p class="section-sub">Looking to work on one of my games? Fill out the form and I'll get back to you.</p>
 
   <div class="devapply-layout">
@@ -2336,13 +2480,18 @@
       <p class="devapply-note">Fill out the form to get a chance to work with me and others!</p>
     </div>
   </div>
-</div>
-</div>
+  </div>
+</details>
 
-<div id="how">
-<div id="how-inner">
-  <p class="section-label">The process</p>
-  <h2>How it works</h2>
+<details class="acc acc-wrap" id="how">
+<summary>
+    <div class="acc-heading">
+      <p class="section-label">The process</p>
+      <h2>How it works</h2>
+    </div>
+    <span class="acc-toggle">+</span>
+  </summary>
+  <div class="acc-body" id="how-inner">
   <p class="section-sub">No upfront payment. You describe what you need, I'll respond with a quote and timeline.</p>
 
   <div class="steps">
@@ -2367,13 +2516,18 @@
       <p>I deliver the work, you review it, and we handle revisions until you're satisfied.</p>
     </div>
   </div>
-</div>
-</div>
+  </div>
+</details>
 
-<div style="background: rgba(12,6,24,0.85); border-top: 2px solid var(--border2); border-bottom: 2px solid var(--border2); max-width: 100%; padding: 96px 48px;">
-<div id="payment" style="max-width:1100px;margin:0 auto;">
-  <p class="section-label">How you pay</p>
-  <h2>Payment Methods</h2>
+<details class="acc acc-wrap" id="payment-wrap">
+<summary>
+    <div class="acc-heading">
+      <p class="section-label">How you pay</p>
+      <h2 id="payment">Payment Methods</h2>
+    </div>
+    <span class="acc-toggle">+</span>
+  </summary>
+  <div class="acc-body">
   <p class="section-sub">I only accept payment through the two platforms below — no exceptions. Payment is handled after we agree on a quote.</p>
 
   <div class="payment-grid">
@@ -2394,8 +2548,8 @@
   <div class="payment-only-note">
     ⚠ <strong>Note:</strong> These are the <strong>only</strong> two payment methods accepted. No PayPal, Venmo, crypto, bank transfer, or other platforms. Payment is only due after you've reviewed and approved the quote — never upfront.
   </div>
-</div>
-</div>
+  </div>
+</details>
 
 <section id="request" style="max-width:1100px;">
   <div class="form-wrap">
@@ -2512,8 +2666,6 @@
   <p>Unity Dev · C# Scripting · 3D Modeling · Web Dev · 3–5 yrs exp</p>
   <p>© 2026 Yuza. All rights reserved.</p>
 </footer>
-
-</div>
 
 <div id="lightbox" class="lightbox">
   <div class="lightbox-inner">
@@ -2677,9 +2829,10 @@
 
 <script>
 function filterWork(cat, btn) {
-  document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+  var scope = btn.closest('.acc-body') || document;
+  scope.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
-  document.querySelectorAll('.work-card').forEach(function(card){
+  scope.querySelectorAll('.work-card').forEach(function(card){
     card.style.display = (cat === 'all' || card.dataset.category === cat) ? '' : 'none';
   });
 }
@@ -2757,14 +2910,19 @@ function filterWork(cat, btn) {
     document.body.style.overflow = '';
   }
 
+  document.addEventListener('click', function(e){
+    var card = e.target.closest ? e.target.closest('.work-card') : null;
+    if (!card) return;
+    openLightbox(card);
+  });
+
   document.querySelectorAll('.work-card').forEach(function(card){
-    card.addEventListener('click', function(){ openLightbox(card); });
     var raw = card.dataset.images;
     var imgs = [];
     try { imgs = JSON.parse(raw); } catch(e){}
     if (imgs.length > 1) {
       var oc = card.querySelector('.work-overlay');
-      if (oc) {
+      if (oc && !oc.querySelector('.work-overlay-count')) {
         var sub = document.createElement('span');
         sub.className = 'work-overlay-count';
         sub.textContent = imgs.length + ' photos';
@@ -2957,18 +3115,23 @@ function copyText(text, btnEl) {
 
   document.querySelectorAll('a[href^="#"]').forEach(function(anchor){
     anchor.addEventListener('click', function(e){
-      var target = document.querySelector(this.getAttribute('href'));
+      var href = this.getAttribute('href');
+      if (!href || href === '#') return;
+      var target = document.querySelector(href);
       if (target) {
         e.preventDefault();
-        var top = target.getBoundingClientRect().top + window.scrollY - 80;
-        window.scrollTo({ top: top, behavior: 'smooth' });
+        var acc = target.closest ? target.closest('details.acc') : null;
+        if (acc && !acc.open) acc.open = true;
+        requestAnimationFrame(function(){
+          var top = target.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+        });
       }
     });
   });
 })();
 </script>
 
-<!-- Buy Me a Coffee floating widget -->
 <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="cbsgames" data-description="Support me on Buy me a coffee!" data-message="" data-color="#FF813F" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 
 </body>

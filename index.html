@@ -6,6 +6,7 @@
 <title>Yuza's Developer Page</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link rel="icon" href="https://raw.githubusercontent.com/redvr777/Yuza/08275274517a36966586f66a1d622ca84a339a5a/7caf2a7b-aa83-4534-a7e2-c635a39a9d8c.png" type="image/png">
 <meta property="og:title"       content="Yuza">
 <meta property="og:description" content="Offical Yuza Developer Website..">
 <meta property="og:url"         content="https://yuza-developer.vercel.app/">
@@ -48,6 +49,14 @@
   }
 
   html { scroll-behavior: smooth; }
+
+  ::selection { background: var(--accent); color: #05020d; }
+
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 0; border: 2px solid var(--bg); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+  html { scrollbar-color: var(--border2) var(--bg); scrollbar-width: thin; }
 
   body {
     background: var(--bg);
@@ -97,6 +106,12 @@
     background: rgba(5,2,13,0.92);
     backdrop-filter: blur(16px);
     border-bottom: 2px solid var(--border2);
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+
+  nav.scrolled {
+    border-bottom-color: var(--accent);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
   }
 
   .nav-logo {
@@ -165,7 +180,20 @@
     font-weight: 400;
     transition: color 0.15s;
     letter-spacing: 0.05em;
+    position: relative;
   }
+
+  .nav-links a:not(.nav-cta)::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -4px;
+    width: 0%;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.2s;
+  }
+
+  .nav-links a:not(.nav-cta):hover::after { width: 100%; }
 
   .nav-links a:hover { color: var(--accent); }
 
@@ -315,6 +343,45 @@
     #playPauseBtn { width: 30px; height: 30px; font-size: 11px; }
     .music-label { font-size: 7px; }
     #volumeSlider { width: 70px; }
+  }
+
+  #backToTop {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 200;
+    width: 44px;
+    height: 44px;
+    background: var(--bg2);
+    border: 2px solid var(--border2);
+    border-radius: var(--card-r);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #6a00cc;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+    transition: opacity 0.2s, transform 0.2s, border-color 0.15s, background 0.15s;
+    text-shadow: 0 0 8px var(--accent);
+  }
+  #backToTop.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  #backToTop:hover { border-color: var(--accent); background: rgba(176,111,255,0.14); transform: translate(-1px,-1px); }
+  #backToTop:active { transform: translate(1px,1px); }
+  @media (max-width: 768px) { #backToTop { bottom: 90px; right: 16px; width: 40px; height: 40px; font-size: 12px; } }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .hero {
@@ -2200,6 +2267,25 @@
     </div>
 
     <div class="work-card" data-category="web"
+      data-images='["https://raw.githubusercontent.com/redvr777/Fear-reality/main/Screenshot_2026-04-21_225227.png","https://raw.githubusercontent.com/redvr777/Fear-reality/main/Screenshot_2026-08-08_115133.png","https://raw.githubusercontent.com/redvr777/Fear-reality/main/FearRealityOfficialPic_2.png","https://raw.githubusercontent.com/redvr777/Fear-reality/main/Fear_Reality_Title_text_NEW.png"]'>
+      <div class="work-img">
+        <img src="https://raw.githubusercontent.com/redvr777/Fear-reality/main/Screenshot_2026-04-21_225227.png" alt="Fear Reality">
+        <div class="work-overlay">
+          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
+        </div>
+      </div>
+      <div class="work-meta">
+        <div class="work-category">Web Development</div>
+        <h3>Fear Reality</h3>
+        <p>Retro Windows-98 styled official site for Fear Reality — desktop windows, a "My Pictures" screenshot gallery, and links out to Discord, YouTube, and TikTok.</p>
+        <div class="work-tags">
+          <span class="tag">HTML / CSS</span><span class="tag">JavaScript</span><span class="tag">Game site</span>
+        </div>
+        <a href="https://fear-reality.vercel.app/#gallery" target="_blank" rel="noopener noreferrer" class="work-visit-link" onclick="event.stopPropagation();">Visit site →</a>
+      </div>
+    </div>
+
+    <div class="work-card" data-category="web"
       data-images='["https://raw.githubusercontent.com/redvr777/Yuza/08275274517a36966586f66a1d622ca84a339a5a/7caf2a7b-aa83-4534-a7e2-c635a39a9d8c.png"]'>
       <div class="work-img">
         <img src="https://raw.githubusercontent.com/redvr777/Yuza/08275274517a36966586f66a1d622ca84a339a5a/7caf2a7b-aa83-4534-a7e2-c635a39a9d8c.png" alt="Yuza Developer Site">
@@ -2745,6 +2831,8 @@
   </div>
 </div>
 
+<button id="backToTop" type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'});">↑</button>
+
 <script>
 (function(){
   var canvas = document.getElementById('bg-canvas');
@@ -2881,6 +2969,52 @@
     }
   },true);
   document.addEventListener('dragstart',function(e){e.preventDefault();return false;});
+})();
+</script>
+
+<script>
+/* ── Nav scroll shadow + back-to-top visibility ── */
+(function(){
+  var navEl = document.querySelector('nav');
+  var backTop = document.getElementById('backToTop');
+  function onScroll() {
+    var y = window.scrollY || document.documentElement.scrollTop;
+    if (navEl) navEl.classList.toggle('scrolled', y > 12);
+    if (backTop) backTop.classList.toggle('visible', y > 480);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+
+/* ── Scroll reveal for cards/sections ── */
+(function(){
+  var targets = document.querySelectorAll('.service-card, .released-card, .work-card, .payment-card, .step, .devapply-perk, .devapply-cta-box');
+  targets.forEach(function(el){ el.classList.add('reveal'); });
+
+  if (!('IntersectionObserver' in window)) {
+    targets.forEach(function(el){ el.classList.add('in-view'); });
+    return;
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  targets.forEach(function(el){ io.observe(el); });
+
+  /* re-check reveal state whenever an accordion is opened, since hidden content starts un-observed visually */
+  document.querySelectorAll('details.acc').forEach(function(d){
+    d.addEventListener('toggle', function(){
+      if (d.open) {
+        d.querySelectorAll('.reveal:not(.in-view)').forEach(function(el){ io.observe(el); });
+      }
+    });
+  });
 })();
 </script>
 

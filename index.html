@@ -9,64 +9,81 @@
 <meta property="og:description" content="Offical Yuza Developer Website..">
 <meta property="og:url"         content="https://yuza-developer.vercel.app/">
 <meta property="og:type"        content="website">
-<meta name="theme-color"        content="#7a0000">
+<meta name="theme-color"        content="#222222">
 <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'; object-src 'none';">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .field input, .field select, .field textarea, .copy-box, input, textarea, select, .allow-select {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+</style>
+
+<script>
+(function(){
+  document.addEventListener('contextmenu', function(e){ e.preventDefault(); return false; });
+  document.addEventListener('keydown', function(e){
+    var k = e.key || ''; var kc = e.keyCode || 0;
+    if (k === 'F12' || kc === 123) { e.preventDefault(); e.stopPropagation(); return false; }
+    if (e.ctrlKey || e.metaKey) {
+      if (e.shiftKey && ['i','I','j','J','c','C','k','K','m','M','p','P'].indexOf(k) > -1) { e.preventDefault(); e.stopPropagation(); return false; }
+      if (e.altKey && ['i','I','j','J','c','C','u','U'].indexOf(k) > -1) { e.preventDefault(); e.stopPropagation(); return false; }
+      if (!e.shiftKey && !e.altKey && ['u','U','s','S','p','P','a','A'].indexOf(k) > -1) { e.preventDefault(); e.stopPropagation(); return false; }
+    }
+  }, true);
+  document.addEventListener('dragstart', function(e){ e.preventDefault(); return false; });
+})();
+</script>
+
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
+    background: #050505;
+    overflow-x: hidden;
+  }
 
   :root {
-    --bg: #0a0000;
-    --bg2: #150202;
-    --bg3: #1f0505;
-    --border: rgba(255,43,43,0.14);
-    --border2: rgba(255,43,43,0.32);
-    --text: #e8d8d8;
-    --muted: #b58f8f;
-    --accent: #ff2b2b;
-    --accent2: #d40000;
-    --accent-glow: rgba(255,43,43,0.22);
-    --white: #ffffff;
-    --card-r: 4px;
+    --panel: #1c1c1c;
+    --panel2: #141414;
+    --panel3: #232323;
+    --menubar: #2a2a2a;
+    --border: #4a4a4a;
+    --border-soft: #333;
+    --text: #d8d8d8;
+    --muted: #999;
+    --accent: #d8d8d8;
+    --accent-bright: #ffffff;
+    --titlebar-hi: #6e6e6e;
+    --titlebar-mid: #3a3a3a;
+    --titlebar-lo: #161616;
     --coffee: #FFDD00;
     --coffee-dark: #e6c800;
     --cashapp: #00D54B;
     --cashapp-dark: #00b83f;
     --live: #ff3333;
     --live-dark: #cc1a1a;
-    --live-glow: rgba(255,51,51,0.18);
     --gold: #FFDD00;
     --gold-dark: #e6c800;
     --gold-dim: #a08800;
-    --gold-glow: rgba(255,221,0,0.18);
     --gold-border: rgba(255,221,0,0.28);
     --discord: #5865F2;
     --discord-dark: #4752c4;
-    --phone: #00C2FF;
-    --phone-dark: #00a3d9;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  ::selection { background: var(--accent); color: #05020d; }
-
-  ::-webkit-scrollbar { width: 10px; height: 10px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 0; border: 2px solid var(--bg); }
-  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-  html { scrollbar-color: var(--border2) var(--bg); scrollbar-width: thin; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 18px;
-    line-height: 1.65;
-    image-rendering: pixelated;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    --phone: #9a9a9a;
+    --phone-dark: #7a7a7a;
+    --card-r: 2px;
   }
 
   #bg-canvas {
@@ -77,3249 +94,782 @@
     pointer-events: none;
   }
 
-  body::before {
-    content: '';
+  #desktop {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    width: 100%;
+    padding: 30px 24px 60px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .site-header {
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+    margin-bottom: 18px;
+  }
+  .site-header h1 {
+    margin: 0;
+    font-family: "Courier New", monospace;
+    font-size: 26px;
+    letter-spacing: 3px;
+    color: #eaeaea;
+    text-shadow: 0 0 6px rgba(255,255,255,0.35), 0 0 14px rgba(120,120,120,0.5), 2px 2px 0 #000;
+  }
+  .site-header .sub {
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    color: #999;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 2px #000;
+    margin-top: 2px;
+  }
+
+  .desktop-icons {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    z-index: 5;
+  }
+  .d-icon {
+    width: 76px;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 2px #000;
+    font-size: 11px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .d-icon img {
+    width: 40px;
+    height: 40px;
+    display: block;
+    margin: 0 auto 4px auto;
+    border-radius: 3px;
+    filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.6)) grayscale(0.15);
+  }
+  .d-icon .emoji-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 4px auto;
+    font-size: 22px;
+    background: #1c1c1c;
+    border: 1px solid #4a4a4a;
+    border-radius: 3px;
+  }
+  .d-icon span.label {
+    background: rgba(0,0,0,0);
+    padding: 1px 3px;
+    font-family: "Courier New", monospace;
+  }
+  .d-icon:hover span.label {
+    background: #3a3a3a;
+    outline: 1px dotted #fff;
+  }
+
+  .xp-window {
+    width: 100%;
+    max-width: 900px;
+    margin: 14px 0;
+    border: 1px solid #3a3a3a;
+    border-radius: 8px 8px 3px 3px;
+    box-shadow: 3px 3px 14px rgba(0,0,0,0.75);
+    background: #1c1c1c;
+    overflow: hidden;
+  }
+  .xp-titlebar {
+    background: linear-gradient(180deg, var(--titlebar-hi) 0%, #4a4a4a 4%, #2a2a2a 8%, #202020 40%, #333 60%, #6a6a6a 88%, #7a7a7a 92%, #3a3a3a 100%);
+    color: #fff;
+    font-weight: bold;
+    font-size: 13px;
+    padding: 4px 4px 5px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.8), 0 0 6px rgba(255,255,255,0.25);
+    border-radius: 6px 6px 0 0;
+  }
+  .xp-titlebar .ttl {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: "Courier New", monospace;
+    letter-spacing: 0.5px;
+  }
+  .xp-titlebar .ttl img { width: 16px; height: 16px; border-radius: 2px; }
+  .xp-titlebar .ttl .ttl-emoji { width: 16px; text-align: center; font-size: 13px; line-height: 1; }
+  .xp-controls { display: flex; gap: 3px; }
+  .xp-controls .btn {
+    width: 21px; height: 20px;
+    background: linear-gradient(180deg,#5a5a5a,#1a1a1a);
+    border: 1px solid #000;
+    border-radius: 3px;
+    color: #ddd;
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.6);
+  }
+  .xp-controls .close { background: linear-gradient(180deg,#8a8a8a,#3a3a3a); border-color: #000; }
+
+  .xp-menubar {
+    background: #2a2a2a;
+    border-bottom: 1px solid #000;
+    padding: 3px 6px;
+    font-size: 11px;
+    display: flex;
+    gap: 14px;
+    color: #c9c9c9;
+    font-family: "Courier New", monospace;
+  }
+  .xp-menubar span.menu-trigger { padding: 1px 4px; cursor: pointer; position: relative; }
+  .xp-menubar span.menu-trigger:hover, .xp-menubar span.menu-trigger.active { background: #4a4a4a; color: #fff; border-radius: 2px; }
+
+  .xp-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 190px;
+    background: #1c1c1c;
+    border: 1px solid #4a4a4a;
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.7);
+    z-index: 200;
+    padding: 3px 0;
+    font-family: "Courier New", monospace;
+    display: none;
+  }
+  .xp-dropdown.open { display: block; }
+  .xp-dropdown .item {
+    padding: 5px 14px;
+    font-size: 12px;
+    color: #ddd;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .xp-dropdown .item:hover { background: #4a4a4a; color: #fff; }
+  .xp-dropdown .sep { height: 1px; background: #3a3a3a; margin: 3px 0; }
+
+  .xp-toast {
+    position: fixed;
+    bottom: 46px;
+    right: 16px;
+    background: #1c1c1c;
+    border: 1px solid #4a4a4a;
+    color: #ddd;
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    padding: 10px 14px;
+    border-radius: 4px;
+    box-shadow: 3px 3px 12px rgba(0,0,0,0.7);
+    z-index: 600;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+    max-width: 260px;
+  }
+  .xp-toast.show { opacity: 1; transform: translateY(0); }
+
+  .xp-body {
+    background: #111;
+    padding: 20px 22px;
+    color: #d8d8d8;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .xp-body.tan { background: #181818; }
+
+  .hero-body-xp {
+    text-align: center;
+    background: #111;
+    padding: 24px 18px;
+  }
+  .hero-body-xp h2 {
+    font-family: "Courier New", monospace;
+    color: #eee;
+    font-size: 20px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px rgba(255,255,255,0.35);
+    margin: 0 0 6px 0;
+  }
+  .hero-tagline {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #aaa;
+    font-family: "Courier New", monospace;
+  }
+
+  .status-bar {
+    background: #2a2a2a;
+    border-top: 1px solid #000;
+    font-size: 11px;
+    padding: 3px 8px;
+    color: #999;
+    font-family: "Courier New", monospace;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .status-bar .cell {
+    border: 1px inset #4a4a4a;
+    padding: 1px 8px;
+  }
+
+  marquee {
+    background: #000;
+    color: #d8d8d8;
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    padding: 4px 0;
+    border: 1px inset #4a4a4a;
+    text-shadow: 0 0 4px rgba(255,255,255,0.4);
+  }
+
+  .blink { animation: blinker 1s step-start infinite; }
+  @keyframes blinker { 50% { opacity: 0; } }
+
+  body.crt-on::after {
+    content: "";
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 999;
     background: repeating-linear-gradient(
       0deg,
-      transparent,
+      rgba(0,0,0,0.18) 0px,
+      rgba(0,0,0,0.18) 1px,
       transparent 2px,
-      rgba(0,0,0,0.07) 2px,
-      rgba(0,0,0,0.07) 4px
+      transparent 4px
     );
+    mix-blend-mode: multiply;
+    animation: crtflicker 6s infinite;
+  }
+  @keyframes crtflicker {
+    0%, 96%, 100% { opacity: 1; }
+    97% { opacity: 0.75; }
+    98% { opacity: 1; }
   }
 
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 48px;
-    height: 64px;
-    background: rgba(5,2,13,0.92);
-    backdrop-filter: blur(16px);
-    border-bottom: 2px solid var(--border2);
-    transition: border-color 0.25s, box-shadow 0.25s;
-  }
+  /* ===== ported Yuza content styling, reskinned to grayscale ===== */
 
-  nav.scrolled {
-    border-bottom-color: var(--accent);
-    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
-  }
-
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-weight: 400;
-    font-size: 16px;
-    letter-spacing: 2px;
-    color: var(--text);
-    text-decoration: none;
-    text-shadow: 0 0 12px var(--accent);
-  }
-
-  .nav-logo span { color: var(--accent); }
-
-  .nav-avatar {
-    width: 38px;
-    height: 38px;
-    border-radius: 2px;
-    border: 2px solid var(--border2);
-    object-fit: cover;
-    display: block;
-    flex-shrink: 0;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    box-shadow: 0 0 0 0 var(--accent);
-    image-rendering: auto;
-    background: var(--bg3);
-  }
-
-  .nav-logo:hover .nav-avatar {
-    border-color: var(--accent);
-    box-shadow: 0 0 10px rgba(255,43,43,0.4);
-  }
-
-  .nav-avatar-placeholder {
-    width: 38px;
-    height: 38px;
-    border-radius: 2px;
-    border: 2px solid var(--border2);
-    background: var(--bg3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-size: 16px;
-    color: var(--accent);
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    transition: border-color 0.2s;
-  }
-  .nav-logo:hover .nav-avatar-placeholder { border-color: var(--accent); }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    list-style: none;
-    align-items: center;
-  }
-
-  .nav-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 13px;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 400;
-    transition: color 0.15s;
-    letter-spacing: 0.05em;
-    position: relative;
-  }
-
-  .nav-links a:not(.nav-cta)::after {
-    content: '';
-    position: absolute;
-    left: 0; bottom: -4px;
-    width: 0%;
-    height: 1px;
-    background: var(--accent);
-    transition: width 0.2s;
-  }
-
-  .nav-links a:not(.nav-cta):hover::after { width: 100%; }
-
-  .nav-links a:hover { color: var(--accent); }
-
-  .nav-cta {
-    background: var(--accent) !important;
-    color: #05020d !important;
-    padding: 8px 16px !important;
-    border-radius: 2px !important;
-    font-family: 'Courier New', Courier, monospace; font-weight: bold !important;
-    font-size: 10px !important;
-    letter-spacing: 1px;
-    transition: background 0.2s !important;
-    box-shadow: 3px 3px 0 #7a0000;
-  }
-
-  .nav-cta:hover { background: var(--accent2) !important; color: #05020d !important; }
-
-  .nav-bmac {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    background: var(--coffee) !important;
-    color: #1a1000 !important;
-    padding: 7px 14px !important;
-    border-radius: 2px !important;
-    font-family: 'Courier New', Courier, monospace; font-weight: bold !important;
-    font-size: 9px !important;
-    letter-spacing: 0.5px;
-    text-decoration: none;
-    transition: background 0.15s, transform 0.1s !important;
-    box-shadow: 3px 3px 0 #a08800;
-    white-space: nowrap;
-  }
-  .nav-bmac:hover {
-    background: var(--coffee-dark) !important;
-    color: #1a1000 !important;
-    transform: translate(-1px,-1px) !important;
-    box-shadow: 4px 4px 0 #a08800 !important;
-  }
-  .nav-bmac:active { transform: translate(1px,1px) !important; box-shadow: 1px 1px 0 #a08800 !important; }
-  .nav-bmac .bmac-icon { font-size: 14px; line-height: 1; }
-
-  .nav-cashapp {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    background: var(--cashapp) !important;
-    color: #001a0d !important;
-    padding: 7px 14px !important;
-    border-radius: 2px !important;
-    font-family: 'Courier New', Courier, monospace; font-weight: bold !important;
-    font-size: 9px !important;
-    letter-spacing: 0.5px;
-    text-decoration: none;
-    transition: background 0.15s, transform 0.1s !important;
-    box-shadow: 3px 3px 0 #007a2b;
-    white-space: nowrap;
-  }
-  .nav-cashapp:hover {
-    background: var(--cashapp-dark) !important;
-    color: #001a0d !important;
-    transform: translate(-1px,-1px) !important;
-    box-shadow: 4px 4px 0 #007a2b !important;
-  }
-  .nav-cashapp:active { transform: translate(1px,1px) !important; box-shadow: 1px 1px 0 #007a2b !important; }
-  .nav-cashapp .cashapp-icon { font-size: 14px; line-height: 1; }
-
-  #musicPlayer {
-    position: fixed;
-    bottom: 28px;
-    left: 28px;
-    z-index: 200;
-    background: var(--bg2);
-    border: 2px solid var(--border2);
-    border-radius: var(--card-r);
-    padding: 10px 14px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    box-shadow: 4px 4px 0 #7a0000;
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    transition: box-shadow 0.1s, transform 0.1s;
-  }
-  #musicPlayer:hover {
-    transform: translate(-1px, -1px);
-    box-shadow: 5px 5px 0 #7a0000;
-  }
-  #playPauseBtn {
-    background: rgba(255,43,43,0.12);
-    border: 2px solid var(--border2);
-    border-radius: 2px;
-    color: var(--accent);
-    width: 34px;
-    height: 34px;
-    cursor: pointer;
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    flex-shrink: 0;
-    transition: background 0.15s, transform 0.1s;
-    text-shadow: 0 0 6px var(--accent);
-  }
-  #playPauseBtn:hover { background: rgba(255,43,43,0.22); transform: translate(-1px,-1px); }
-  #playPauseBtn:active { transform: translate(1px,1px); }
-  .music-label {
-    font-size: 8px;
-    color: var(--accent);
-    letter-spacing: 1px;
-    text-shadow: 0 0 8px var(--accent);
-    margin-bottom: 6px;
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-  }
-  #volumeSlider {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 90px;
-    height: 4px;
-    background: var(--border2);
-    border-radius: 2px;
-    outline: none;
-    cursor: pointer;
-    display: block;
-  }
-  #volumeSlider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 12px;
-    height: 12px;
-    background: var(--accent);
-    border-radius: 0;
-    cursor: pointer;
-    box-shadow: 0 0 6px var(--accent);
-  }
-  #volumeSlider::-moz-range-thumb {
-    width: 12px;
-    height: 12px;
-    background: var(--accent);
-    border: none;
-    border-radius: 0;
-    cursor: pointer;
-    box-shadow: 0 0 6px var(--accent);
-  }
-  @media (max-width: 768px) {
-    #musicPlayer { bottom: 90px; left: 16px; padding: 8px 12px; gap: 10px; }
-    #playPauseBtn { width: 30px; height: 30px; font-size: 11px; }
-    .music-label { font-size: 7px; }
-    #volumeSlider { width: 70px; }
-  }
-
-  #backToTop {
-    position: fixed;
-    bottom: 28px;
-    right: 28px;
-    z-index: 200;
-    width: 44px;
-    height: 44px;
-    background: var(--bg2);
-    border: 2px solid var(--border2);
-    border-radius: var(--card-r);
-    color: var(--accent);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 14px;
-    cursor: pointer;
-    box-shadow: 4px 4px 0 #7a0000;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(8px);
-    transition: opacity 0.2s, transform 0.2s, border-color 0.15s, background 0.15s;
-    text-shadow: 0 0 8px var(--accent);
-  }
-  #backToTop.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
-  #backToTop:hover { border-color: var(--accent); background: rgba(255,43,43,0.14); transform: translate(-1px,-1px); }
-  #backToTop:active { transform: translate(1px,1px); }
-  @media (max-width: 768px) { #backToTop { bottom: 90px; right: 16px; width: 40px; height: 40px; font-size: 12px; } }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  .reveal.in-view {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 120px 48px 80px;
-    max-width: 1100px;
-    margin: 0 auto;
-    position: relative;
-  }
-
-  .hero-body {
-    display: grid;
-    grid-template-columns: 1fr 420px;
-    gap: 56px;
-    align-items: center;
-  }
-
-  .hero-image-wrap {
-    position: relative;
-    border: 2px solid var(--border2);
-    border-radius: var(--card-r);
-    overflow: hidden;
-    background: var(--bg3);
-    aspect-ratio: 4 / 3;
-    box-shadow: 6px 6px 0 #7a0000, 0 0 40px rgba(255,43,43,0.15);
-    transition: box-shadow 0.2s, transform 0.2s;
-  }
-
-  .hero-image-wrap:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: 9px 9px 0 #7a0000, 0 0 56px rgba(255,43,43,0.22);
-  }
-
-  .hero-image-wrap::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--accent);
-    box-shadow: 0 0 12px var(--accent);
-    z-index: 2;
-  }
-
-  .hero-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    image-rendering: auto;
-    transition: transform 0.4s;
-  }
-
-  .hero-image-wrap:hover .hero-img {
-    transform: scale(1.04);
-  }
-
-  .hero-img-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    color: var(--border2);
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 9px;
-    letter-spacing: 0.08em;
-    text-align: center;
-    padding: 24px;
-    min-height: 240px;
-  }
-
-  .hero-img-placeholder .ph-big { font-size: 48px; opacity: 0.35; }
-
-  .hero-image-wrap::after {
-    content: '';
-    position: absolute;
-    bottom: 0; right: 0;
-    width: 16px; height: 16px;
-    background: var(--accent);
-    opacity: 0.25;
-    pointer-events: none;
-  }
-
-  .hero-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255,43,43,0.08);
-    border: 2px solid var(--border2);
-    color: var(--accent);
-    font-size: 13px;
-    font-family: 'Courier New', Courier, monospace;
-    letter-spacing: 0.1em;
-    padding: 6px 14px;
-    border-radius: 2px;
-    margin-bottom: 32px;
-    width: fit-content;
-  }
-
-  .hero-tag::before {
-    content: '';
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    background: var(--accent);
-    border-radius: 0;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  @keyframes live-pulse {
-    0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--live); }
-    50% { opacity: 0.5; box-shadow: 0 0 14px var(--live); }
-  }
-
-  @keyframes gold-pulse {
-    0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--gold); }
-    50% { opacity: 0.5; box-shadow: 0 0 18px var(--gold); }
-  }
-
-  h1 {
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: clamp(22px, 3.5vw, 46px);
-    font-weight: 400;
-    line-height: 1.4;
-    letter-spacing: -1px;
-    margin-bottom: 32px;
-    max-width: 820px;
-    text-shadow: 0 0 30px rgba(255,43,43,0.4);
-  }
-
-  h1 em {
-    font-style: normal;
-    color: var(--accent);
-    text-shadow: 0 0 20px var(--accent);
-  }
-
-  .hero-sub {
-    font-size: 20px;
-    color: var(--muted);
-    max-width: 520px;
-    margin-bottom: 48px;
-    line-height: 1.6;
-    font-family: 'Courier New', Courier, monospace;
-  }
-
-  .hero-btns {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .btn-primary {
-    background: var(--accent);
-    color: #05020d;
-    padding: 14px 24px;
-    border-radius: 2px;
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 11px;
-    letter-spacing: 1px;
-    text-decoration: none;
-    transition: background 0.15s, transform 0.1s;
-    display: inline-block;
-    box-shadow: 4px 4px 0 #7a0000;
-  }
-
-  .btn-primary:hover { background: var(--accent2); transform: translate(-1px,-1px); box-shadow: 5px 5px 0 #7a0000; }
-  .btn-primary:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 #7a0000; }
-
-  .btn-outline {
-    background: transparent;
-    color: var(--accent);
-    padding: 14px 24px;
-    border-radius: 2px;
-    border: 2px solid var(--border2);
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 11px;
-    letter-spacing: 1px;
-    text-decoration: none;
-    transition: border-color 0.2s, transform 0.1s;
-    display: inline-block;
-  }
-
-  .btn-outline:hover { border-color: var(--accent); transform: translate(-1px,-1px); }
-
-  .hero-stats {
-    display: flex;
-    gap: 48px;
-    margin-top: 72px;
-    padding-top: 40px;
-    border-top: 2px solid var(--border);
-  }
-
-  .stat-num {
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 18px;
-    color: var(--accent);
-    line-height: 1;
-    margin-bottom: 8px;
-    text-shadow: 0 0 10px var(--accent);
-  }
-
-  .stat-label {
+  h2.xp-h2 {
+    font-family: "Courier New", monospace;
     font-size: 15px;
-    color: var(--muted);
-    font-family: 'Courier New', Courier, monospace;
+    letter-spacing: 1px;
+    color: #eee;
+    text-shadow: 0 0 8px rgba(255,255,255,0.25);
+    margin-bottom: 4px;
   }
-
-  section {
-    padding: 96px 48px;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .section-label {
+  .section-sub-xp {
+    font-family: "Courier New", monospace;
     font-size: 13px;
-    font-family: 'Courier New', Courier, monospace;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 16px;
-  }
-
-  h2 {
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: clamp(18px, 2.5vw, 30px);
-    font-weight: 400;
-    letter-spacing: -0.5px;
-    line-height: 1.4;
-    margin-bottom: 16px;
-    text-shadow: 0 0 20px rgba(255,43,43,0.3);
-  }
-
-  .section-sub {
-    font-size: 18px;
     color: var(--muted);
-    max-width: 520px;
-    font-family: 'Courier New', Courier, monospace;
-    margin-bottom: 56px;
+    margin-bottom: 18px;
     line-height: 1.55;
   }
 
   .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2px;
-    background: var(--border2);
-    border: 2px solid var(--border2);
-    border-radius: var(--card-r);
-    overflow: hidden;
-  }
-
-  .service-card {
-    background: var(--bg2);
-    padding: 36px 32px;
-    transition: background 0.2s;
-    position: relative;
-  }
-
-  .service-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--accent);
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-
-  .service-card:hover { background: var(--bg3); }
-  .service-card:hover::before { opacity: 1; }
-
-  .service-icon {
-    width: 44px;
-    height: 44px;
-    background: var(--accent-glow);
-    border: 2px solid var(--border2);
-    border-radius: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    font-size: 20px;
-  }
-
-  .service-card h3 {
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 13px;
-    font-weight: 400;
-    margin-bottom: 14px;
-    line-height: 1.5;
-    color: var(--text);
-  }
-
-  .service-card p {
-    font-size: 17px;
-    color: var(--muted);
-    line-height: 1.6;
-    font-family: 'Courier New', Courier, monospace;
-  }
-
-  .service-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 18px;
-  }
-
-  .tag {
-    font-size: 13px;
-    padding: 3px 10px;
-    border-radius: 2px;
-    background: rgba(255,43,43,0.08);
-    color: var(--accent);
-    border: 1px solid var(--border2);
-    font-family: 'Courier New', Courier, monospace;
-    letter-spacing: 0.05em;
-  }
-
-  #released {
-    background: rgba(10,0,0,0.92);
-    border-top: 2px solid rgba(255,51,51,0.25);
-    border-bottom: 2px solid rgba(255,51,51,0.25);
-    max-width: 100%;
-    padding: 96px 48px;
-  }
-
-  #released-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  #released .section-label {
-    color: var(--live);
-  }
-
-  #released h2 {
-    text-shadow: 0 0 20px rgba(0,255,136,0.3);
-  }
-
-  .released-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 20px;
-  }
-
-  .released-card {
-    background: var(--bg);
-    border: 2px solid rgba(255,51,51,0.2);
-    border-radius: var(--card-r);
-    overflow: hidden;
-    text-decoration: none;
-    display: block;
-    position: relative;
-    transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
-    cursor: pointer;
-  }
-
-  .released-card:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: 5px 5px 0 var(--live-dark);
-    border-color: var(--live);
-  }
-
-  .released-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--live);
-    box-shadow: 0 0 12px var(--live);
-    z-index: 2;
-  }
-
-  .released-img {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    background: var(--bg3);
-    border-bottom: 2px solid rgba(255,51,51,0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .released-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    image-rendering: auto;
-    transition: transform 0.3s;
-  }
-
-  .released-card:hover .released-img img {
-    transform: scale(1.04);
-  }
-
-  .released-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(10,0,0,0.75);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.2s;
-    gap: 10px;
-    flex-direction: column;
-  }
-
-  .released-card:hover .released-overlay {
-    opacity: 1;
-  }
-
-  .released-overlay-text {
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 11px;
-    color: var(--live);
-    text-shadow: 0 0 12px var(--live);
-    letter-spacing: 1px;
-  }
-
-  .released-overlay-sub {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 16px;
-    color: rgba(0,255,136,0.7);
-    letter-spacing: 0.08em;
-  }
-
-  .released-meta {
-    padding: 20px 22px 24px;
-  }
-
-  .released-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(255,51,51,0.08);
-    border: 1px solid rgba(255,51,51,0.3);
-    color: var(--live);
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 14px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    border-radius: 2px;
-    margin-bottom: 12px;
-  }
-
-  .released-badge::before {
-    content: '';
-    display: inline-block;
-    width: 7px;
-    height: 7px;
-    background: var(--live);
-    border-radius: 0;
-    animation: live-pulse 1.8s ease-in-out infinite;
-  }
-
-  .released-card h3 {
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 1.6;
-    color: var(--text);
-    margin-bottom: 10px;
-  }
-
-  .released-card p {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 17px;
-    color: var(--muted);
-    line-height: 1.5;
-    margin-bottom: 14px;
-  }
-
-  .released-platform {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 9px;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-    padding: 5px 10px;
-    border: 1px solid var(--border2);
-    border-radius: 2px;
-    background: rgba(255,43,43,0.05);
-  }
-
-  #work {
-    background: rgba(12,6,24,0.85);
-    border-top: 2px solid var(--border2);
-    border-bottom: 2px solid var(--border2);
-    max-width: 100%;
-    padding: 96px 48px;
-  }
-
-  #work-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .work-filters {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
-  }
-
-  .filter-btn {
-    background: transparent;
-    border: 2px solid var(--border2);
-    color: var(--muted);
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 16px;
-    padding: 6px 16px;
-    border-radius: 2px;
-    cursor: pointer;
-    transition: all 0.15s;
-    letter-spacing: 0.05em;
-  }
-
-  .filter-btn:hover,
-  .filter-btn.active {
-    background: rgba(255,43,43,0.1);
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  .work-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 16px;
-  }
-
-  .work-card {
-    background: var(--bg);
-    border: 2px solid var(--border2);
-    border-radius: var(--card-r);
-    overflow: hidden;
-    transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
-    position: relative;
-    cursor: pointer;
-  }
-
-  .work-card:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: 5px 5px 0 var(--accent2);
-    border-color: var(--accent);
-  }
-
-  .work-img {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    background: var(--bg3);
-    border-bottom: 2px solid var(--border2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .work-img-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    color: var(--border2);
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 9px;
-    letter-spacing: 0.05em;
-    text-align: center;
-    padding: 16px;
-  }
-
-  .work-img-placeholder .ph-icon {
-    font-size: 32px;
-    opacity: 0.4;
-  }
-
-  .work-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    image-rendering: auto;
-    transition: transform 0.3s;
-  }
-
-  .work-card:hover .work-img img {
-    transform: scale(1.04);
-  }
-
-  .work-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(5,2,13,0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.2s;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .work-card:hover .work-overlay {
-    opacity: 1;
-  }
-
-  .work-overlay-text {
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 11px;
-    color: var(--accent);
-    text-shadow: 0 0 12px var(--accent);
-    letter-spacing: 1px;
-  }
-
-  .work-overlay-count {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 15px;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-  }
-
-  .work-meta {
-    padding: 20px 22px 22px;
-  }
-
-  .work-category {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 13px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 8px;
-  }
-
-  .work-card h3 {
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 1.6;
-    color: var(--text);
-    margin-bottom: 10px;
-  }
-
-  .work-card p {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 17px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-
-  .work-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    margin-top: 14px;
-  }
-
-  .work-visit-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 14px;
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 9px;
-    color: var(--accent);
-    letter-spacing: 0.05em;
-    padding: 6px 10px;
-    border: 1px solid var(--border2);
-    border-radius: 2px;
-    background: rgba(255,43,43,0.06);
-    text-decoration: none;
-    transition: border-color 0.15s, background 0.15s, color 0.15s;
-  }
-  .work-visit-link:hover {
-    border-color: var(--accent);
-    background: rgba(255,43,43,0.14);
-  }
-
-  #how { background: rgba(12,6,24,0.85); border-top: 2px solid var(--border2); border-bottom: 2px solid var(--border2); max-width: 100%; padding: 96px 48px; }
-  #how-inner { max-width: 1100px; margin: 0 auto; }
-
-  .steps {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 0;
-    position: relative;
-    margin-top: 56px;
-  }
-
-  .step {
-    padding: 0 32px 0 0;
-    position: relative;
-  }
-
-  .step:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    top: 22px;
-    right: 0;
-    width: 2px;
-    height: 60px;
-    background: var(--border2);
-  }
-
-  .step-num {
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 11px;
-    color: var(--accent);
-    margin-bottom: 16px;
-    letter-spacing: 0.05em;
-    text-shadow: 0 0 8px var(--accent);
-  }
-
-  .step h3 {
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 12px;
-    font-weight: 400;
-    margin-bottom: 12px;
-    line-height: 1.6;
-    color: var(--text);
-  }
-
-  .step p {
-    font-size: 17px;
-    color: var(--muted);
-    font-family: 'Courier New', Courier, monospace;
-    line-height: 1.55;
-  }
-
-  #payment { background: var(--bg); }
-
-  .payment-grid {
-    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 16px;
-    margin-top: 40px;
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
   }
-
-  .payment-card {
-    border: 2px solid var(--border2);
-    border-radius: var(--card-r);
-    padding: 32px 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  .service-card {
+    background: #181818;
+    padding: 20px 18px;
     position: relative;
-    overflow: hidden;
-    transition: transform 0.15s, box-shadow 0.15s;
   }
-
-  .payment-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-  }
-
-  .payment-card.cashapp { background: rgba(0,213,75,0.05); }
-  .payment-card.cashapp::before { background: var(--cashapp); }
-  .payment-card.cashapp:hover { transform: translate(-2px,-2px); box-shadow: 4px 4px 0 var(--cashapp); }
-
-  .payment-card.bmac { background: rgba(255,221,0,0.05); }
-  .payment-card.bmac::before { background: var(--coffee); }
-  .payment-card.bmac:hover { transform: translate(-2px,-2px); box-shadow: 4px 4px 0 #a08800; }
-
-  .payment-icon {
-    font-size: 32px;
-    line-height: 1;
-  }
-
-  .payment-card h3 {
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 1.5;
-  }
-
-  .payment-card.cashapp h3 { color: var(--cashapp); text-shadow: 0 0 10px rgba(0,213,75,0.4); }
-  .payment-card.bmac h3 { color: var(--coffee); text-shadow: 0 0 10px rgba(255,221,0,0.4); }
-
-  .payment-card p {
-    font-size: 17px;
-    color: var(--muted);
-    font-family: 'Courier New', Courier, monospace;
-    line-height: 1.55;
-  }
-
-  .payment-only-note {
-    margin-top: 24px;
-    padding: 16px 20px;
-    background: rgba(255,43,43,0.06);
-    border: 1px solid var(--border2);
-    border-radius: 2px;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 17px;
-    color: var(--muted);
-    line-height: 1.55;
-  }
-
-  .payment-only-note strong { color: var(--accent); font-weight: 400; }
-
-  .form-wrap {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 56px;
-    align-items: start;
-  }
-
-  .form-info h2 { margin-bottom: 16px; }
-
-  .form-info p {
-    font-size: 18px;
-    color: var(--muted);
-    font-family: 'Courier New', Courier, monospace;
-    margin-bottom: 32px;
-    line-height: 1.65;
-  }
-
-  .contact-detail {
+  .service-card:hover { background: #202020; }
+  .service-icon {
+    width: 38px;
+    height: 38px;
+    background: #232323;
+    border: 1px solid var(--border);
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 16px 0;
-    border-top: 1px solid var(--border);
-    font-size: 16px;
+    justify-content: center;
+    margin-bottom: 14px;
+    font-size: 18px;
+  }
+  .service-card h3 {
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    margin-bottom: 10px;
+    color: #eee;
+  }
+  .service-card p {
+    font-family: "Courier New", monospace;
+    font-size: 12px;
     color: var(--muted);
-    font-family: 'Courier New', Courier, monospace;
+    line-height: 1.6;
+  }
+  .service-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    background: #232323;
+    color: #ccc;
+    border: 1px solid var(--border);
+    font-family: "Courier New", monospace;
   }
 
-  .contact-detail:last-child { border-bottom: 1px solid var(--border); }
-
-  .contact-detail strong { color: var(--accent); font-weight: 400; }
-
-  .form-card {
-    background: var(--bg2);
-    border: 2px solid var(--border2);
-    border-radius: var(--card-r);
-    padding: 40px;
+  .gallery-grid, .released-grid-xp {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .released-card-xp, .work-card-xp {
+    border: 2px inset #4a4a4a;
+    background: #000;
+    padding: 3px;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+    cursor: pointer;
+  }
+  .released-card-xp img, .work-card-xp img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+  }
+  .gallery-caption {
+    background: #2a2a2a;
+    color: #bbb;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    text-align: center;
+    padding: 4px 6px;
+    border-top: 1px solid #4a4a4a;
+  }
+  .released-card-xp .gallery-caption, .work-card-xp .gallery-caption { text-align: left; }
+  .released-card-xp h3, .work-card-xp h3 {
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    color: #eee;
+    margin-bottom: 4px;
+  }
+  .released-card-xp p, .work-card-xp p {
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    color: #999;
+    line-height: 1.4;
+  }
+  .released-live-badge {
+    display: inline-block;
+    background: rgba(255,51,51,0.1);
+    border: 1px solid rgba(255,51,51,0.4);
+    color: var(--live);
+    font-family: "Courier New", monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    padding: 2px 6px;
+    margin-bottom: 6px;
   }
 
-  .field { margin-bottom: 20px; }
+  .work-filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+  .filter-btn {
+    background: #1c1c1c;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    padding: 5px 12px;
+    cursor: pointer;
+  }
+  .filter-btn:hover, .filter-btn.active { background: #3a3a3a; border-color: #888; color: #fff; }
 
+  .work-grid-xp { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 10px; }
+
+  .steps-xp { display: flex; flex-direction: column; gap: 14px; }
+  .step-xp { border-left: 2px solid var(--border); padding: 2px 0 2px 16px; }
+  .step-xp .step-num { font-family: "Courier New", monospace; color: #ccc; font-size: 11px; letter-spacing: 1px; margin-bottom: 4px; }
+  .step-xp h3 { font-family: "Courier New", monospace; font-size: 13px; color: #eee; margin-bottom: 4px; }
+  .step-xp p { font-family: "Courier New", monospace; font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .payment-grid-xp { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 12px; }
+  .payment-card-xp {
+    border: 1px solid var(--border);
+    background: #181818;
+    padding: 16px 16px;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+  }
+  .payment-card-xp.cashapp h3 { color: var(--cashapp); }
+  .payment-card-xp.bmac h3 { color: var(--coffee); }
+  .payment-card-xp h3 { font-family: "Courier New", monospace; font-size: 13px; margin-bottom: 6px; }
+  .payment-card-xp p { font-family: "Courier New", monospace; font-size: 12px; color: var(--muted); }
+  .payment-only-note-xp {
+    margin-top: 16px;
+    padding: 10px 14px;
+    background: #181818;
+    border: 1px solid var(--border);
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  .payment-only-note-xp strong { color: #eee; }
+
+  .devapply-perks-xp { display: flex; flex-direction: column; gap: 10px; }
+  .devapply-perk-xp {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 12px 14px;
+    background: #181818;
+    border: 1px solid var(--gold-border);
+  }
+  .devapply-perk-xp .icon { font-size: 18px; }
+  .devapply-perk-xp h4 { font-family: "Courier New", monospace; font-size: 12px; color: var(--gold); margin-bottom: 4px; }
+  .devapply-perk-xp p { font-family: "Courier New", monospace; font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .devapply-cta-xp {
+    margin-top: 16px;
+    text-align: center;
+    padding: 18px;
+    border: 1px solid var(--gold-border);
+    background: rgba(255,221,0,0.03);
+  }
+  .devapply-cta-xp h3 { font-family: "Courier New", monospace; color: var(--gold); font-size: 14px; margin-bottom: 8px; }
+  .devapply-cta-xp p { font-family: "Courier New", monospace; color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+  .btn-gold-xp {
+    display: inline-block;
+    background: var(--gold);
+    color: #1a1000;
+    padding: 10px 22px;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+    font-size: 12px;
+    text-decoration: none;
+    border: 1px solid var(--gold-dim);
+  }
+  .btn-gold-xp:hover { background: var(--gold-dark); }
+
+  /* form */
+  .form-card-xp { padding: 4px 0; }
+  .field { margin-bottom: 14px; }
   .field label {
     display: block;
-    font-size: 13px;
-    font-family: 'Courier New', Courier, monospace;
-    color: var(--accent);
-    margin-bottom: 8px;
-    letter-spacing: 0.08em;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    color: #ccc;
+    margin-bottom: 5px;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
   }
-
-  .field input,
-  .field select,
-  .field textarea {
+  .field input, .field select, .field textarea {
     width: 100%;
-    background: var(--bg3);
-    border: 2px solid var(--border);
-    border-radius: 2px;
-    color: var(--text);
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 17px;
-    padding: 10px 12px;
+    background: #0d0d0d;
+    border: 1px inset #4a4a4a;
+    color: #ddd;
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    padding: 7px 9px;
     outline: none;
-    transition: border-color 0.15s;
-    -webkit-appearance: none;
-    -webkit-user-select: text;
-    -moz-user-select: text;
-    user-select: text;
   }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: #888; }
+  .field textarea { resize: vertical; min-height: 90px; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-  .field input:focus,
-  .field select:focus,
-  .field textarea:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(255,43,43,0.1);
-  }
-
-  .field textarea { resize: vertical; min-height: 110px; }
-
-  .field select option { background: var(--bg3); color: var(--text); }
-
-  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-
-  .contact-method-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-
+  .contact-method-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 14px; }
   .contact-method-btn {
-    background: var(--bg3);
-    border: 2px solid var(--border);
+    background: #181818;
+    border: 1px solid var(--border);
     border-radius: 2px;
     color: var(--muted);
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 16px;
-    padding: 12px 8px;
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    padding: 10px 6px;
     cursor: pointer;
     text-align: center;
-    transition: border-color 0.15s, color 0.15s, background 0.15s;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 4px;
   }
-
-  .contact-method-btn .cm-icon { font-size: 20px; }
-
-  .contact-method-btn.selected {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: rgba(255,43,43,0.08);
-  }
-
+  .contact-method-btn .cm-icon { font-size: 18px; }
+  .contact-method-btn.selected { border-color: #ccc; color: #fff; background: #2a2a2a; }
   .contact-method-btn.selected.discord { border-color: var(--discord); color: var(--discord); background: rgba(88,101,242,0.1); }
-  .contact-method-btn.selected.phone { border-color: var(--phone); color: var(--phone); background: rgba(0,194,255,0.1); }
+  .contact-method-btn.selected.phone { border-color: var(--phone); color: var(--phone); background: rgba(154,154,154,0.15); }
   .contact-method-btn.selected.email { border-color: var(--cashapp); color: var(--cashapp); background: rgba(0,213,75,0.08); }
 
-  .contact-method-input { display: none; margin-bottom: 20px; }
-  .contact-method-input.active { display: block; }
-
   .form-note {
-    font-size: 15px;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
     color: var(--muted);
-    font-family: 'Courier New', Courier, monospace;
-    margin-bottom: 20px;
-    padding: 12px 14px;
-    background: rgba(255,43,43,0.05);
-    border-radius: 2px;
-    border: 1px solid var(--border2);
-    line-height: 1.55;
+    margin-bottom: 14px;
+    padding: 8px 10px;
+    background: #181818;
+    border: 1px solid var(--border);
+    line-height: 1.5;
   }
+  .form-note .cashapp-pill { display: inline-block; background: rgba(0,213,75,0.12); color: var(--cashapp); border: 1px solid rgba(0,213,75,0.3); padding: 1px 6px; font-size: 10px; }
+  .form-note .bmac-pill { display: inline-block; background: rgba(255,221,0,0.10); color: var(--coffee); border: 1px solid rgba(255,221,0,0.3); padding: 1px 6px; font-size: 10px; }
 
-  .form-note .cashapp-pill {
-    display: inline-block;
-    background: rgba(0,213,75,0.12);
-    color: var(--cashapp);
-    border: 1px solid rgba(0,213,75,0.3);
-    padding: 1px 8px;
-    border-radius: 2px;
-    font-size: 14px;
-  }
-
-  .form-note .bmac-pill {
-    display: inline-block;
-    background: rgba(255,221,0,0.10);
-    color: var(--coffee);
-    border: 1px solid rgba(255,221,0,0.3);
-    padding: 1px 8px;
-    border-radius: 2px;
-    font-size: 14px;
-  }
-
-  .submit-btn {
+  .submit-btn-xp {
     width: 100%;
-    background: var(--accent);
-    color: #05020d;
-    border: none;
-    border-radius: 2px;
-    padding: 14px;
+    background: #3a3a3a;
+    color: #fff;
+    border: 1px solid #666;
+    padding: 10px;
     font-size: 12px;
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
     letter-spacing: 1px;
     cursor: pointer;
-    transition: background 0.15s, transform 0.1s;
-    box-shadow: 4px 4px 0 #7a0000;
   }
+  .submit-btn-xp:hover { background: #4a4a4a; }
 
-  .submit-btn:hover { background: var(--accent2); transform: translate(-1px,-1px); box-shadow: 5px 5px 0 #7a0000; }
-  .submit-btn:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 #7a0000; }
-
-  .success-msg {
-    display: none;
-    text-align: center;
-    padding: 32px 0;
-  }
-
+  .success-msg { display: none; text-align: center; padding: 20px 0; }
   .success-msg .check {
-    width: 52px;
-    height: 52px;
-    background: var(--accent-glow);
-    border: 2px solid var(--border2);
-    border-radius: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 16px;
-    font-size: 22px;
-    color: var(--accent);
+    width: 44px; height: 44px;
+    background: #232323;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 12px;
+    font-size: 18px; color: #eee;
   }
-
-  .success-msg h3 {
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 16px;
-    font-weight: 400;
-    margin-bottom: 12px;
-    color: var(--accent);
-  }
-
-  .success-msg p { font-size: 17px; color: var(--muted); font-family: 'Courier New', Courier, monospace; margin-bottom: 8px; }
+  .success-msg h3 { font-family: "Courier New", monospace; font-size: 14px; color: #eee; margin-bottom: 10px; }
+  .success-msg p { font-family: "Courier New", monospace; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
 
   .copy-box {
-    background: var(--bg3);
-    border: 2px solid var(--border2);
-    border-radius: 2px;
-    padding: 16px;
+    background: #0d0d0d;
+    border: 1px inset #4a4a4a;
+    padding: 12px;
     text-align: left;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 16px;
-    color: var(--text);
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    color: #ddd;
     white-space: pre-wrap;
-    margin: 16px 0;
-    max-height: 260px;
+    margin: 12px 0;
+    max-height: 220px;
     overflow-y: auto;
-    -webkit-user-select: text;
-    -moz-user-select: text;
-    user-select: text;
   }
-
-  .copy-btn {
+  .copy-btn, .action-btn {
     display: inline-block;
-    background: var(--accent);
-    color: #05020d;
-    border: none;
-    border-radius: 2px;
-    padding: 10px 20px;
+    border: 1px solid #000;
+    padding: 8px 16px;
     font-size: 11px;
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: background 0.15s, transform 0.1s;
-    box-shadow: 3px 3px 0 #7a0000;
-    margin-right: 10px;
-    margin-bottom: 8px;
-  }
-  .copy-btn:hover { background: var(--accent2); transform: translate(-1px,-1px); }
-  .copy-btn:active { transform: translate(1px,1px); }
-
-  .action-btn {
-    display: inline-block;
-    color: #05020d;
-    border: none;
-    border-radius: 2px;
-    padding: 10px 20px;
-    font-size: 11px;
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    letter-spacing: 1px;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
     cursor: pointer;
     text-decoration: none;
-    transition: background 0.15s, transform 0.1s;
+    margin-right: 8px;
     margin-bottom: 8px;
   }
+  .copy-btn { background: #3a3a3a; color: #fff; }
+  .copy-btn:hover { background: #4a4a4a; }
+  .action-btn.discord { background: var(--discord); color: #fff; }
+  .action-btn.discord:hover { background: var(--discord-dark); }
+  .action-btn.phone { background: var(--phone); color: #111; }
+  .action-btn.phone:hover { background: var(--phone-dark); }
+  .action-btn.email { background: var(--cashapp); color: #001a0d; }
+  .action-btn.email:hover { background: var(--cashapp-dark); }
 
-  .action-btn.discord { background: var(--discord); box-shadow: 3px 3px 0 var(--discord-dark); color: #fff; }
-  .action-btn.discord:hover { background: var(--discord-dark); transform: translate(-1px,-1px); }
-
-  .action-btn.phone { background: var(--phone); box-shadow: 3px 3px 0 var(--phone-dark); }
-  .action-btn.phone:hover { background: var(--phone-dark); transform: translate(-1px,-1px); }
-
-  .action-btn.email { background: var(--cashapp); box-shadow: 3px 3px 0 var(--cashapp-dark); }
-  .action-btn.email:hover { background: var(--cashapp-dark); transform: translate(-1px,-1px); }
-
-  .reset-btn {
+  .reset-btn-xp {
     display: block;
-    margin: 24px auto 0;
+    margin: 18px auto 0;
     background: transparent;
     color: var(--muted);
-    border: 2px solid var(--border2);
-    border-radius: 2px;
-    padding: 8px 18px;
-    font-size: 13px;
-    font-family: 'Courier New', Courier, monospace;
+    border: 1px solid var(--border);
+    padding: 6px 16px;
+    font-size: 12px;
+    font-family: "Courier New", monospace;
     cursor: pointer;
-    letter-spacing: 0.05em;
-    transition: color 0.15s, border-color 0.15s;
   }
-  .reset-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .reset-btn-xp:hover { color: #fff; border-color: #888; }
 
-  footer {
-    border-top: 2px solid var(--border2);
-    padding: 40px 48px;
+  .contact-detail-xp {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .footer-logo {
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 16px;
-    color: var(--text);
-    letter-spacing: 2px;
-    text-shadow: 0 0 12px var(--accent);
-  }
-
-  .footer-logo span { color: var(--accent); }
-
-  footer p {
-    font-size: 15px;
-    color: var(--muted);
-    font-family: 'Courier New', Courier, monospace;
-  }
-
-  .sep {
-    max-width: 1100px;
-    margin: 0 auto;
-    height: 2px;
-    background: var(--border);
-  }
-
-  /* ── Collapsible accordion sections ── */
-  details.acc { display: block; }
-  details.acc > summary {
-    list-style: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    padding: 96px 48px 0;
-    max-width: 1100px;
-    margin: 0 auto;
-    -webkit-user-select: none;
-    user-select: none;
-  }
-  details.acc[open] > summary { padding-bottom: 0; }
-  details.acc:not([open]) > summary { padding-bottom: 96px; }
-  details.acc > summary::-webkit-details-marker { display: none; }
-  details.acc > summary::marker { content: ""; }
-
-  .acc-heading { flex: 1; min-width: 0; }
-  .acc-heading .section-label { margin-bottom: 16px; }
-  .acc-heading h2 { margin-bottom: 0; }
-
-  .acc-toggle {
-    flex-shrink: 0;
-    width: 42px;
-    height: 42px;
-    border: 2px solid var(--border2);
-    border-radius: 2px;
-    background: rgba(255,43,43,0.06);
-    color: var(--accent);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 14px;
-    transition: transform 0.2s, background 0.15s, border-color 0.15s;
-    text-shadow: 0 0 8px var(--accent);
-  }
-  details.acc[open] .acc-toggle { transform: rotate(45deg); }
-  details.acc > summary:hover .acc-toggle { border-color: var(--accent); background: rgba(255,43,43,0.14); }
-
-  .acc-body {
-    padding: 40px 48px 96px;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  /* full-bleed tinted sections keep their own background/border, accordion just controls the inner padding */
-  #released.acc-wrap, #work.acc-wrap, #devapply.acc-wrap, #how.acc-wrap, #payment-wrap.acc-wrap {
-    padding: 0;
-  }
-  #released.acc-wrap > summary,
-  #work.acc-wrap > summary,
-  #devapply.acc-wrap > summary,
-  #how.acc-wrap > summary,
-  #payment-wrap.acc-wrap > summary { padding-top: 96px; }
-  #released.acc-wrap:not([open]) > summary,
-  #work.acc-wrap:not([open]) > summary,
-  #devapply.acc-wrap:not([open]) > summary,
-  #how.acc-wrap:not([open]) > summary,
-  #payment-wrap.acc-wrap:not([open]) > summary { padding-bottom: 96px; }
-  #released.acc-wrap[open] > summary,
-  #work.acc-wrap[open] > summary,
-  #devapply.acc-wrap[open] > summary,
-  #how.acc-wrap[open] > summary,
-  #payment-wrap.acc-wrap[open] > summary { padding-bottom: 0; }
-  #released .acc-body, #work .acc-body, #devapply .acc-body, #how .acc-body, #payment-wrap .acc-body {
-    padding: 40px 48px 96px;
-  }
-
-  @media (max-width: 768px) {
-    details.acc > summary,
-    #released.acc-wrap > summary,
-    #work.acc-wrap > summary,
-    #devapply.acc-wrap > summary,
-    #how.acc-wrap > summary,
-    #payment-wrap.acc-wrap > summary { padding-left: 24px; padding-right: 24px; }
-    .acc-body,
-    #released .acc-body, #work .acc-body, #devapply .acc-body, #how .acc-body, #payment-wrap .acc-body {
-      padding-left: 24px; padding-right: 24px;
-    }
-  }
-
-  .lightbox {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 500;
-    background: rgba(5,2,13,0.96);
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(12px);
-  }
-
-  .lightbox.open { display: flex; }
-
-  .lightbox-inner {
-    max-width: 940px;
-    width: 94%;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-  }
-
-  .lightbox-topbar {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 14px;
-  }
-
-  .lightbox-title {
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 11px;
-    color: var(--accent);
-    text-shadow: 0 0 8px var(--accent);
-    letter-spacing: 1px;
-  }
-
-  .lightbox-close {
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 10px;
-    color: var(--muted);
-    cursor: pointer;
-    background: rgba(255,43,43,0.08);
-    border: 2px solid var(--border2);
-    border-radius: 2px;
-    padding: 6px 12px;
-    letter-spacing: 1px;
-    transition: color 0.15s, border-color 0.15s, background 0.15s;
-  }
-  .lightbox-close:hover { color: var(--accent); border-color: var(--accent); background: rgba(255,43,43,0.15); }
-
-  .lightbox-stage {
-    width: 100%;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .lightbox-img-wrap {
-    width: 100%;
-    border: 2px solid var(--border2);
-    border-radius: var(--card-r);
-    overflow: hidden;
-    background: var(--bg3);
-    position: relative;
-  }
-
-  .lightbox-img-wrap img {
-    width: 100%;
-    max-height: 68vh;
-    object-fit: contain;
-    display: block;
-    image-rendering: auto;
-    transition: opacity 0.18s;
-  }
-
-  .lightbox-img-wrap img.fading { opacity: 0; }
-
-  .lb-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(5,2,13,0.82);
-    border: 2px solid var(--border2);
-    border-radius: 2px;
-    color: var(--accent);
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 14px;
-    width: 42px;
-    height: 52px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.15s, border-color 0.15s, transform 0.1s;
-    z-index: 2;
-    text-shadow: 0 0 8px var(--accent);
-    flex-shrink: 0;
-  }
-  .lb-arrow:hover { background: rgba(255,43,43,0.18); border-color: var(--accent); }
-  .lb-arrow:active { transform: translateY(-50%) scale(0.93); }
-  .lb-arrow.lb-prev { left: -54px; }
-  .lb-arrow.lb-next { right: -54px; }
-  .lb-arrow.lb-hidden { opacity: 0; pointer-events: none; }
-
-  .lightbox-footer {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 14px;
-    gap: 16px;
-  }
-
-  .lightbox-caption {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 18px;
-    color: var(--muted);
-    flex: 1;
-  }
-
-  .lightbox-counter {
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 10px;
-    color: var(--accent);
-    letter-spacing: 1px;
-    white-space: nowrap;
-    text-shadow: 0 0 6px var(--accent);
-  }
-
-  .lightbox-dots {
-    display: flex;
-    gap: 7px;
-    align-items: center;
-  }
-
-  .lb-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 0;
-    background: var(--border2);
-    border: 1px solid var(--border2);
-    cursor: pointer;
-    transition: background 0.15s, border-color 0.15s;
-    flex-shrink: 0;
-  }
-  .lb-dot.active { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 6px var(--accent); }
-  .lb-dot:hover:not(.active) { background: rgba(255,43,43,0.4); }
-
-  @media (max-width: 768px) {
-    .lb-arrow.lb-prev { left: -2px; }
-    .lb-arrow.lb-next { right: -2px; }
-    .lb-arrow { width: 34px; height: 42px; font-size: 11px; }
-    .lightbox-inner { width: 98%; }
-  }
-
-  #devapply {
-    background: rgba(20,14,0,0.96);
-    border-top: 2px solid var(--gold-border);
-    border-bottom: 2px solid var(--gold-border);
-    max-width: 100%;
-    padding: 96px 48px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  #devapply::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 60% 50% at 20% 50%, rgba(255,221,0,0.06) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 60% at 80% 30%, rgba(255,180,0,0.04) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  #devapply-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-
-  #devapply .section-label {
-    color: var(--gold);
-    text-shadow: 0 0 8px rgba(255,221,0,0.5);
-  }
-
-  #devapply h2 {
-    color: var(--gold);
-    text-shadow: 0 0 24px rgba(255,221,0,0.35);
-  }
-
-  #devapply .section-sub {
-    max-width: 600px;
-  }
-
-  .devapply-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 56px;
-    align-items: center;
-    margin-top: 48px;
-  }
-
-  .devapply-perks {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .devapply-perk {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 20px 22px;
-    background: rgba(255,221,0,0.04);
-    border: 1px solid var(--gold-border);
-    border-radius: var(--card-r);
-    transition: background 0.15s, border-color 0.15s, transform 0.15s;
-  }
-
-  .devapply-perk:hover {
-    background: rgba(255,221,0,0.08);
-    border-color: rgba(255,221,0,0.5);
-    transform: translate(-2px, -2px);
-  }
-
-  .devapply-perk-icon {
-    font-size: 22px;
-    line-height: 1;
-    flex-shrink: 0;
-    margin-top: 2px;
-    filter: drop-shadow(0 0 6px rgba(255,221,0,0.5));
-  }
-
-  .devapply-perk-text h4 {
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 11px;
-    font-weight: 400;
-    color: var(--gold);
-    margin-bottom: 6px;
-    line-height: 1.5;
-  }
-
-  .devapply-perk-text p {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 17px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-
-  .devapply-cta-box {
-    background: rgba(255,221,0,0.04);
-    border: 2px solid var(--gold-border);
-    border-radius: var(--card-r);
-    padding: 44px 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 24px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .devapply-cta-box::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--gold);
-    box-shadow: 0 0 16px var(--gold);
-  }
-
-  .devapply-cta-icon {
-    font-size: 48px;
-    line-height: 1;
-    filter: drop-shadow(0 0 12px rgba(255,221,0,0.6));
-    animation: gold-bob 3s ease-in-out infinite;
-  }
-
-  @keyframes gold-bob {
-    0%, 100% { transform: translateY(0); filter: drop-shadow(0 0 12px rgba(255,221,0,0.6)); }
-    50% { transform: translateY(-6px); filter: drop-shadow(0 0 20px rgba(255,221,0,0.9)); }
-  }
-
-  .devapply-cta-box h3 {
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 15px;
-    font-weight: 400;
-    color: var(--gold);
-    line-height: 1.5;
-    text-shadow: 0 0 16px rgba(255,221,0,0.4);
-  }
-
-  .devapply-cta-box p {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 19px;
-    color: var(--muted);
-    line-height: 1.55;
-    max-width: 320px;
-  }
-
-  .devapply-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    background: rgba(255,221,0,0.1);
-    border: 1px solid rgba(255,221,0,0.35);
-    color: var(--gold);
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 15px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 4px 12px;
-    border-radius: 2px;
-  }
-
-  .devapply-badge::before {
-    content: '';
-    display: inline-block;
-    width: 7px;
-    height: 7px;
-    background: var(--gold);
-    border-radius: 0;
-    animation: gold-pulse 2s ease-in-out infinite;
-  }
-
-  .btn-gold {
-    display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: var(--gold);
-    color: #1a1000;
-    padding: 16px 28px;
-    border-radius: 2px;
-    font-family: 'Courier New', Courier, monospace; font-weight: bold;
-    font-size: 11px;
-    letter-spacing: 1px;
-    text-decoration: none;
-    transition: background 0.15s, transform 0.1s, box-shadow 0.1s;
-    box-shadow: 5px 5px 0 var(--gold-dim);
-    width: 100%;
+    padding: 10px 0;
+    border-top: 1px solid #2a2a2a;
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .contact-detail-xp:last-child { border-bottom: 1px solid #2a2a2a; }
+  .contact-detail-xp strong { color: #eee; }
+
+  .socials-body {
+    display: flex;
     justify-content: center;
-    cursor: pointer;
-    border: none;
+    gap: 14px;
+    padding: 16px 8px 6px;
+    flex-wrap: wrap;
   }
-
-  .btn-gold:hover {
-    background: var(--gold-dark);
-    transform: translate(-2px, -2px);
-    box-shadow: 7px 7px 0 var(--gold-dim), 0 0 28px rgba(255,221,0,0.25);
+  .social-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    text-decoration: none;
+    width: 96px;
+    padding: 10px 8px;
+    background: linear-gradient(180deg,#232323,#141414);
+    border: 1px solid var(--border);
   }
+  .social-btn:hover { background: linear-gradient(180deg,#2f2f2f,#1a1a1a); border-color: #888; }
+  .social-btn .emoji-icon { font-size: 26px; }
+  .social-btn span.label { font-family: "Courier New", monospace; font-size: 10px; color: #ddd; letter-spacing: 1px; }
 
-  .btn-gold:active {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0 var(--gold-dim);
-  }
-
-  .btn-gold-icon {
-    font-size: 16px;
-    line-height: 1;
-  }
-
-  .devapply-note {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 15px;
-    color: rgba(255,221,0,0.45);
-    letter-spacing: 0.05em;
+  footer.footer-xp {
+    max-width: 900px;
+    width: 100%;
     text-align: center;
+    padding: 20px 0 80px;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    color: #777;
   }
 
-  @media (max-width: 1024px) {
-    .hero-body { grid-template-columns: 1fr; gap: 40px; }
-    .hero-image-wrap { max-width: 480px; }
+  .taskbar {
+    position: fixed;
+    bottom: 0; left: 0; width: 100%; height: 34px;
+    background: linear-gradient(180deg, #4a4a4a 0%, #2e2e2e 8%, #1a1a1a 50%, #0d0d0d 92%, #000 100%);
+    border-top: 1px solid #6a6a6a;
+    display: flex; align-items: center;
+    z-index: 50;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.6);
   }
+  .start-btn {
+    height: 26px; margin: 3px 4px; padding: 0 14px 0 6px;
+    background: linear-gradient(180deg,#c9c9c9,#7a7a7a 45%,#5c5c5c 55%,#3a3a3a);
+    border-radius: 0 12px 12px 0;
+    display: flex; align-items: center; gap: 5px;
+    color: #111; font-weight: bold; font-style: italic; font-size: 15px;
+    font-family: "Courier New", monospace;
+    text-shadow: 1px 1px 1px rgba(255,255,255,0.25);
+    box-shadow: 0 0 0 1px #3a3a3a, inset 0 1px 0 rgba(255,255,255,0.3);
+    cursor: pointer;
+  }
+  .start-btn .xp-logo { width: 20px; height: 20px; display: inline-block; }
+  .taskbar-divider { width: 2px; height: 24px; background: rgba(255,255,255,0.15); box-shadow: 1px 0 0 rgba(0,0,0,0.4); margin: 0 4px; }
+  .taskbar-item {
+    height: 26px; margin: 3px 2px; padding: 0 10px;
+    background: linear-gradient(180deg,#3a3a3a,#1a1a1a);
+    border: 1px solid #000; border-radius: 3px;
+    display: flex; align-items: center; gap: 6px;
+    color: #eee; font-size: 12px; font-family: "Courier New", monospace;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+    cursor: pointer;
+  }
+  .taskbar-item.active { background: linear-gradient(180deg,#222,#111); box-shadow: inset 1px 1px 3px rgba(0,0,0,0.7); }
+  .tray {
+    margin-left: auto; margin-right: 8px;
+    background: linear-gradient(180deg,#2a2a2a,#101010);
+    border-radius: 3px 0 0 3px;
+    color: #ddd; font-size: 11px; font-family: "Courier New", monospace;
+    padding: 4px 10px; display: flex; align-items: center; height: 26px;
+    box-shadow: inset 1px 1px 2px rgba(0,0,0,0.5);
+  }
+
+  .start-dropdown {
+    position: fixed; bottom: 34px; left: 4px; min-width: 210px;
+    background: #1c1c1c; border: 1px solid #4a4a4a;
+    box-shadow: 3px 3px 12px rgba(0,0,0,0.75);
+    z-index: 200; padding: 4px 0;
+    font-family: "Courier New", monospace;
+    display: none;
+  }
+  .start-dropdown.open { display: block; }
+  .start-dropdown .item { padding: 6px 16px; font-size: 12px; color: #ddd; white-space: nowrap; cursor: pointer; }
+  .start-dropdown .item:hover { background: #4a4a4a; color: #fff; }
+  .start-dropdown .sep { height: 1px; background: #3a3a3a; margin: 4px 0; }
+
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 500;
+    background: rgba(0,0,0,0.94);
+    align-items: center; justify-content: center;
+    backdrop-filter: blur(10px);
+  }
+  .lightbox.open { display: flex; }
+  .lightbox-inner { max-width: 900px; width: 94%; position: relative; display: flex; flex-direction: column; align-items: center; }
+  .lightbox-topbar { width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .lightbox-title { font-family: "Courier New", monospace; font-size: 12px; color: #eee; letter-spacing: 1px; }
+  .lightbox-close {
+    font-family: "Courier New", monospace; font-size: 11px; color: var(--muted); cursor: pointer;
+    background: #232323; border: 1px solid var(--border); padding: 6px 12px;
+  }
+  .lightbox-close:hover { color: #fff; border-color: #888; }
+  .lightbox-stage { width: 100%; position: relative; display: flex; align-items: center; justify-content: center; }
+  .lightbox-img-wrap { width: 100%; border: 1px solid var(--border); overflow: hidden; background: #111; position: relative; }
+  .lightbox-img-wrap img { width: 100%; max-height: 64vh; object-fit: contain; display: block; transition: opacity 0.18s; }
+  .lightbox-img-wrap img.fading { opacity: 0; }
+  .lb-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(0,0,0,0.8); border: 1px solid var(--border); color: #eee;
+    font-family: "Courier New", monospace; font-size: 14px;
+    width: 38px; height: 46px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; z-index: 2;
+  }
+  .lb-arrow:hover { background: rgba(60,60,60,0.9); border-color: #999; }
+  .lb-arrow.lb-prev { left: -50px; }
+  .lb-arrow.lb-next { right: -50px; }
+  .lb-arrow.lb-hidden { opacity: 0; pointer-events: none; }
+  .lightbox-footer { width: 100%; display: flex; align-items: center; justify-content: space-between; margin-top: 12px; gap: 14px; }
+  .lightbox-caption { font-family: "Courier New", monospace; font-size: 13px; color: var(--muted); flex: 1; }
+  .lightbox-counter { font-family: "Courier New", monospace; font-size: 11px; color: #eee; white-space: nowrap; }
+  .lightbox-dots { display: flex; gap: 6px; align-items: center; }
+  .lb-dot { width: 7px; height: 7px; background: var(--border); border: 1px solid var(--border); cursor: pointer; }
+  .lb-dot.active { background: #fff; border-color: #fff; }
+  .lb-dot:hover:not(.active) { background: #888; }
 
   @media (max-width: 768px) {
-    nav { padding: 0 24px; }
-    .nav-links { display: none; }
-    .hero, section { padding: 80px 24px 60px; }
-    h1 { font-size: 20px; }
-    .hero-stats { gap: 28px; flex-wrap: wrap; }
-    .form-wrap { grid-template-columns: 1fr; gap: 32px; }
+    .desktop-icons { top: 8px; left: 8px; gap: 12px; }
+    .d-icon { width: 64px; }
+    .gallery-grid, .released-grid-xp, .work-grid-xp { grid-template-columns: 1fr; }
     .field-row { grid-template-columns: 1fr; }
-    footer { flex-direction: column; gap: 12px; text-align: center; }
-    .step:not(:last-child)::after { display: none; }
-    #how { padding: 72px 24px; }
-    #work { padding: 72px 24px; }
-    .work-grid { grid-template-columns: 1fr; }
-    #released { padding: 72px 24px; }
-    .released-grid { grid-template-columns: 1fr; }
-    #devapply { padding: 72px 24px; }
-    .devapply-layout { grid-template-columns: 1fr; gap: 36px; }
-    .devapply-cta-box { padding: 32px 24px; }
-    .hero-body { grid-template-columns: 1fr; }
-    .hero-image-wrap { max-width: 100%; }
-    .contact-method-row { grid-template-columns: 1fr; }
+    .devapply-perks-xp { gap: 8px; }
+    .lb-arrow.lb-prev { left: -2px; }
+    .lb-arrow.lb-next { right: -2px; }
+    .lb-arrow { width: 32px; height: 40px; font-size: 11px; }
+    .lightbox-inner { width: 98%; }
   }
 </style>
 </head>
-<body>
+<body class="crt-on">
+
 <canvas id="bg-canvas"></canvas>
 
-<nav>
-  <a href="#" class="nav-logo">
-    <img
-      class="nav-avatar"
-      src="https://raw.githubusercontent.com/redvr777/Yuza/08275274517a36966586f66a1d622ca84a339a5a/7caf2a7b-aa83-4534-a7e2-c635a39a9d8c.png"
-      alt="Yuza"
-      onerror="this.style.display='none'; document.getElementById('nav-fallback').style.display='flex';"
-    >
-    <span id="nav-fallback" class="nav-avatar-placeholder" style="display:none;">Y</span>
-    yuza<span>.</span>
+<div class="desktop-icons">
+  <a class="d-icon" href="#about">
+    <img src="https://raw.githubusercontent.com/redvr777/Yuza/08275274517a36966586f66a1d622ca84a339a5a/7caf2a7b-aa83-4534-a7e2-c635a39a9d8c.png" alt="icon">
+    <span class="label">About.exe</span>
   </a>
-
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#released">Released</a></li>
-    <li><a href="#websites">Websites</a></li>
-    <li><a href="#work">My Work</a></li>
-    <li><a href="#devapply">Dev Apply</a></li>
-    <li><a href="#how">How it works</a></li>
-    <li><a href="#payment">Payment</a></li>
-    <li><a href="#request">Request work</a></li>
-    <li><a href="https://buymeacoffee.com/cbsgames" target="_blank" rel="noopener noreferrer">☕ Buy me a coffee</a></li>
-    <li><a href="https://cash.app/$Thatonedev476" target="_blank" rel="noopener noreferrer">💸 CashApp</a></li>
-    <li><a href="#request" class="nav-cta">Get a quote</a></li>
-  </ul>
-</nav>
-
-<div class="page-content">
-
-  <section class="hero" id="home">
-    <div class="hero-tag">Available for freelance work</div>
-
-    <div class="hero-body">
-      <div class="hero-text">
-        <h1>I code, model &amp;<br>build for <em>Unity.</em></h1>
-
-        <p class="hero-sub">
-          3–5 years of experience in Unity game dev, 3D modeling, and web development.
-          Tell me what you need — I'll tell you if I can do it and what it'll cost.
-        </p>
-
-        <div class="hero-btns">
-          <a href="#request" class="btn-primary">Request a project</a>
-          <a href="#services" class="btn-outline">See what I do</a>
-        </div>
-      </div>
-
-      <div class="hero-image-wrap">
-        <img
-          class="hero-img"
-          src="https://raw.githubusercontent.com/redvr777/Yuza/08275274517a36966586f66a1d622ca84a339a5a/7caf2a7b-aa83-4534-a7e2-c635a39a9d8c.png"
-          alt="Yuza's work"
-          onerror="this.style.display='none'; document.getElementById('hero-fallback').style.display='flex';"
-        >
-
-        <div id="hero-fallback" class="hero-img-placeholder" style="display:none;">
-          <span class="ph-big">🎮</span>
-          <span>
-            
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <div class="hero-stats">
-      <div>
-        <div class="stat-num">Unity</div>
-        <div class="stat-label">Only engine I use</div>
-      </div>
-      <div>
-        <div class="stat-num">3–5 yrs</div>
-        <div class="stat-label">Experience</div>
-      </div>
-      <div>
-        <div class="stat-num">4</div>
-        <div class="stat-label">Core skills</div>
-      </div>
-    </div>
-  </section>
-
+  <a class="d-icon" href="#work">
+    <span class="emoji-icon">🗂️</span>
+    <span class="label">My Work</span>
+  </a>
+  <a class="d-icon" href="#request">
+    <span class="emoji-icon">📨</span>
+    <span class="label">Request</span>
+  </a>
+  <a class="d-icon" href="https://buymeacoffee.com/cbsgames" target="_blank" rel="noopener noreferrer">
+    <span class="emoji-icon">☕</span>
+    <span class="label">Coffee</span>
+  </a>
+  <a class="d-icon" href="https://cash.app/$Thatonedev476" target="_blank" rel="noopener noreferrer">
+    <span class="emoji-icon">💸</span>
+    <span class="label">CashApp</span>
+  </a>
 </div>
 
-<div class="sep"></div>
+<div id="desktop">
 
-<details class="acc" id="services" open>
-  <summary>
-    <div class="acc-heading">
-      <p class="section-label">What I do</p>
-      <h2>Services</h2>
-    </div>
-    <span class="acc-toggle">+</span>
-  </summary>
-  <div class="acc-body">
-  <p class="section-sub">Every project is quoted individually. Send me the details and we'll figure out a fair price together.</p>
-
-  <div class="services-grid">
-    <div class="service-card">
-      <div class="service-icon">⚙️</div>
-      <h3>Unity Development</h3>
-      <p>Gameplay systems, mechanics, physics, UI, scripting, and bug fixes — all in Unity. 3/5 years of hands-on C# experience building real games.</p>
-      <p style="margin-top:14px;font-family:'Courier New',monospace;font-weight:bold;font-size:12px;color:var(--accent);text-shadow:0 0 8px var(--accent);">$10 / day</p>
-      <p style="font-family:'Courier New',monospace;font-size:15px;color:var(--muted);margin-top:4px;">Price per day worked — final cost depends on scope and what's needed.</p>
-      <div class="service-tags">
-        <span class="tag">Unity</span>
-        <span class="tag">C#</span>
-        <span class="tag">Gameplay</span>
-        <span class="tag">Physics</span>
-        <span class="tag">UI systems</span>
-      </div>
-    </div>
-
-    <div class="service-card">
-      <div class="service-icon">📜</div>
-      <h3>C# Scripting</h3>
-      <p>Advanced C# scripts for any purpose — AI systems, save systems, custom tools, editor extensions, networking logic, or anything complex you need written cleanly and efficiently.</p>
-      <p style="margin-top:14px;font-family:'Courier New',monospace;font-weight:bold;font-size:12px;color:var(--accent);text-shadow:0 0 8px var(--accent);">$1 – $30 / script</p>
-      <p style="font-family:'Courier New',monospace;font-size:15px;color:var(--muted);margin-top:4px;">Price depends on complexity, length, and the scope of what's needed.</p>
-      <div class="service-tags">
-        <span class="tag">C#</span>
-        <span class="tag">AI / Logic</span>
-        <span class="tag">Save systems</span>
-        <span class="tag">Editor tools</span>
-        <span class="tag">Networking</span>
-      </div>
-    </div>
-
-    <div class="service-card">
-      <div class="service-icon">🧊</div>
-      <h3>3D Modeling</h3>
-      <p>Characters, props, environments, and assets modeled and optimized for use in Unity. Clean topology, game-ready exports, and pipeline-friendly formats.</p>
-      <p style="margin-top:14px;font-family:'Courier New',monospace;font-weight:bold;font-size:12px;color:var(--accent);text-shadow:0 0 8px var(--accent);">$1 – $20 / model</p>
-      <p style="font-family:'Courier New',monospace;font-size:15px;color:var(--muted);margin-top:4px;">Price varies based on complexity, detail, and size of the model.</p>
-      <div class="service-tags">
-        <span class="tag">3D modeling</span>
-        <span class="tag">Characters</span>
-        <span class="tag">Props</span>
-        <span class="tag">Environments</span>
-        <span class="tag">Unity-ready</span>
-      </div>
-    </div>
-
-    <div class="service-card">
-      <div class="service-icon">🌐</div>
-      <h3>Web Development</h3>
-      <p>Custom websites built from scratch — landing pages, portfolios, game pages, or whatever you need. Clean code, no templates.</p>
-      <p style="margin-top:14px;font-family:'Courier New',monospace;font-weight:bold;font-size:12px;color:var(--accent);text-shadow:0 0 8px var(--accent);">$10 – $50 / site</p>
-      <p style="font-family:'Courier New',monospace;font-size:15px;color:var(--muted);margin-top:4px;">Price depends on size, features, and complexity of the site.</p>
-      <div class="service-tags">
-        <span class="tag">HTML / CSS</span>
-        <span class="tag">JavaScript</span>
-        <span class="tag">Landing pages</span>
-        <span class="tag">Game sites</span>
-      </div>
-    </div>
+  <div class="site-header">
+    <h1>YUZA</h1>
+    <div class="sub">developer_page.exe</div>
   </div>
-  </div>
-</details>
-
-<div class="sep"></div>
-
-<details class="acc acc-wrap" id="released">
-<summary>
-    <div class="acc-heading">
-      <p class="section-label">Live on Meta Quest</p>
-      <h2>Released Games</h2>
-    </div>
-    <span class="acc-toggle">+</span>
-  </summary>
-  <div class="acc-body" id="released-inner">
-  <p class="section-sub" style="color:var(--muted);">Games I've made, worked on, or developed on that are released to meta right now!</p>
-
-  <div class="released-grid">
-
-    <a href="https://www.meta.com/en-gb/experiences/affinity/33514428664838971/" target="_blank" rel="noopener noreferrer" class="released-card">
-      <div class="released-img">
-        <img src="https://github.com/redvr777/Yuza/blob/main/Screenshot%202026-04-30%20011311.png?raw=true" alt="Affinity">
-        <div class="released-overlay">
-          <span class="released-overlay-text">[ VIEW ON META ]</span>
-          <span class="released-overlay-sub">meta.com/experiences</span>
-        </div>
-      </div>
-      <div class="released-meta">
-        <div class="released-badge">LIVE NOW</div>
-        <h3>Affinity</h3>
-        <p>Affinity is my game. I have spent countless hours working on Affinity to make it better!</p>
-        <div class="released-platform">🥽 Meta Quest</div>
-      </div>
-    </a>
-
-    <a href="https://www.meta.com/en-gb/experiences/monkaroon/26094581960137109/" target="_blank" rel="noopener noreferrer" class="released-card">
-      <div class="released-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/18f8fe59008d910c6c65d414be6319a553c4c23a/4748d2b99296a548716e03ced2af1e68.jpg" alt="Monkaroon">
-        <div class="released-overlay">
-          <span class="released-overlay-text">[ VIEW ON META ]</span>
-          <span class="released-overlay-sub">meta.com/experiences</span>
-        </div>
-      </div>
-      <div class="released-meta">
-        <div class="released-badge">LIVE NOW</div>
-        <h3>Monkaroon</h3>
-        <p>A gorilla tag fan game with Tag, Crown Tag, Bazooka PVP, and Casual. I'm a developer and wrote many of the core scripts.</p>
-        <div class="released-platform">🥽 Meta Quest</div>
-      </div>
-    </a>
-
-  </div>
-  </div>
-</details>
-
-<details class="acc acc-wrap" id="websites">
-<summary>
-    <div class="acc-heading">
-      <p class="section-label">Sites I've built</p>
-      <h2>Websites</h2>
-    </div>
-    <span class="acc-toggle">+</span>
-  </summary>
-  <div class="acc-body" id="websites-inner">
-  <p class="section-sub">Landing pages and site builds I've coded from scratch — click a card to view screenshots, or use the link to visit the live site.</p>
-
-  <div class="work-grid" id="websiteGrid">
-
-    <div class="work-card" data-category="web"
-      data-images='["https://raw.githubusercontent.com/redvr777/MonkeTekRemastered/main/firstimeagfe.png","https://raw.githubusercontent.com/redvr777/MonkeTekRemastered/main/seconds.png","https://raw.githubusercontent.com/redvr777/MonkeTekRemastered/main/thrisimgae.png","https://raw.githubusercontent.com/redvr777/MonkeTekRemastered/main/fourths.png","https://raw.githubusercontent.com/redvr777/MonkeTekRemastered/main/fgirths.png"]'>
-      <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/MonkeTekRemastered/main/firstimeagfe.png" alt="MonkeTek Remastered">
-        <div class="work-overlay">
-          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
-        </div>
-      </div>
-      <div class="work-meta">
-        <div class="work-category">Web Development</div>
-        <h3>MonkeTek Remastered</h3>
-        <p>Landing page for the MonkeTek Remastered dev build — raytraced city, character reveal, and a screenshot gallery with a Discord join link.</p>
-        <div class="work-tags">
-          <span class="tag">HTML / CSS</span><span class="tag">JavaScript</span><span class="tag">Game site</span>
-        </div>
-        <a href="https://monke-tek-remastered.vercel.app/#gallery" target="_blank" rel="noopener noreferrer" class="work-visit-link" onclick="event.stopPropagation();">Visit site →</a>
-      </div>
-    </div>
-
-    <div class="work-card" data-category="web"
-      data-images='["https://raw.githubusercontent.com/redvr777/monke-manor/main/Screenshot%202026-08-08%20143855.png","https://raw.githubusercontent.com/redvr777/monke-manor/main/Screenshot%202026-08-08%20143919.png","https://raw.githubusercontent.com/redvr777/monke-manor/main/Screenshot%202026-08-08%20143932.png","https://raw.githubusercontent.com/redvr777/monke-manor/main/Screenshot%202026-08-08%20143947.png","https://raw.githubusercontent.com/redvr777/monke-manor/main/Screenshot%202026-08-08%20144008.png"]'>
-      <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/monke-manor/main/Screenshot%202026-08-08%20143855.png" alt="Monke Manor">
-        <div class="work-overlay">
-          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
-        </div>
-      </div>
-      <div class="work-meta">
-        <div class="work-category">Web Development</div>
-        <h3>Monke Manor</h3>
-        <p>Landing page for the Monke Manor VR hangout — brick grounds, a shop, a cosmetics wing, and a cave, laid out section by section with a gallery.</p>
-        <div class="work-tags">
-          <span class="tag">HTML / CSS</span><span class="tag">JavaScript</span><span class="tag">Game site</span>
-        </div>
-        <a href="https://monke-manor.vercel.app/" target="_blank" rel="noopener noreferrer" class="work-visit-link" onclick="event.stopPropagation();">Visit site →</a>
-      </div>
-    </div>
-
-    <div class="work-card" data-category="web"
-      data-images='["https://raw.githubusercontent.com/redvr777/Fear-reality/main/Screenshot_2026-04-21_225227.png","https://raw.githubusercontent.com/redvr777/Fear-reality/main/Screenshot_2026-08-08_115133.png","https://raw.githubusercontent.com/redvr777/Fear-reality/main/FearRealityOfficialPic_2.png","https://raw.githubusercontent.com/redvr777/Fear-reality/main/Fear_Reality_Title_text_NEW.png"]'>
-      <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Fear-reality/main/Screenshot_2026-04-21_225227.png" alt="Fear Reality">
-        <div class="work-overlay">
-          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
-        </div>
-      </div>
-      <div class="work-meta">
-        <div class="work-category">Web Development</div>
-        <h3>Fear Reality</h3>
-        <p>Retro Windows-98 styled official site for Fear Reality — desktop windows, a "My Pictures" screenshot gallery, and links out to Discord, YouTube, and TikTok.</p>
-        <div class="work-tags">
-          <span class="tag">HTML / CSS</span><span class="tag">JavaScript</span><span class="tag">Game site</span>
-        </div>
-        <a href="https://fear-reality.vercel.app/#gallery" target="_blank" rel="noopener noreferrer" class="work-visit-link" onclick="event.stopPropagation();">Visit site →</a>
-      </div>
-    </div>
-
-    <div class="work-card" data-category="web"
-      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/08275274517a36966586f66a1d622ca84a339a5a/7caf2a7b-aa83-4534-a7e2-c635a39a9d8c.png"]'>
-      <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/08275274517a36966586f66a1d622ca84a339a5a/7caf2a7b-aa83-4534-a7e2-c635a39a9d8c.png" alt="Yuza Developer Site">
-        <div class="work-overlay">
-          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
-        </div>
-      </div>
-      <div class="work-meta">
-        <div class="work-category">Web Development</div>
-        <h3>Yuza Developer Site</h3>
-        <p>This very site — a from-scratch landing page for freelance Unity, scripting, modeling, and web work. No templates.</p>
-        <div class="work-tags">
-          <span class="tag">HTML / CSS</span><span class="tag">JavaScript</span><span class="tag">Landing page</span>
-        </div>
-        <a href="https://yuza-developer.vercel.app/" target="_blank" rel="noopener noreferrer" class="work-visit-link" onclick="event.stopPropagation();">Visit site →</a>
-      </div>
-    </div>
-
-  </div>
-  </div>
-</details>
-
-<details class="acc acc-wrap" id="work">
-<summary>
-    <div class="acc-heading">
-      <p class="section-label">Things I have made or worked on</p>
-      <h2>My Work</h2>
-    </div>
-    <span class="acc-toggle">+</span>
-  </summary>
-  <div class="acc-body" id="work-inner">
-  <p class="section-sub">A selection of things I've built — games, scripts, models, and sites.</p>
-
-  <div class="work-filters">
-    <button class="filter-btn active" onclick="filterWork('all', this)">All</button>
-    <button class="filter-btn" onclick="filterWork('unity', this)">Unity</button>
-    <button class="filter-btn" onclick="filterWork('scripting', this)">Scripting</button>
-    <button class="filter-btn" onclick="filterWork('modeling', this)">3D Models</button>
-    <button class="filter-btn" onclick="filterWork('web', this)">Web</button>
-  </div>
-
-  <div class="work-grid" id="workGrid">
-
-<div class="work-card" data-category="unity"
-  data-images='["https://github.com/redvr777/Yuza/blob/main/Screenshot%202026-04-30%20011311.png?raw=true","https://github.com/redvr777/Yuza/blob/55b819f14145e00305a19895e9193e93ef7219ef/Screenshot%202026-05-02%20162544.png?raw=true","https://github.com/redvr777/Yuza/blob/55b819f14145e00305a19895e9193e93ef7219ef/Screenshot%202026-05-02%20163944.png?raw=true","https://github.com/redvr777/Yuza/blob/55b819f14145e00305a19895e9193e93ef7219ef/Screenshot%202026-05-02%20163951.png?raw=true","https://github.com/redvr777/Yuza/blob/55b819f14145e00305a19895e9193e93ef7219ef/Screenshot%202026-05-02%20163959.png?raw=true","https://github.com/redvr777/Yuza/blob/55b819f14145e00305a19895e9193e93ef7219ef/Screenshot%202026-05-02%20164008.png?raw=true","https://github.com/redvr777/Yuza/blob/55b819f14145e00305a19895e9193e93ef7219ef/Screenshot%202026-05-02%20164015.png?raw=true"]'>
-  <div class="work-img">    
- <img src="https://github.com/redvr777/Yuza/blob/main/Screenshot%202026-04-30%20011311.png?raw=true" alt="Affinity">
-        <div class="work-overlay">
-          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
-          <span class="work-overlay-count" id="cnt-affinity"></span>
-        </div>
-      </div>
-      <div class="work-meta">
-        <div class="work-category">Unity Development</div>
-        <h3>Affinity</h3>
-        <p>Affinity is my game. I have spent countless hours working on Affinity to make it better!</p>
-        <div class="work-tags">
-          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Gameplay</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="work-card" data-category="unity"
-      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/8a7d093e218730dd57b2c70512b4777128b1cde8/Screenshot%202026-04-26%20200551.png"]'>
-      <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/8a7d093e218730dd57b2c70512b4777128b1cde8/Screenshot%202026-04-26%20200551.png" alt="SSGT">
-        <div class="work-overlay">
-          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
-        </div>
-      </div>
-      <div class="work-meta">
-        <div class="work-category">Unity Development</div>
-        <h3>Super Scary Gorilla Tag (SSGT)</h3>
-        <p>SSGT is a full remake of gorilla tag made into horror! Everything is remade and created by Olive/Yuza. SSGT was planned to come out last year but was never released.</p>
-        <div class="work-tags">
-          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Gameplay</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="work-card" data-category="unity"
-      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/10c79729437d992f65fd2ec80c5d3ca329f7d437/Screenshot%202026-04-30%20014136.png"]'>
-      <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/10c79729437d992f65fd2ec80c5d3ca329f7d437/Screenshot%202026-04-30%20014136.png" alt="Martial Monkey">
-        <div class="work-overlay">
-          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
-        </div>
-      </div>
-      <div class="work-meta">
-        <div class="work-category">Unity Development</div>
-        <h3>Martial Monkey</h3>
-        <p>Martial Monkey is a game where you are a monkey learning Martial Arts! This game is in very early development and is owned by MARIGOLD</p>
-        <div class="work-tags">
-          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Gameplay</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="work-card" data-category="unity"
-      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/120e02a0ecf455ff589198040d731483a8c93bfb/Screenshot%202026-04-30%20014743.png"]'>
-      <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/120e02a0ecf455ff589198040d731483a8c93bfb/Screenshot%202026-04-30%20014743.png" alt="Chimp Dead Zone">
-        <div class="work-overlay">
-          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
-        </div>
-      </div>
-      <div class="work-meta">
-        <div class="work-category">Unity Development</div>
-        <h3>Chimp Dead Zone</h3>
-        <p>Chimp Dead Zone is my game. Chimp Dead Zone is in very early development, the base of the game is to go around and kill other monkeys to get better guns.</p>
-        <div class="work-tags">
-          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Gameplay</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="work-card" data-category="unity"
-      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/85b4dc1e0c3a3e09dc8ae55dac10bc6fc947272f/Screenshot%202026-04-30%20015613.png"]'>
-      <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/85b4dc1e0c3a3e09dc8ae55dac10bc6fc947272f/Screenshot%202026-04-30%20015613.png" alt="MonkeTekV3">
-        <div class="work-overlay">
-          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
-        </div>
-      </div>
-      <div class="work-meta">
-        <div class="work-category">Unity Development</div>
-        <h3>MonkeTekV3?</h3>
-        <p>MonkeTek is a voxel sandbox game with saving progress and many items to build and explore. MonkeTek was Owned by TEVR then was gaven to me because he started working on other games.</p>
-        <div class="work-tags">
-          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Gameplay</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="work-card" data-category="unity"
-      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/4a759b919151cb73b9673d377433ac2c178404ea/Untitled139_20260412125653-1.jpg"]'>
-      <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/4a759b919151cb73b9673d377433ac2c178404ea/Untitled139_20260412125653-1.jpg" alt="Junk-Yard-Mechs">
-        <div class="work-overlay">
-          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
-        </div>
-      </div>
-      <div class="work-meta">
-        <div class="work-category">Unity Development</div>
-        <h3>Junk-Yard-Mechs</h3>
-        <p>Junk-Yard-Mechs is a upcoming gorilla tag fan game to bring vr back to life as it was back in 2022. Junk-Yard-Mechs is a big project planned to release over the summer of 2026!</p>
-        <div class="work-tags">
-          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Gameplay</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="work-card" data-category="unity"
-      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/b314dbd2fafd9cefad1ead5dda54ad77d2015e2e/b76b219885e018c9a66a031100d481d1.jpg"]'>
-      <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/b314dbd2fafd9cefad1ead5dda54ad77d2015e2e/b76b219885e018c9a66a031100d481d1.jpg" alt="The Mighty Mine">
-        <div class="work-overlay">
-          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
-        </div>
-      </div>
-      <div class="work-meta">
-        <div class="work-category">Unity Development</div>
-        <h3>The Mighty Mine</h3>
-        <p>The Mighty Mine is a level type game where you explore througout each level to find ores to sell to go to new levels. I worked on The Mighty Mine for 3 months before I quit.</p>
-        <div class="work-tags">
-          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Gameplay</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="work-card" data-category="unity"
-      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/18f8fe59008d910c6c65d414be6319a553c4c23a/4748d2b99296a548716e03ced2af1e68.jpg"]'>
-      <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/18f8fe59008d910c6c65d414be6319a553c4c23a/4748d2b99296a548716e03ced2af1e68.jpg" alt="Monkaroon">
-        <div class="work-overlay">
-          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
-        </div>
-      </div>
-      <div class="work-meta">
-        <div class="work-category">Unity Development</div>
-        <h3>Monkaroon</h3>
-        <p>Monkaroon is a gorilla tag fan game with Tag, Crown Tag, Bazooka PVP, and Casual. I've worked on many scripts for monkaroon and im a Developer for monkaroon</p>
-        <div class="work-tags">
-          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Gameplay</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="work-card" data-category="unity"
-      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/e1365d11b19360f0ff36b689878c30a1a04b6802/image.png"]'>
-      <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/e1365d11b19360f0ff36b689878c30a1a04b6802/image.png" alt="Project Skate">
-        <div class="work-overlay">
-          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
-        </div>
-      </div>
-      <div class="work-meta">
-        <div class="work-category">Unity Development</div>
-        <h3>Project Skate</h3>
-        <p>Project Skate is gorilla tag fan game where you have a skate board and you skate around the map with other monkeys! I'm a developer and a coder for Project Skate. Project Skate will be in public early accsess in June</p>
-        <div class="work-tags">
-          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Gameplay</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="work-card" data-category="unity"
-      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/7911264aa37190e346ae567a1249ed0834294f09/Screenshot%202026-05-01%20022004.png"]'>
-      <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/7911264aa37190e346ae567a1249ed0834294f09/Screenshot%202026-05-01%20022004.png" alt="Deep Descent">
-        <div class="work-overlay">
-          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
-        </div>
-      </div>
-      <div class="work-meta">
-        <div class="work-category">Unity Development</div>
-        <h3>Deep Descent</h3>
-        <p>Deep Descent is a gorilla tag fan game where you mine ores to get better pickaxes and explore new areas. This game is owned by me but the main developer is LANCER who is currently on break from games. We plan for the game to come out late summer.</p>
-        <div class="work-tags">
-          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Gameplay</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="work-card" data-category="unity"
-      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/70b3ea24cebcdcc538e672f62648e160c41d3c80/Screenshot%202026-05-01%20043138.png"]'>
-      <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/70b3ea24cebcdcc538e672f62648e160c41d3c80/Screenshot%202026-05-01%20043138.png" alt="Experimental Chimps">
-        <div class="work-overlay">
-          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
-        </div>
-      </div>
-      <div class="work-meta">
-        <div class="work-category">Unity Development</div>
-        <h3>Experimental Chimps</h3>
-        <p>Experimental Chimps was one of the first games that I was really proud of! so many people loved it and played it but I sadly lost almost everything during a PC error. This game is here to be remembered ❤️</p>
-        <div class="work-tags">
-          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Gameplay</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="work-card" data-category="scripting"
-      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/e0923695c2477898271d7452ac59672f90c05a7b/qr-code%20(1).png"]'>
-      <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/e0923695c2477898271d7452ac59672f90c05a7b/qr-code%20(1).png" alt="Quest Optimizer">
-        <div class="work-overlay">
-          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
-        </div>
-      </div>
-      <div class="work-meta">
-        <div class="work-category">Scripting</div>
-        <h3>Quest Optimizer</h3>
-        <p>The Quest Optimizer is one of the biggest scripting projects I have done yet. I spent countless hours researching Unity's Universal Render Pipeline to create a highly optimized performance system.</p>
-        <div class="work-tags">
-          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Gameplay</span>
-        </div>
-      </div>
-    </div>
-
-       <div class="work-card" data-category="unity"
-      data-images='["https://raw.githubusercontent.com/redvr777/Yuza/main/Screenshot%202026-07-27%20160245.png"]'>
-      <div class="work-img">
-        <img src="https://raw.githubusercontent.com/redvr777/Yuza/main/Screenshot%202026-07-27%20160245.png" alt="Project Helix">
-        <div class="work-overlay">
-          <span class="work-overlay-text">[ VIEW GALLERY ]</span>
-        </div>
-      </div>
-      <div class="work-meta">
-        <div class="work-category">Unity Development</div>
-        <h3>Project Helix</h3>
-        <p>Project Helix is a game where you can explore the facility and try not to die or run out of sanity</p>
-        <div class="work-tags">
-          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Gameplay</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-  </div>
-</details>
-
-<details class="acc acc-wrap" id="devapply">
-<summary>
-    <div class="acc-heading">
-      <p class="section-label">Join the team</p>
-      <h2>Developer Applications</h2>
-    </div>
-    <span class="acc-toggle">+</span>
-  </summary>
-  <div class="acc-body" id="devapply-inner">
-  <p class="section-sub">Looking to work on one of my games? Fill out the form and I'll get back to you.</p>
-
-  <div class="devapply-layout">
-    <div class="devapply-perks">
-      <div class="devapply-perk">
-        <div class="devapply-perk-icon">🎮</div>
-        <div class="devapply-perk-text">
-          <h4>Work on real games</h4>
-          <p>Contribute to active projects that are live on Meta Quest or in development for 2026 release.</p>
-        </div>
-      </div>
-      <div class="devapply-perk">
-        <div class="devapply-perk-icon">🤝</div>
-        <div class="devapply-perk-text">
-          <h4>Collaborative environment</h4>
-          <p>Work directly alongside me and other developers in a tight-knit team where your contributions actually matter.</p>
-        </div>
-      </div>
-      <div class="devapply-perk">
-        <div class="devapply-perk-icon">📈</div>
-        <div class="devapply-perk-text">
-          <h4>Build your portfolio</h4>
-          <p>Get real shipped game experience to put on your portfolio — Unity, C#, VR, and more.</p>
-        </div>
-      </div>
-      <div class="devapply-perk">
-        <div class="devapply-perk-icon">⚡</div>
-        <div class="devapply-perk-text">
-          <h4>All skill levels welcome</h4>
-          <p>Whether you're intermediate or experienced, if you're motivated and can deliver, I want to hear from you.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="devapply-cta-box">
-      <div class="devapply-badge">Now accepting apps</div>
-      <div class="devapply-cta-icon">📋</div>
-      <h3>Apply to be a developer</h3>
-      <p>Takes only a few minutes. Tell me your skills, experience, and which projects interest you most.</p>
-      <a href="https://forms.gle/NJTPVPtjdPYwFcnGA" target="_blank" rel="noopener noreferrer" class="btn-gold">
-        <span class="btn-gold-icon">✦</span>
-        Fill out the form
-      </a>
-      <p class="devapply-note">Fill out the form to get a chance to work with me and others!</p>
-    </div>
-  </div>
-  </div>
-</details>
-
-<details class="acc acc-wrap" id="how">
-<summary>
-    <div class="acc-heading">
-      <p class="section-label">The process</p>
-      <h2>How it works</h2>
-    </div>
-    <span class="acc-toggle">+</span>
-  </summary>
-  <div class="acc-body" id="how-inner">
-  <p class="section-sub">No upfront payment. You describe what you need, I'll respond with a quote and timeline.</p>
-
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">01</div>
-      <h3>Submit a request</h3>
-      <p>Fill out the form below with your project details — what you need, your engine, deadline, and any relevant files.</p>
-    </div>
-    <div class="step" style="padding-left:32px;">
-      <div class="step-num">02</div>
-      <h3>I review &amp; respond</h3>
-      <p>I'll respond back with whether I can take it on, how much it'll cost, and how long it'll take.</p>
-    </div>
-    <div class="step" style="padding-left:32px;">
-      <div class="step-num">03</div>
-      <h3>We agree on terms</h3>
-      <p>Once you're happy with the quote, we sort out payment via CashApp or BuyMeACoffee and I get started on your project.</p>
-    </div>
-    <div class="step" style="padding-left:32px; padding-right:0;">
-      <div class="step-num">04</div>
-      <h3>Delivery</h3>
-      <p>I deliver the work, you review it, and we handle revisions until you're satisfied.</p>
-    </div>
-  </div>
-  </div>
-</details>
-
-<details class="acc acc-wrap" id="payment-wrap">
-<summary>
-    <div class="acc-heading">
-      <p class="section-label">How you pay</p>
-      <h2 id="payment">Payment Methods</h2>
-    </div>
-    <span class="acc-toggle">+</span>
-  </summary>
-  <div class="acc-body">
-  <p class="section-sub">I only accept payment through the two platforms below — no exceptions. Payment is handled after we agree on a quote.</p>
-
-  <div class="payment-grid">
-    <a href="https://cash.app/$Thatonedev476" target="_blank" rel="noopener noreferrer" class="payment-card cashapp" style="text-decoration:none;">
-      <div class="payment-icon">💸</div>
-      <h3>CashApp</h3>
-      <p>Send payment directly via CashApp once we've agreed on a price. Fast, simple, and no fees on your end.</p>
-      <p style="margin-top:12px;font-family:'Courier New',monospace;font-weight:bold;font-size:10px;color:var(--cashapp);">$Thatonedev476 →</p>
-    </a>
-    <a href="https://buymeacoffee.com/cbsgames" target="_blank" rel="noopener noreferrer" class="payment-card bmac" style="text-decoration:none;">
-      <div class="payment-icon">☕</div>
-      <h3>BuyMeACoffee</h3>
-      <p>Pay through BuyMeACoffee — great if you want to support the work or prefer that platform for transactions.</p>
-      <p style="margin-top:12px;font-family:'Courier New',monospace;font-weight:bold;font-size:10px;color:var(--coffee);">buymeacoffee.com/cbsgames →</p>
-    </a>
-  </div>
-
-  <div class="payment-only-note">
-    ⚠ <strong>Note:</strong> These are the <strong>only</strong> two payment methods accepted. No PayPal, Venmo, crypto, bank transfer, or other platforms. Payment is only due after you've reviewed and approved the quote — never upfront.
-  </div>
-  </div>
-</details>
-
-<section id="request" style="max-width:1100px;">
-  <div class="form-wrap">
-    <div class="form-info">
-      <p class="section-label">Work with me</p>
-      <h2>Request a project</h2>
-      <p>Tell me about your game and what you need. Pick how you'd like to reach me — Discord, phone, or email — no obligation, no upfront cost.</p>
-
-      <div class="contact-detail">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-        <div><strong>Response time</strong><br>Usually within 24–48 hours</div>
-      </div>
-      <div class="contact-detail">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-        <div><strong>Pricing</strong><br>Custom quote per project</div>
-      </div>
-      <div class="contact-detail">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M9 12l2 2 4-4"/></svg>
-        <div><strong>Payment</strong><br>CashApp or BuyMeACoffee only</div>
-      </div>
-      <div class="contact-detail">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M9 12l2 2 4-4"/></svg>
-        <div><strong>Contact me via</strong><br>Discord (yuza4948), phone, or email</div>
-      </div>
-    </div>
-
-    <div class="form-card">
-      <form id="requestForm">
-        <div class="field-row">
-          <div class="field">
-            <label>Your name</label>
-            <input type="text" name="name" placeholder="Name Example" required>
-          </div>
-          <div class="field">
-            <label>Your email</label>
-            <input type="email" name="email" placeholder="Example@gmail.com" required>
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Type of work needed</label>
-          <select name="service" required>
-            <option value="" disabled selected>Select a service...</option>
-            <option>Unity Game Development</option>
-            <option>C# Scripting</option>
-            <option>3D Modeling</option>
-            <option>Web Development</option>
-            <option>Multiple services</option>
-            <option>Not sure — I'll describe it</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Platform / target (if applicable)</label>
-          <input type="text" name="engine" placeholder="e.g. PC, mobile, WebGL, VR...">
-        </div>
-
-        <div class="field">
-          <label>Project description</label>
-          <textarea name="description" placeholder="Describe what you need. The more detail the better — scope, current state of the project, what's done vs what's needed..." required></textarea>
-        </div>
-
-        <div class="field">
-          <label>Deadline (if any)</label>
-          <input type="text" name="deadline" placeholder="e.g. 3 weeks, by end of August, flexible...">
-        </div>
-
-        <div class="field">
-          <label>Your budget</label>
-          <input type="text" name="budget" placeholder="e.g. $20, $50–$100, not sure yet...">
-        </div>
-
-        <div class="field">
-          <label>How should I reach you back?</label>
-          <div class="contact-method-row">
-            <div class="contact-method-btn discord" data-method="discord" onclick="selectContactMethod('discord')">
-              <span class="cm-icon">🎮</span>
-              <span>Discord</span>
-            </div>
-            <div class="contact-method-btn phone" data-method="phone" onclick="selectContactMethod('phone')">
-              <span class="cm-icon">📱</span>
-              <span>Phone</span>
-            </div>
-            <div class="contact-method-btn email" data-method="email" onclick="selectContactMethod('email')">
-              <span class="cm-icon">✉️</span>
-              <span>Email</span>
-            </div>
-          </div>
-          <input type="hidden" name="contactMethod" id="contactMethodField" required>
-        </div>
-
-        <div class="form-note">
-          i Pick a contact method above, then hit send. There's <strong>no payment required now</strong> — pricing is agreed after reviewing your request. Payment is accepted via <span class="cashapp-pill">💸 CashApp</span> or <span class="bmac-pill">☕ BuyMeACoffee</span> only.
-        </div>
-
-        <button type="submit" class="submit-btn">Send request</button>
-      </form>
-
-      <div class="success-msg" id="successMsg">
-        <div class="check">✓</div>
-        <h3 id="successTitle">Request ready!</h3>
-        <p id="successSub">Here's your message, ready to send.</p>
-        <div class="copy-box" id="copyBox"></div>
-        <div id="actionArea"></div>
-        <button type="button" class="reset-btn" onclick="resetForm()">← Back to form</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="sep" style="margin: 0 48px;"></div>
-<footer>
-  <div class="footer-logo">yuza<span>.</span></div>
-  <p>Unity Dev · C# Scripting · 3D Modeling · Web Dev · 3–5 yrs exp</p>
-  <p>© 2026 Yuza. All rights reserved.</p>
-</footer>
-
-<div id="lightbox" class="lightbox">
-  <div class="lightbox-inner">
-    <div class="lightbox-topbar">
-      <span class="lightbox-title" id="lbTitle"></span>
-      <span class="lightbox-close" id="lbClose">CLOSE ✕</span>
-    </div>
-    <div class="lightbox-stage">
-      <div class="lb-arrow lb-prev" id="lbPrev">‹</div>
-      <div class="lightbox-img-wrap">
-        <img id="lightbox-img" src="" alt="">
-      </div>
-      <div class="lb-arrow lb-next" id="lbNext">›</div>
-    </div>
-    <div class="lightbox-footer">
-      <span class="lightbox-caption" id="lightbox-caption"></span>
-      <div class="lightbox-dots" id="lbDots"></div>
-      <span class="lightbox-counter" id="lbCounter"></span>
-    </div>
-  </div>
-</div>
-
-<button id="backToTop" type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'});">↑</button>
-
-<script>
-(function(){
-  var canvas = document.getElementById('bg-canvas');
-  var ctx = canvas.getContext('2d');
-  var W, H;
-
-  function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  var orbs = [
-    { x: 0.15, y: 0.25, r: 0.42, vx: 0.00018, vy: 0.00009, color: '255,43,43' },
-    { x: 0.82, y: 0.65, r: 0.36, vx: -0.00012, vy: 0.00021, color: '122,0,0' },
-    { x: 0.5,  y: 0.85, r: 0.28, vx: 0.00022, vy: -0.00014, color: '212,38,38' },
-    { x: 0.3,  y: 0.55, r: 0.22, vx: -0.00008, vy: -0.00018, color: '255,140,140' },
-  ];
-
-  var particles = [];
-  for (var i = 0; i < 120; i++) {
-    particles.push({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      size: Math.floor(Math.random() * 2) + 1,
-      vy: -(Math.random() * 0.25 + 0.08),
-      vx: (Math.random() - 0.5) * 0.06,
-      opacity: Math.random() * 0.45 + 0.08,
-      twinkle: Math.random() * Math.PI * 2,
-      twinkleSpeed: Math.random() * 0.03 + 0.005,
-    });
-  }
-
-  var shootingStars = [];
-  function spawnStar() {
-    shootingStars.push({
-      x: Math.random() * W,
-      y: Math.random() * H * 0.5,
-      len: Math.random() * 80 + 40,
-      vx: Math.random() * 4 + 3,
-      vy: Math.random() * 2 + 1,
-      life: 1.0,
-      decay: Math.random() * 0.015 + 0.008,
-    });
-  }
-
-  var gridLines = [];
-  var GRID = 48;
-  function buildGrid() {
-    gridLines = [];
-    for (var gx = 0; gx < W; gx += GRID) gridLines.push({ type: 'v', pos: gx });
-    for (var gy = 0; gy < H; gy += GRID) gridLines.push({ type: 'h', pos: gy });
-  }
-  buildGrid();
-  window.addEventListener('resize', buildGrid);
-
-  var frame = 0;
-
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-
-    ctx.strokeStyle = 'rgba(255,43,43,0.04)';
-    ctx.lineWidth = 1;
-    for (var gi = 0; gi < gridLines.length; gi++) {
-      var gl = gridLines[gi];
-      ctx.beginPath();
-      if (gl.type === 'v') { ctx.moveTo(gl.pos, 0); ctx.lineTo(gl.pos, H); }
-      else { ctx.moveTo(0, gl.pos); ctx.lineTo(W, gl.pos); }
-      ctx.stroke();
-    }
-
-    for (var oi = 0; oi < orbs.length; oi++) {
-      var o = orbs[oi];
-      o.x += o.vx; o.y += o.vy;
-      if (o.x < -0.3) o.x = 1.3;
-      if (o.x > 1.3)  o.x = -0.3;
-      if (o.y < -0.3) o.y = 1.3;
-      if (o.y > 1.3)  o.y = -0.3;
-      var grd = ctx.createRadialGradient(o.x*W, o.y*H, 0, o.x*W, o.y*H, o.r*Math.max(W,H));
-      grd.addColorStop(0,   'rgba('+o.color+',0.11)');
-      grd.addColorStop(0.5, 'rgba('+o.color+',0.05)');
-      grd.addColorStop(1,   'rgba('+o.color+',0)');
-      ctx.fillStyle = grd;
-      ctx.fillRect(0, 0, W, H);
-    }
-
-    for (var pi = 0; pi < particles.length; pi++) {
-      var p = particles[pi];
-      p.x += p.vx; p.y += p.vy;
-      p.twinkle += p.twinkleSpeed;
-      if (p.y < -4) { p.y = H + 4; p.x = Math.random() * W; }
-      if (p.x < -4) p.x = W + 4;
-      if (p.x > W + 4) p.x = -4;
-      var tw = (Math.sin(p.twinkle) * 0.3 + 0.7);
-      ctx.fillStyle = 'rgba(255,43,43,' + (p.opacity * tw) + ')';
-      ctx.fillRect(Math.floor(p.x), Math.floor(p.y), p.size, p.size);
-    }
-
-    if (frame % 240 === 0 && Math.random() > 0.3) spawnStar();
-
-    for (var si = shootingStars.length - 1; si >= 0; si--) {
-      var s = shootingStars[si];
-      s.x += s.vx; s.y += s.vy; s.life -= s.decay;
-      if (s.life <= 0) { shootingStars.splice(si, 1); continue; }
-      var sg = ctx.createLinearGradient(s.x, s.y, s.x - s.len, s.y - s.len * 0.5);
-      sg.addColorStop(0, 'rgba(255,210,180,' + s.life * 0.9 + ')');
-      sg.addColorStop(1, 'rgba(255,43,43,0)');
-      ctx.strokeStyle = sg;
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.moveTo(s.x, s.y);
-      ctx.lineTo(s.x - s.len, s.y - s.len * 0.5);
-      ctx.stroke();
-    }
-
-    frame++;
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-</script>
-
-<script>
-(function(){
-  document.addEventListener('contextmenu',function(e){e.preventDefault();return false;});
-  document.addEventListener('keydown',function(e){
-    var k=e.key||'';var kc=e.keyCode||0;
-    if(k==='F12'||kc===123){e.preventDefault();e.stopPropagation();return false;}
-    if(e.ctrlKey||e.metaKey){
-      if(e.shiftKey&&['i','I','j','J','c','C','k','K','m','M','p','P'].indexOf(k)>-1){e.preventDefault();e.stopPropagation();return false;}
-      if(e.altKey&&['i','I','j','J','c','C','u','U'].indexOf(k)>-1){e.preventDefault();e.stopPropagation();return false;}
-      if(!e.shiftKey&&!e.altKey&&['u','U','s','S','p','P','a','A'].indexOf(k)>-1){e.preventDefault();e.stopPropagation();return false;}
-    }
-  },true);
-  document.addEventListener('dragstart',function(e){e.preventDefault();return false;});
-})();
-</script>
-
-<script>
-/* ── Nav scroll shadow + back-to-top visibility ── */
-(function(){
-  var navEl = document.querySelector('nav');
-  var backTop = document.getElementById('backToTop');
-  function onScroll() {
-    var y = window.scrollY || document.documentElement.scrollTop;
-    if (navEl) navEl.classList.toggle('scrolled', y > 12);
-    if (backTop) backTop.classList.toggle('visible', y > 480);
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-})();
-
-/* ── Scroll reveal for cards/sections ── */
-(function(){
-  var targets = document.querySelectorAll('.service-card, .released-card, .work-card, .payment-card, .step, .devapply-perk, .devapply-cta-box');
-  targets.forEach(function(el){ el.classList.add('reveal'); });
-
-  if (!('IntersectionObserver' in window)) {
-    targets.forEach(function(el){ el.classList.add('in-view'); });
-    return;
-  }
-
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-  targets.forEach(function(el){ io.observe(el); });
-
-  /* re-check reveal state whenever an accordion is opened, since hidden content starts un-observed visually */
-  document.querySelectorAll('details.acc').forEach(function(d){
-    d.addEventListener('toggle', function(){
-      if (d.open) {
-        d.querySelectorAll('.reveal:not(.in-view)').forEach(function(el){ io.observe(el); });
-      }
-    });
-  });
-})();
-</script>
-
-<script>
-function filterWork(cat, btn) {
-  var scope = btn.closest('.acc-body') || document;
-  scope.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
-  btn.classList.add('active');
-  scope.querySelectorAll('.work-card').forEach(function(card){
-    card.style.display = (cat === 'all' || card.dataset.category === cat) ? '' : 'none';
-  });
-}
-
-(function(){
-  var lb        = document.getElementById('lightbox');
-  var lbImg     = document.getElementById('lightbox-img');
-  var lbTitle   = document.getElementById('lbTitle');
-  var lbCaption = document.getElementById('lightbox-caption');
-  var lbCounter = document.getElementById('lbCounter');
-  var lbDots    = document.getElementById('lbDots');
-  var lbPrev    = document.getElementById('lbPrev');
-  var lbNext    = document.getElementById('lbNext');
-  var lbClose   = document.getElementById('lbClose');
-
-  if (!lb) return;
-
-  var gallery = [];
-  var current = 0;
-
-  function buildDots(total) {
-    lbDots.innerHTML = '';
-    for (var i = 0; i < total; i++) {
-      var d = document.createElement('span');
-      d.className = 'lb-dot' + (i === current ? ' active' : '');
-      d.dataset.index = i;
-      d.addEventListener('click', (function(idx){ return function(){ goTo(idx); }; })(i));
-      lbDots.appendChild(d);
-    }
-  }
-
-  function updateDots() {
-    var dots = lbDots.querySelectorAll('.lb-dot');
-    dots.forEach(function(d, i){ d.classList.toggle('active', i === current); });
-  }
-
-  function updateArrows() {
-    lbPrev.classList.toggle('lb-hidden', gallery.length <= 1 || current === 0);
-    lbNext.classList.toggle('lb-hidden', gallery.length <= 1 || current === gallery.length - 1);
-  }
-
-  function goTo(idx) {
-    if (idx < 0 || idx >= gallery.length) return;
-    lbImg.classList.add('fading');
-    setTimeout(function(){
-      current = idx;
-      lbImg.src = gallery[current];
-      lbImg.classList.remove('fading');
-      lbCounter.textContent = (current + 1) + ' / ' + gallery.length;
-      updateDots();
-      updateArrows();
-    }, 160);
-  }
-
-  function openLightbox(card) {
-    var raw = card.dataset.images;
-    try { gallery = JSON.parse(raw); } catch(e) { gallery = []; }
-    if (!gallery.length) {
-      var img = card.querySelector('.work-img img');
-      if (img) gallery = [img.src];
-    }
-    current = 0;
-    lbTitle.textContent   = card.querySelector('h3') ? card.querySelector('h3').textContent : '';
-    lbCaption.textContent = card.querySelector('p')  ? card.querySelector('p').textContent  : '';
-    lbImg.src             = gallery[0];
-    lbCounter.textContent = '1 / ' + gallery.length;
-    buildDots(gallery.length);
-    updateArrows();
-    lb.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeLightbox() {
-    lb.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  document.addEventListener('click', function(e){
-    var card = e.target.closest ? e.target.closest('.work-card') : null;
-    if (!card) return;
-    openLightbox(card);
-  });
-
-  document.querySelectorAll('.work-card').forEach(function(card){
-    var raw = card.dataset.images;
-    var imgs = [];
-    try { imgs = JSON.parse(raw); } catch(e){}
-    if (imgs.length > 1) {
-      var oc = card.querySelector('.work-overlay');
-      if (oc && !oc.querySelector('.work-overlay-count')) {
-        var sub = document.createElement('span');
-        sub.className = 'work-overlay-count';
-        sub.textContent = imgs.length + ' photos';
-        oc.appendChild(sub);
-      }
-    }
-  });
-
-  lbPrev.addEventListener('click', function(e){ e.stopPropagation(); goTo(current - 1); });
-  lbNext.addEventListener('click', function(e){ e.stopPropagation(); goTo(current + 1); });
-  lbClose.addEventListener('click', closeLightbox);
-  lb.addEventListener('click', function(e){ if (e.target === lb) closeLightbox(); });
-
-  document.addEventListener('keydown', function(e){
-    if (!lb.classList.contains('open')) return;
-    if (e.key === 'Escape')      closeLightbox();
-    if (e.key === 'ArrowLeft')   goTo(current - 1);
-    if (e.key === 'ArrowRight')  goTo(current + 1);
-  });
-
-  var touchStartX = 0;
-  lb.addEventListener('touchstart', function(e){ touchStartX = e.changedTouches[0].clientX; }, { passive: true });
-  lb.addEventListener('touchend', function(e){
-    var dx = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(dx) > 50) dx < 0 ? goTo(current + 1) : goTo(current - 1);
-  });
-})();
-
-/* ── CONTACT METHOD PICKER + REQUEST FORM ── */
-var YUZA_DISCORD = 'yuza4948';
-var YUZA_PHONE   = '9042586813';
-var YUZA_PHONE_DISPLAY = '(904) 258-6813';
-var YUZA_EMAIL   = 'yuzadeveloper@gmail.com';
-
-function selectContactMethod(method) {
-  document.querySelectorAll('.contact-method-btn').forEach(function(b){
-    b.classList.toggle('selected', b.dataset.method === method);
-  });
-  document.getElementById('contactMethodField').value = method;
-}
-
-function resetForm() {
-  document.getElementById('requestForm').style.display = '';
-  document.getElementById('requestForm').reset();
-  document.querySelectorAll('.contact-method-btn').forEach(function(b){ b.classList.remove('selected'); });
-  document.getElementById('successMsg').style.display = 'none';
-}
-
-function copyText(text, btnEl) {
-  function done(ok) {
-    if (!btnEl) return;
-    var orig = btnEl.textContent;
-    btnEl.textContent = ok ? 'Copied!' : 'Copy failed';
-    setTimeout(function(){ btnEl.textContent = orig; }, 1600);
-  }
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(function(){ done(true); }).catch(function(){ done(false); });
-  } else {
-    try {
-      var ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.focus(); ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      done(true);
-    } catch (e) { done(false); }
-  }
-}
-
-(function(){
-  var _f = document.getElementById('requestForm');
-  var _s = document.getElementById('successMsg');
-
-  _f.addEventListener('submit', function(e){
-    e.preventDefault();
-
-    var method = document.getElementById('contactMethodField').value;
-    if (!method) {
-      alert('Please pick how you\'d like Yuza to reach you back (Discord, Phone, or Email).');
-      return;
-    }
-
-    var _n  = _f.querySelector('[name="name"]').value;
-    var _e  = _f.querySelector('[name="email"]').value;
-    var _sv = _f.querySelector('[name="service"]').value;
-    var _en = _f.querySelector('[name="engine"]').value;
-    var _d  = _f.querySelector('[name="description"]').value;
-    var _dl = _f.querySelector('[name="deadline"]').value;
-    var _bg = _f.querySelector('[name="budget"]').value;
-
-    var messageBody =
-      'Hi Yuza,\n\nI\'d like to request some work on my game. Here are the details:\n\n' +
-      'Name: ' + _n + '\n' +
-      'Email: ' + _e + '\n' +
-      'Service needed: ' + _sv +
-      '\nEngine / Platform: ' + (_en || 'Not specified') +
-      '\nDeadline: ' + (_dl || 'Flexible') +
-      '\nBudget: ' + (_bg || 'Not specified') +
-      '\n\nProject description:\n' + _d +
-      '\n\nLooking forward to hearing from you!\n\n— ' + _n;
-
-    var copyBox    = document.getElementById('copyBox');
-    var actionArea = document.getElementById('actionArea');
-    var title      = document.getElementById('successTitle');
-    var sub        = document.getElementById('successSub');
-
-    actionArea.innerHTML = '';
-
-    if (method === 'discord') {
-      title.textContent = 'Message ready for Discord!';
-      sub.textContent = 'Copy the message below, open Discord, and DM it to Yuza (@' + YUZA_DISCORD + ').';
-      copyBox.textContent = messageBody;
-
-      var copyBtn = document.createElement('button');
-      copyBtn.type = 'button';
-      copyBtn.className = 'copy-btn';
-      copyBtn.textContent = 'Copy message';
-      copyBtn.onclick = function(){ copyText(messageBody, copyBtn); };
-      actionArea.appendChild(copyBtn);
-
-      var discordLink = document.createElement('a');
-      discordLink.className = 'action-btn discord';
-      discordLink.href = 'https://discord.com/users/' + YUZA_DISCORD;
-      discordLink.target = '_blank';
-      discordLink.rel = 'noopener noreferrer';
-      discordLink.textContent = 'Open Discord';
-      actionArea.appendChild(discordLink);
-
-      var note = document.createElement('p');
-      note.style.marginTop = '8px';
-      note.textContent = 'Discord username: ' + YUZA_DISCORD;
-      actionArea.appendChild(note);
-
-    } else if (method === 'phone') {
-      title.textContent = 'Message ready to text!';
-      sub.textContent = 'Copy the message below, or tap "Open Messages" to text it straight to Yuza.';
-      copyBox.textContent = messageBody;
-
-      var copyBtn2 = document.createElement('button');
-      copyBtn2.type = 'button';
-      copyBtn2.className = 'copy-btn';
-      copyBtn2.textContent = 'Copy message';
-      copyBtn2.onclick = function(){ copyText(messageBody, copyBtn2); };
-      actionArea.appendChild(copyBtn2);
-
-      var smsLink = document.createElement('a');
-      smsLink.className = 'action-btn phone';
-      smsLink.href = 'sms:' + YUZA_PHONE + '?&body=' + encodeURIComponent(messageBody);
-      smsLink.textContent = 'Open Messages';
-      actionArea.appendChild(smsLink);
-
-      var note2 = document.createElement('p');
-      note2.style.marginTop = '8px';
-      note2.textContent = 'Phone number: ' + YUZA_PHONE_DISPLAY;
-      actionArea.appendChild(note2);
-
-    } else if (method === 'email') {
-      title.textContent = 'Message ready to email!';
-      sub.textContent = 'Copy the message below, or tap "Open Email" to send it straight to Yuza.';
-      copyBox.textContent = messageBody;
-
-      var copyBtn3 = document.createElement('button');
-      copyBtn3.type = 'button';
-      copyBtn3.className = 'copy-btn';
-      copyBtn3.textContent = 'Copy message';
-      copyBtn3.onclick = function(){ copyText(messageBody, copyBtn3); };
-      actionArea.appendChild(copyBtn3);
-
-      var mailLink = document.createElement('a');
-      mailLink.className = 'action-btn email';
-      var subj = encodeURIComponent('Project Request from ' + _n + ' — ' + _sv);
-      mailLink.href = 'mailto:' + YUZA_EMAIL + '?subject=' + subj + '&body=' + encodeURIComponent(messageBody);
-      mailLink.target = '_blank';
-      mailLink.rel = 'noopener noreferrer';
-      mailLink.textContent = 'Open Email';
-      actionArea.appendChild(mailLink);
-
-      var note3 = document.createElement('p');
-      note3.style.marginTop = '8px';
-      note3.textContent = 'Email: ' + YUZA_EMAIL;
-      actionArea.appendChild(note3);
-    }
-
-    _f.style.display = 'none';
-    _s.style.display = 'block';
-  });
-
-  document.querySelectorAll('a[href^="#"]').forEach(function(anchor){
-    anchor.addEventListener('click', function(e){
-      var href = this.getAttribute('href');
-      if (!href || href === '#') return;
-      var target = document.querySelector(href);
-      if (target) {
-        e.preventDefault();
-        var acc = target.closest ? target.closest('details.acc') : null;
-        if (acc && !acc.open) acc.open = true;
-        requestAnimationFrame(function(){
-          var top = target.getBoundingClientRect().top + window.scrollY - 80;
-          window.scrollTo({ top: top, behavior: 'smooth' });
-        });
-      }
-    });
-  });
-})();
-</script>
-
-<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="cbsgames" data-description="Support me on Buy me a coffee!" data-message="" data-color="#FF813F" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
-</body>
-</html>
